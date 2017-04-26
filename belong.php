@@ -14,4 +14,11 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
+// Add a Client user role that can only view their content
+function add_roles_on_plugin_activation() {
+    add_role( 'client', 'Client', array( 'read' => true ) );
+}
+
+register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
+
 ?>
