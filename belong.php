@@ -37,15 +37,12 @@ function belong_list_events_for_user() {
     $posts = get_posts();
     foreach ($posts as $post) {
         $client = get_field('event_client', $post->ID);
-        echo 'current user ID: ' + $current_user->ID;
-        echo 'event_client value: ' + $client;
-        if ($client == $current_user->ID) {
+        //if ($client == $current_user->ID) {
             $post->post_title;
             $post->post_content;
             get_field('event_date', $post->ID);
             get_field('event_address', $post->ID);
-
-        }
+       //}
     }
 }
 
