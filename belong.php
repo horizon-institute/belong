@@ -17,8 +17,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 // Add a Client user role that can only view their content
 function add_roles_on_plugin_activation() {
     add_role( 'client', 'Client', array( 
-        'read' => true         printf 'current user ID: ' + $current_user->ID;
-        printf 'event_client value: ' + $client;
+        'read' => true 
         )
     );
 
@@ -43,7 +42,7 @@ function belong_list_events_for_user() {
             $post->post_content;
             get_field('event_date', $post->ID);
             get_field('event_address', $post->ID);
-       //}
+       // }
     }
 }
 
