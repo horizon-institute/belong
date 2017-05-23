@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.0.6
+* Version: 0.0.0.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -17,7 +17,8 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 // Add a Client user role that can only view their content
 function add_roles_on_plugin_activation() {
     add_role( 'client', 'Client', array( 
-        'read' => true 
+        'read' => true         printf 'current user ID: ' + $current_user->ID;
+        printf 'event_client value: ' + $client;
         )
     );
 
