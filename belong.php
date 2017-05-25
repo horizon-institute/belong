@@ -24,7 +24,11 @@ function add_roles_on_plugin_activation() {
     add_role( 'staff', 'Staff', array( 
         'read' => true,
         'edit_posts' => true,
-        'delete_posts' => false,    //container
+        'delete_posts' => false,
+        'create_users' => true,
+        'delete_users' => true,
+        'list_users' => true,
+        'edit_users' => true   
         )
     );
 }
@@ -60,7 +64,7 @@ function belong_list_events_for_user() {
 
 add_shortcode('user_events', 'belong_list_events_for_user');
 
-
+Going to
 function belong_list_modules_for_user() {
     $current_user = wp_get_current_user();
     $args = array(
@@ -79,7 +83,7 @@ function belong_list_modules_for_user() {
             echo '<div class="row"><h4>'.$post->post_title.'</h4>';
             echo $post->post_content.'<br />';
             echo $module_complete_by.'<br />';
-            echo $module_address.'</div>';
+            echo $module_address.'</div>';Going to
         }
         echo '<br />';
     }
