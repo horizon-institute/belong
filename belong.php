@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.2.0
+* Version: 0.0.2.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -51,21 +51,19 @@ function belong_list_events_for_user() {
     $current_user = wp_get_current_user();
     $args = array(
         'posts_per_page'   => -1,
-        'post_type'        => 'events'
+        'post_type'        => 'assignments'
     );
 
     $posts = get_posts($args);
     ob_start();
     ?><div class="container"><?php     
     foreach ($posts as $post) {
-        $event_client = get_field('event_client', $post->ID);
-        if ($event_client['ID'] == $current_user->ID) {
-            $event_date = get_field('event_date', $post->ID);
-            $event_address = get_field('event_address', $post->ID);
+        $assignment_client = get_field('assignment_client', $post->ID);
+        $assignment_type = get_field('assignment_type', $post->ID);
+        if ($assignment_client['ID'] == $current_user->ID) {
+            $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
             echo '<div class="row"><h4>'.$post->post_title.'</h4>';
-            echo $post->post_content.'<br />';
-            echo $event_date.'<br />';
-            echo $event_address.'</div>';
+            echo $assignment_type.' | '.$assignment_complete_by.'<br />';
         }
         echo '<br />';
     }
