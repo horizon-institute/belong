@@ -48,14 +48,14 @@ register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
+    ob_start();
     $current_user = wp_get_current_user();
     $args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
     );
 
-    $event_posts = get_posts($args);
-    //ob_start();
+    $event_posts = get_posts($args);  
     foreach ($event_posts as $post) {
         $assignment_client = get_field('assignment_client', $post->ID);
         $assignment_type = get_field('assignment_type', $post->ID);
@@ -65,7 +65,7 @@ function belong_list_events_for_user() {
             <h4><?php echo $assignment_type.' :: '.$assignment_select_event; ?></h4><?php
         }
     }
-    //return ob_get_clean();
+    return ob_get_clean();
 }
 
 add_shortcode('user_events', 'belong_list_events_for_user');
@@ -73,6 +73,7 @@ add_shortcode('user_events', 'belong_list_events_for_user');
 
 /*********************************************************************************/
 function belong_list_modules_for_user() {
+    ob_start();
     $current_user = wp_get_current_user();
     $args = array(
         'posts_per_page'   => -1,
@@ -80,7 +81,6 @@ function belong_list_modules_for_user() {
     );
 
     $module_posts = get_posts($args);
-    ob_start();
     foreach ($module_posts as $post) {
         $assignment_client = get_field('assignment_client', $post->ID);
         $assignment_type = get_field('assignment_type', $post->ID);
