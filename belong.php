@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.2.2
+* Version: 0.0.2.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -46,7 +46,7 @@ function add_roles_on_plugin_activation() {
 
 register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
 
-
+/*********************************************************************************/
 function belong_list_events_for_user() {
     $current_user = wp_get_current_user();
     $args = array(
@@ -60,10 +60,10 @@ function belong_list_events_for_user() {
     foreach ($posts as $post) {
         $assignment_client = get_field('assignment_client', $post->ID);
         $assignment_type = get_field('assignment_type', $post->ID);
-        if ($assignment_client['ID'] == $current_user->ID) {
-            $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
+        if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Events') {
+            //$assignment_complete_by = get_field('assignment_complete_by', $post->ID);
             echo '<div class="row"><h4>'.$post->post_title.'</h4>';
-            echo $assignment_type.' | '.$assignment_complete_by.'<br />';
+            echo $assignment_type.'<br />';
         }
         echo '<br />';
     }
@@ -73,25 +73,25 @@ function belong_list_events_for_user() {
 
 add_shortcode('user_events', 'belong_list_events_for_user');
 
+
+/*********************************************************************************/
 function belong_list_modules_for_user() {
     $current_user = wp_get_current_user();
     $args = array(
         'posts_per_page'   => -1,
-        'post_type'        => 'modules'
+        'post_type'        => 'assignments'
     );
 
     $posts = get_posts($args);
     ob_start();
-    ?><div class="container"><?php
+    ?><div class="container"><?php     
     foreach ($posts as $post) {
-        $module_client = get_field('module_client', $post->ID);
-        if ($module_client['ID'] == $current_user->ID) {
-            $module_complete_by = get_field('module_complete_by', $post->ID);
-            $module_address = get_field('module_address', $post->ID);
+        $assignment_client = get_field('assignment_client', $post->ID);
+        $assignment_type = get_field('assignment_type', $post->ID);
+        if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
+            $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
             echo '<div class="row"><h4>'.$post->post_title.'</h4>';
-            echo $post->post_content.'<br />';
-            echo $module_complete_by.'<br />';
-            echo $module_address.'</div>';
+            echo $assignment_type.' | '.$assignment_complete_by.'<br />';
         }
         echo '<br />';
     }
