@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.3.6
+* Version: 0.0.3.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -86,10 +86,7 @@ function belong_list_modules_for_user() {
         if ($assignment_client['ID'] == $current_user->ID) {
             $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
             $assignment_select_module = get_field('assignment_select_module', $post->ID);
-            ?>
-                <h2><a href="<?php get_post_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2>
-                <h4><?php echo $assignment_type.' :: '.$assignment_select_module; ?></h4>
-            <?php 
+            ?><h2><a href="<?php get_post_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2><?php 
         }
     }
     return ob_get_clean();
