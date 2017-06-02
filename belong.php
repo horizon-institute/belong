@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.3.1
+* Version: 0.0.3.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -56,17 +56,17 @@ function belong_list_events_for_user() {
 
     $event_posts = get_posts($args);
     ob_start();
-    foreach ($event_posts as $post) :
+    foreach ($event_posts as $post) {
         $assignment_client = get_field('assignment_client', $post->ID);
         $assignment_type = get_field('assignment_type', $post->ID);
         if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Events') {
             $assignment_select_event = get_field('assignment_select_event', $post->ID); 
             ?>
-                <h2><a href="<?php get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2>
+                <h2><a href="<?php get_post_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2>
                 <h4><?php echo $assignment_type.' :: '.$assignment_select_event; ?></h4>
             <?php 
         }
-    endforeach;
+    }
     return ob_get_clean();
 }
 
@@ -81,19 +81,20 @@ function belong_list_modules_for_user() {
         'post_type'        => 'assignments'
     );
 
-    $posts = get_posts($args);
+    $module_posts = get_posts($args);
     ob_start();
     ?><div class="container"><?php     
-    foreach ($posts as $post) {
+    foreach ($module_posts as $post) {
         $assignment_client = get_field('assignment_client', $post->ID);
         $assignment_type = get_field('assignment_type', $post->ID);
         if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
             $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
             $assignment_select_module = get_field('assignment_select_module', $post->ID);
-            echo '<div class="row"><h4>'.$post->post_title.'</h4>';
-            echo $assignment_type.': '.$assignment_select_module.' | Complete By: '.$assignment_complete_by.'</div>';
+            ?>
+                <h2><a href="<?php get_post_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2>
+                <h4><?php echo $assignment_type.' :: '.$assignment_select_module; ?></h4>
+            <?php 
         }
-        echo '<br />';
     }
     ?></div><?php 
     return ob_get_clean();
