@@ -61,8 +61,7 @@ function belong_list_events_for_user() {
         $assignment_type = get_field('assignment_type', $post->ID);
         if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Events') {
             $assignment_select_event = get_field('assignment_select_event', $post->ID); 
-            ?><h2><a href="<?php get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2>
-            <h4><?php echo $assignment_type.' :: '.$assignment_select_event; ?></h4><?php
+            ?><h2><a href="<?php get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h2><?php
         }
     }
     return ob_get_clean();
