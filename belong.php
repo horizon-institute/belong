@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.5.0
+* Version: 0.0.5.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -59,7 +59,7 @@ register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
 function belong_list_events_for_user() {
     ob_start();
     $current_user = wp_get_current_user();
-    $args = array(
+    $args = array(table
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
     );
@@ -88,7 +88,7 @@ function belong_list_modules_for_user() {
         'post_type'        => 'assignments'
     )
     ?>
-    <table>
+    <div class="row">
     <?php 
     $module_posts = get_posts($args);
     if($module_posts):
@@ -99,18 +99,18 @@ function belong_list_modules_for_user() {
                 $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
                 $assignment_select_module = get_field('assignment_select_module', $post->ID);
                 ?>
-                <tr>
-                    <td><a href="<?php echo get_permalink($post->ID) ?>"><?php echo $post->post_title; ?></a></td>
-                    <td><?php echo $assignment_complete_by; ?></td>
-                    <td><?php echo $assignment_select_module; ?></td>
-                </tr>
+                <ul>
+                    <li><a href="<?php echo get_permalink($post->ID) ?>"><?php echo $post->post_title; ?></a></li>
+                    <li><?php echo $assignment_complete_by; ?></li>
+                    <li><?php echo $assignment_select_module; ?></li>
+                </ul>
                 <?php 
             endif;
         endforeach; 
         wp_reset_postdata();
     endif;
         ?>
-     </table>
+     </div>
     <?php 
     return ob_get_clean();
 }
