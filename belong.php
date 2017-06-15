@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.5.7
+* Version: 0.0.5.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 /*********************************************************************************/
 function belong_list_events_for_user() {
     ob_start();
-    $current_user = wp_get_current_user();
+    $current_user = belong_get_logged_in_user_info();
     $args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
@@ -43,7 +43,7 @@ add_shortcode('user_events', 'belong_list_events_for_user');
 /*********************************************************************************/
 function belong_list_modules_for_user() {
     ob_start();
-    $current_user = wp_get_current_user();
+    $current_user = belong_get_logged_in_user_info();
     $args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
@@ -57,7 +57,10 @@ function belong_list_modules_for_user() {
             if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
                 $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
                 $assignment_select_module = get_field('assignment_select_module', $post->ID);
-                ?><h4><a href="<?php get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
+                ?>
+                <h4><a href="<?php get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
+                <h4><?php echo get_field('assignment_complete_by', $post->ID);?></h4>
+                <h4><?php echo get_field('assignment_select_module', $post->ID);?></h4>
                 <?php
             }
         }
@@ -71,7 +74,7 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 /*********************************************************************************/
 function belong_show_user_info_main() {
     ob_start();
-    $user_info = wpse_58429();
+    $user_info = belong_get_logged_in_user_info();
     echo 'Hi ' . $user_info->display_name . "<br />";
     echo 'First Name: ' . $user_info->user_firstname . "<br />";
     echo 'Last Name: ' . $user_info->user_lastname . "<br />";
@@ -81,7 +84,7 @@ function belong_show_user_info_main() {
 
 add_shortcode('user_profile_main', 'belong_show_user_info_main');
 
-function wpse_58429() {
+function belong_get_logged_in_user_info() {
     $current_user = wp_get_current_user(); 
     if (!($current_user instanceof WP_User)) 
         return; 
