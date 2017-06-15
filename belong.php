@@ -55,13 +55,10 @@ function belong_list_modules_for_user() {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
             if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
-                $assignment_complete_by = get_field('assignment_complete_by', $post->ID);
-                $assignment_select_module = get_field('assignment_select_module', $post->ID);
-                ?>
-                <h4><a href="<?php get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
-                <h4><?php echo get_field('assignment_complete_by', $post->ID);?></h4>
-                <h4><?php echo get_field('assignment_select_module', $post->ID);?></h4>
-                <?php
+                $permalink = get_permalink($post->ID);
+                echo "Assignment: <a href='" .$permalink. "'>". $post->post_title . "</a><br />";
+                echo "Complet By: " . get_field('assignment_complete_by', $post->ID) . "<br />";
+                echo "Module: " . get_field('assignment_select_module', $post->ID) . "<br />";
             }
         }
     }
