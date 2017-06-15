@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.6.2
+* Version: 0.0.6.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -43,6 +43,7 @@ add_shortcode('user_events', 'belong_list_events_for_user');
 /*********************************************************************************/
 function belong_list_modules_for_user() {
     ob_start();
+    $counter = 0;
     $current_user = belong_get_logged_in_user_info();
     $args = array(
         'posts_per_page'   => -1,
@@ -51,15 +52,18 @@ function belong_list_modules_for_user() {
 
     $module_posts = get_posts($args);
     if ($module_posts) {
+        echo "<table>";
         foreach ($module_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
             if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
+                $counter++;
                 $permalink = get_permalink($post->ID);
-                echo "<table><tr><td>Assignment</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td></tr>";
-                echo "<tr><td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr></table>";
+                echo "<tr><td> . $counter . </td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
+                echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
             }
         }
+        echo "</table>";
     }
     return ob_get_clean();
 }
