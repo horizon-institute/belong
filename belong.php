@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.5.5
+* Version: 0.0.5.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -43,7 +43,7 @@ add_shortcode('user_events', 'belong_list_events_for_user');
 /*********************************************************************************/
 function belong_list_modules_for_user() {
     ob_start();
-    $current_user = wp_get_current_user();
+    $current_user = wp_get_current_user();user_login
     $args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
@@ -70,13 +70,21 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 
 /*********************************************************************************/
 function belong_show_user_info_main() {
-    $current_user = wp_get_current_user();
-    $user_info = get_userdata($current_user);
-      echo 'Username: ' . $user_info->user_login . "\n";
-      echo 'User roles: ' . implode(', ', $user_info->roles) . "\n";
-      echo 'User ID: ' . $user_info->ID . "\n";
+    ob_start();
+    $user_info = wpse_58429();
+    echo 'Username: ' . $user_info->user_login . "\n";
+    echo 'User roles: ' . implode(', ', $user_info->roles) . "\n";
+    echo 'User ID: ' . $user_info->ID . "\n";
+    return ob_get_clean();
 }
 
 add_shortcode('user_profile_main', 'belong_show_user_info_main');
+
+function wpse_58429() {
+    $current_user = wp_get_current_user(); 
+    if (!($current_user instanceof WP_User)) 
+        return; 
+    return $current_user; 
+}
 
 ?>
