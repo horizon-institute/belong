@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.6.6
+* Version: 0.0.6.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -29,8 +29,10 @@ function belong_list_events_for_user() {
         echo "<table>";
         foreach ($event_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
+            echo $assignment_client;
             $assignment_type = get_field('assignment_type', $post->ID);
             if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Events') {
+                $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
                 echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
@@ -59,6 +61,7 @@ function belong_list_modules_for_user() {
         echo "<table>";
         foreach ($module_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
+            echo $assignment_client;
             $assignment_type = get_field('assignment_type', $post->ID);
             if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
                 $counter++;
@@ -79,7 +82,7 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 function belong_show_user_info_main() {
     ob_start();
     $user_info = belong_get_user_info();
-    echo "<table><tr><td>Hi</td><td>" . $user_info->display_name . "</td></tr>";
+    echo "<table><tr><td>Display Name</td><td>" . $user_info->display_name . "</td></tr>";
     echo "<tr><td>First Name</td><td>" . $user_info->user_firstname . "</td></tr>";
     echo "<tr><td>Last Name</td><td>" . $user_info->user_lastname . "</td></tr>";
     echo "<tr><td>Email</td><td>" . $user_info->user_email . "</td></tr></table>";
