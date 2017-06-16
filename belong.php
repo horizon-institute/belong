@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.6.9
+* Version: 0.0.7.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -29,7 +29,7 @@ function belong_list_events_for_user() {
         echo "<table>";
         foreach ($event_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
-            var_dump($assignment_client);
+            var_dump(is_current_user_selected($assignment_client, $current_user->ID));
             $assignment_type = get_field('assignment_type', $post->ID);
             if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
                 $counter++;
@@ -62,7 +62,7 @@ function belong_list_modules_for_user() {
         foreach ($module_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-            if (is_current_user_selected($assignment_client, $current_user->ID)  && $assignment_type == 'Modules') {
+            if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
