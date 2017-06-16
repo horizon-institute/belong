@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.6.8
+* Version: 0.0.6.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -31,7 +31,7 @@ function belong_list_events_for_user() {
             $assignment_client = get_field('assignment_client', $post->ID);
             var_dump($assignment_client);
             $assignment_type = get_field('assignment_type', $post->ID);
-            if (in_array($current_user->ID, $assignment_client['ID'])  && $assignment_type == 'Events') {
+            if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
@@ -62,7 +62,7 @@ function belong_list_modules_for_user() {
         foreach ($module_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-            if ($assignment_client['ID'] == $current_user->ID && $assignment_type == 'Modules') {
+            if (is_current_user_selected($assignment_client, $current_user->ID)  && $assignment_type == 'Modules') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
@@ -75,6 +75,18 @@ function belong_list_modules_for_user() {
 }
 
 add_shortcode('user_modules', 'belong_list_modules_for_user');
+
+/*********************************************************************************
+Check if current user ID is in the mult-select array for the particulat assignment
+**********************************************************************************/
+function is_current_user_selected($array, $id) {
+    foreach ($array as $element) {
+        if ($id == $element->ID) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 /*********************************************************************************/
