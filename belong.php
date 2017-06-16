@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.7.5
+* Version: 0.0.7.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -34,7 +34,7 @@ function belong_list_events_for_user() {
                 $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
-                echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
+                // echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
             }
         }
         echo "</table>";echo "array ID: " . $element->ID . "<br />";
@@ -75,23 +75,6 @@ function belong_list_modules_for_user() {
 
 add_shortcode('user_modules', 'belong_list_modules_for_user');
 
-/*********************************************************************************
-Check if current user ID is in the mult-select array for the particulat assignment
-**********************************************************************************/
-function is_current_user_selected(array $array, $id) {
-    foreach ($array as $element) {
-
-        echo "array ID: " . $element['ID'] . "<br />";
-        echo "login ID: " . $id . "<br />";
-
-        if ($element['ID'] == $id) {
-            echo "Should return true";
-            return true;
-        }
-    }
-    return false;
-}
-
 
 /*********************************************************************************/
 function belong_show_user_info_main() {
@@ -122,11 +105,33 @@ function belong_show_user_info_main() {
 
 add_shortcode('user_profile_main', 'belong_show_user_info_main');
 
+
+/***********************************
+*        HELPER FUNCTIONS          *
+************************************/
+
+/***********************************************
+ Check if current user ID is in the mult-select 
+ array for the particular assignment
+***********************************************/
+function is_current_user_selected(array $array, $id) {
+    foreach ($array as $element) {
+        if ($element['ID'] == $id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/***********************************************
+ Get current user ID 
+************************************************/
 function belong_get_user_info() {
     $current_user = wp_get_current_user(); 
     if (!($current_user instanceof WP_User)) 
         return; 
     return $current_user; 
 }
+
 
 ?>
