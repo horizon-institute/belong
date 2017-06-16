@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.7.2
+* Version: 0.0.7.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -29,7 +29,6 @@ function belong_list_events_for_user() {
         echo "<table>";
         foreach ($event_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
-            var_dump(is_current_user_selected($assignment_client, $current_user->ID));
             $assignment_type = get_field('assignment_type', $post->ID);
             if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
                 $counter++;
@@ -79,9 +78,9 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 /*********************************************************************************
 Check if current user ID is in the mult-select array for the particulat assignment
 **********************************************************************************/
-function is_current_user_selected($array, $id) {
+function is_current_user_selected(array $array, $id) {
     foreach ($array as $element) {
-        if ($id == $element->ID) {
+        if ($element->ID == $id) {
             echo "Should return true";
             return true;
         }
