@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.7.0
+* Version: 0.0.7.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -81,6 +81,7 @@ Check if current user ID is in the mult-select array for the particulat assignme
 **********************************************************************************/
 function is_current_user_selected($array, $id) {
     foreach ($array as $element) {
+        echo $id . " : " . $element->ID;
         if ($id == $element->ID) {
             return true;
         }
