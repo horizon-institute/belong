@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.7.9
+* Version: 0.0.8.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -105,6 +105,19 @@ function belong_show_user_info_main() {
 
 add_shortcode('user_profile_main', 'belong_show_user_info_main');
 
+/*********************************************************************************/
+function select_menu_for_role($args = '') {
+    $user = belong_get_user_info();
+    $role = get_users_role($user->ID);
+    if ($role = 'Client') {
+        $args['menu'] = 'client-top-menu';
+    } else {
+        $args['menu'] = 'staff-top-menu';
+    }
+    return $args;
+}
+
+add_filter('wp_nav_menu_args', 'select_menu_for_role');
 
 /***********************************
 *        HELPER FUNCTIONS          *
@@ -124,13 +137,24 @@ function is_current_user_selected(array $array, $id) {
 }
 
 /***********************************************
- Get current user ID 
+ Get current user
 ************************************************/
 function belong_get_user_info() {
     $current_user = wp_get_current_user(); 
     if (!($current_user instanceof WP_User)) 
         return; 
     return $current_user; 
+}
+
+/***********************************************
+ Get role of current logged in user 
+ - only returns the first one.
+************************************************/
+function get_users_role($user_id) {
+    $user = new WP_User($user_id);
+    if (!empty( $user->roles ) && is_array( $user->roles)) {
+        return $user->roles[0];
+    }
 }
 
 
