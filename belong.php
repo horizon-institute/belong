@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.8.5
+* Version: 0.0.8.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -16,10 +16,11 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 add_filter('wp_nav_menu_args', 'select_menu_for_role');
 
 /*********************************************************************************/
-function select_menu_for_role($args = '') {
+function select_menu_for_role($args) {
     $user = belong_get_user_info();
     $role = get_users_role($user->ID);
-    if ($role == 'Client') {
+    
+    if ($role == 'Client' && $args['theme_location'] === 'top-menu') {
         $args['menu'] = 'client-top-menu';
     } else {
         $args['menu'] = 'staff-top-menu';
