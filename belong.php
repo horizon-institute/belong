@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.9.2
+* Version: 0.0.9.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -14,9 +14,12 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-function get_staff_list($options, $settings) {
+function populate_staff_list($options, $settings) {
+    echo '<pre>';
+    var_dump($settings);
+    echo '</pre>';
     $staff_list = array();
-    if( $settings['id'] == 3 ) {
+    if( $settings['id'] == 87 || $settings['id'] == 88 ) {
         $args = array('role' => 'staff');
         $staff_members = get_users($args);
         foreach ($staff_members as $staff_member) {
@@ -31,13 +34,12 @@ function get_staff_list($options, $settings) {
     return $staff_list;
 }
 
-add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
+add_filter('ninja_forms_render_options','populate_staff_list');
 
 /*********************************************************************************/
 function select_menu_for_role($args) {
     $user = belong_get_user_info();
     $role = get_users_role($user->ID);
-    _list
     if ($args['theme_location'] == 'primary') {
         if ($role == 'Client') {
             $args['menu'] = 'client-top-menu';
@@ -99,7 +101,7 @@ function belong_list_modules_for_user() {
             if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
-                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
+                echo "<tr><td>"$settings['id'] == 87 || $settings['id'] == 88 ) . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
                 echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
             }
         }
