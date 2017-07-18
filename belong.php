@@ -14,9 +14,10 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-function get_staff_list($options, $settings) {    
+function get_staff_list($options, $settings) {   
+    var_dump($settings); 
+    $staff_list = array();
     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-        $staff_list = array();
         $args = array('role' => 'staff');
         $staff_members = get_users($args);
         foreach ($staff_members as $staff_member) {
@@ -27,9 +28,9 @@ function get_staff_list($options, $settings) {
                 'selected' => 0
                 );
         }
-        return $staff_list;
+        
     }
-    return null;   
+    return $staff_list;  
 }
 
 add_filter('ninja_forms_render_options','get_staff_list');
