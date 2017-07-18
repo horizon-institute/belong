@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.0.9.3
+* Version: 0.0.9.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -14,12 +14,9 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-function populate_staff_list($options, $settings) {
-    echo '<pre>';
-    var_dump($settings);
-    echo '</pre>';
-    $staff_list = array();
+function get_staff_list($options, $settings) {    
     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+        $staff_list = array();
         $args = array('role' => 'staff');
         $staff_members = get_users($args);
         foreach ($staff_members as $staff_member) {
@@ -30,11 +27,11 @@ function populate_staff_list($options, $settings) {
                 'selected' => 0
                 );
         }
-    }
-    return $staff_list;
+        return $staff_list;
+    }   
 }
 
-add_filter('ninja_forms_render_options','populate_staff_list');
+add_filter('ninja_forms_render_options','get_staff_list');
 
 /*********************************************************************************/
 function select_menu_for_role($args) {
@@ -101,7 +98,7 @@ function belong_list_modules_for_user() {
             if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
-                echo "<tr><td>"$settings['id'] == 87 || $settings['id'] == 88 ) . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
+                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
                 echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
             }
         }
