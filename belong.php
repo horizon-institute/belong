@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.0.2
+* Version: 0.1.0.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -14,28 +14,25 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-function get_staff_list($data,$field_id) {
-    var_dump($data);
+function get_staff_list($options, $settings) {
+    var_dump($settings);
     $staff_list = array();
-    if( $field_id == 87 ){
-        $data['default_value'] = 'hello world';
+    if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+        $args = array('role' => 'staff');
+        $staff_members = get_users($args);
+        foreach ($staff_members as $staff_member) {
+            $staff_list[] = array(
+                'label' =>  $staff_member->display_name,
+                'value' =>  $staff_member->display_name,
+                'calc'  =>  null,
+                'selected' => 0
+                );
+        }
     }
-   // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-   //     $args = array('role' => 'staff');
-   //     $staff_members = get_users($args);
-   //     foreach ($staff_members as $staff_member) {
-   //         $staff_list[] = array(
-   //             'label' =>  $staff_member->display_name,
-   //             'value' =>  $staff_member->display_name,
-   //             'calc'  =>  null,
-   //             'selected' => 0
-   //            );
-   //     }
-   // }
-    return $data;
+    return $staff_list;
 }
 
-add_filter('ninja_forms_field','get_staff_list');
+add_filter('ninja_forms_render_options','get_staff_list');
 
 /*********************************************************************************/
 function select_menu_for_role($args) {
