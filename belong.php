@@ -6,7 +6,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.0.6
+* Version: 0.1.0.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -15,20 +15,20 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 function get_staff_list($options, $settings) {
-    var_dump($options);
-    $options = array();
-    if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-        $args = array('role' => 'staff');
-        $staff_members = get_users($args);
-        foreach ($staff_members as $staff_member) {
-            $options[] = array(
-                'label' =>  $staff_member->display_name,
-                'value' =>  $staff_member->display_name,
-                'calc'  =>  null,
-                'selected' => 0
-                );
-        }
-    }
+    // var_dump($settings);
+    // $options = array();
+    // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+    //     $args = array('role' => 'staff');
+    //     $staff_members = get_users($args);
+    //     foreach ($staff_members as $staff_member) {
+    //         $options[] = array(
+    //             'label' =>  $staff_member->display_name,
+    //             'value' =>  $staff_member->display_name,
+    //             'calc'  =>  null,
+    //             'selected' => 0
+    //             );
+    //     }
+    // }
     return $options;
 }
 
@@ -113,7 +113,18 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 
 /***********************************
 *        HELPER FUNCTIONS          *
-************************************/
+************************************/    // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+    //     $args = array('role' => 'staff');
+    //     $staff_members = get_users($args);
+    //     foreach ($staff_members as $staff_member) {
+    //         $options[] = array(
+    //             'label' =>  $staff_member->display_name,
+    //             'value' =>  $staff_member->display_name,
+    //             'calc'  =>  null,
+    //             'selected' => 0
+    //             );
+    //     }
+    // }
 
 /***********************************************
  Check if current user ID is in the mult-select 
