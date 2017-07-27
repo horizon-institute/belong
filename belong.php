@@ -65,7 +65,7 @@ function belong_list_events_for_user() {
         foreach ($assignment_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-
+            
             if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
                 $assignment_event = get_field('assignment_select_event', $post->ID);
                 $event_datetime = get_field('event_date', $assignment_event->ID);
@@ -77,6 +77,15 @@ function belong_list_events_for_user() {
             }
         }
         echo "</table>";
+        
+        $to = "javidyousaf@outlook.com";
+        $subject = "Testing Email in WordPress";
+        $content = "This is the content";
+        $headers = array(
+        'Reply-To' => "javidyousaf@outlook.com"
+        );
+        $status = wp_mail($to, $subject, $content, $headers);
+        echo $status;
     }
     return ob_get_clean();
 }
@@ -108,7 +117,7 @@ function belong_list_modules_for_user() {
                 $counter++;
                 $permalink = get_permalink($assignment_module->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
-                echo "<td> . $date->format('j M Y') . "</td></tr>";
+                echo "<td>" . $date->format('j M Y') . "</td></tr>";
             }
         }
         echo "</table>";
