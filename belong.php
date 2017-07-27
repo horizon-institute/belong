@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.1.2
+* Version: 0.1.1.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -72,7 +72,7 @@ function belong_list_events_for_user() {
                 $date = new DateTime($event_datetime);
                 $counter++;
                 $permalink = get_permalink($assignment_event->ID);
-                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td></tr>";
+                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
                 echo "<td>" . $date->format('F j, Y g:i a') . "</td></tr>";
             }
         }
@@ -108,7 +108,7 @@ function belong_list_modules_for_user() {
                 $counter++;
                 $permalink = get_permalink($assignment_module->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
-                echo $date->format('j M Y') . "</td></tr>";
+                echo "<td> . $date->format('j M Y') . "</td></tr>";
             }
         }
         echo "</table>";
