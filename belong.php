@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -15,7 +14,6 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 function get_staff_list($options, $settings) {
-    // var_dump($settings);
     // $options = array();
     // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
     //     $args = array('role' => 'staff');
@@ -37,7 +35,7 @@ add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
 /*********************************************************************************/
 function select_menu_for_role($args) {
     $user = belong_get_user_info();
-    $role = get_users_role($user->ID);
+    $role = belong_get_users_role($user->ID);
     if ($args['theme_location'] == 'primary') {
         if ($role == 'Client') {
             $args['menu'] = 'client-top-menu';
@@ -55,18 +53,20 @@ function belong_list_events_for_user() {
     ob_start();
     $counter = 0;
     $current_user = belong_get_user_info();
-    $args = array(
+    $assignment_args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
     );
 
-    $event_posts = get_posts($args);  
-    if ($event_posts) {
+    $assignment_posts = get_posts($assignment_args);  
+    var_dump($assignment_posts);
+    if ($assignment_posts) {
         echo "<table>";
-        foreach ($event_posts as $post) {
+        foreach ($assignment_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-            if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
+            //var_dump($assignment_type);
+            if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td></tr>";
@@ -85,18 +85,18 @@ function belong_list_modules_for_user() {
     ob_start();
     $counter = 0;
     $current_user = belong_get_user_info();
-    $args = array(
+    $assignment_args = array(
         'posts_per_page'   => -1,
         'post_type'        => 'assignments'
     );
 
-    $module_posts = get_posts($args);
-    if ($module_posts) {
+    $module_posts = get_posts($assignment_args);
+    if ($assignment_posts) {
         echo "<table>";
-        foreach ($module_posts as $post) {
+        foreach ($assignment_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-            if (is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
+            if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
                 $counter++;
                 $permalink = get_permalink($post->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
@@ -113,24 +113,13 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 
 /***********************************
 *        HELPER FUNCTIONS          *
-************************************/    // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-    //     $args = array('role' => 'staff');
-    //     $staff_members = get_users($args);
-    //     foreach ($staff_members as $staff_member) {
-    //         $options[] = array(
-    //             'label' =>  $staff_member->display_name,
-    //             'value' =>  $staff_member->display_name,
-    //             'calc'  =>  null,
-    //             'selected' => 0
-    //             );
-    //     }
-    // }
+************************************/ 
 
 /***********************************************
  Check if current user ID is in the mult-select 
  array for the particular assignment
 ***********************************************/
-function is_current_user_selected(array $array, $id) {
+function belong_is_current_user_selected(array $array, $id) {
     foreach ($array as $element) {
         if ($element['ID'] == $id) {
             return true;
@@ -153,7 +142,7 @@ function belong_get_user_info() {
  Get role of current logged in user 
  - only returns the first one.
 ************************************************/
-function get_users_role($user_id) {
+function belong_get_users_role($user_id) {
     $user = new WP_User($user_id);
     if (!empty( $user->roles ) && is_array( $user->roles)) {
         return $user->roles[0];
