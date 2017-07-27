@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.1.1
+* Version: 0.1.1.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -61,16 +61,19 @@ function belong_list_events_for_user() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
         echo "<table>";
+        echo "<tr><td></td><td>Event Name</td><td> Date & Time</td></tr>";
         foreach ($assignment_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-            $assignment_event = get_field('assignment_select_event', $post->ID);
-            //var_dump($assignment_type);
+
             if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Events') {
+                $assignment_event = get_field('assignment_select_event', $post->ID);
+                $event_datetime = get_field('event_date', $assignment_event->ID);
+                $date = new DateTime($event_datetime);
                 $counter++;
                 $permalink = get_permalink($assignment_event->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td></tr>";
-                // echo "<td>Complete By</td><td>" . get_field('assignment_complete_by', $post->ID) . "</td></tr>";
+                echo "<td>" . $date->format('F j, Y g:i a') . "</td></tr>";
             }
         }
         echo "</table>";
@@ -93,17 +96,19 @@ function belong_list_modules_for_user() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
         echo "<table>";
+        echo "<tr><td></td><td>Module Name</td><td>Complete By</td></tr>";
         foreach ($assignment_posts as $post) {
             $assignment_client = get_field('assignment_client', $post->ID);
             $assignment_type = get_field('assignment_type', $post->ID);
-            $assignment_module = get_field('assignment_select_module', $post->ID);
-            $assignment_date = get_field('assignment_complete_by', $post->ID);
-            $date = new DateTime($assignment_date);
+            
             if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
+                $assignment_module = get_field('assignment_select_module', $post->ID);
+                $assignment_date = get_field('assignment_complete_by', $post->ID);
+                $date = new DateTime($assignment_date);
                 $counter++;
                 $permalink = get_permalink($assignment_module->ID);
                 echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
-                echo "<td>Complete By</td><td>" . $date->format('j M Y') . "</td></tr>";
+                echo $date->format('j M Y') . "</td></tr>";
             }
         }
         echo "</table>";
