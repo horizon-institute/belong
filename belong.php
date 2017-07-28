@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.1.8
+* Version: 0.1.1.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -100,23 +100,15 @@ function belong_list_modules_for_user() {
     if ($assignment_posts) {
         echo "<table>";
         echo "<tr><td></td><td>Module Name</td><td>Complete By</td></tr>";
-        foreach ($assignment_posts as $post) {
-            $assignment_client = get_field('assignment_client', $post->ID);        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td></tr>";
-        var_dump($client);
-    }
-    echo "</table>";
-    return ob_get_clean();
-            $assignment_type = get_field('assignment_type', $post->ID);
-            
-            if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
-                $assignment_module = get_field('assignment_select_module', $post->ID);
-                $assignment_date = get_field('assignment_complete_by', $post->ID);
-                $date = new DateTime($assignment_date);
-                $counter++;
-                $permalink = get_permalink($assignment_module->ID);
-                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
-                echo "<td>" . $date->format('j M Y') . "</td></tr>";
-            }
+        $assignment_type = get_field('assignment_type', $post->ID);           
+        if (belong_is_current_user_selected($assignment_client, $current_user->ID) && $assignment_type == 'Modules') {
+            $assignment_module = get_field('assignment_select_module', $post->ID);
+            $assignment_date = get_field('assignment_complete_by', $post->ID);
+            $date = new DateTime($assignment_date);
+            $counter++;
+            $permalink = get_permalink($assignment_module->ID);
+            echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
+            echo "<td>" . $date->format('j M Y') . "</td></tr>";
         }
         echo "</table>";
     }
@@ -135,9 +127,10 @@ function belong_list_clients() {
 
     $clients = get_users( $user_args );   
     echo "<table>";
+    echo "<tr><td></td><td>Client Name</td><td>Registration Date</td></tr>";
     foreach ( $clients as $client ) {
-        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td></tr>";
-        var_dump($client);
+        $registration_date = new DateTime($client->user_registered);
+        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td><td>" . $registration_date.format('F j, Y g:i a') . "</td></tr>";
     }
     echo "</table>";
     return ob_get_clean();
