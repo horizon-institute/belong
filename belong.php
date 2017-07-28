@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.1.4
+* Version: 0.1.1.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -78,14 +78,6 @@ function belong_list_events_for_user() {
         }
         echo "</table>";
         
-        $to = "javidyousaf@outlook.com";
-        $subject = "Testing Email in WordPress";
-        $content = "This is the content";
-        $headers = array(
-        'Reply-To' => "javidyousaf@outlook.com"
-        );
-        $status = wp_mail($to, $subject, $content, $headers);
-        echo $status;
     }
     return ob_get_clean();
 }
@@ -94,6 +86,8 @@ add_shortcode('user_events', 'belong_list_events_for_user');
 
 /*********************************************************************************/
 function belong_list_modules_for_user() {
+
+    belong_send_SMS();
     ob_start();
     $counter = 0;
     $current_user = belong_get_user_info();
@@ -131,6 +125,17 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 /***********************************
 *        HELPER FUNCTIONS          *
 ************************************/
+
+/**********************************
+* Send a test SMS to me
+***********************************/
+function belong_send_SMS() {
+    global $sms;
+    $sms->to = array('07412296609');
+    $sms->msg = "Sent from PHP";
+    $sms->SendSMS();
+}
+
 
 /***********************************************
 Check if current user ID is in the mult-select
