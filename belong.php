@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.1.9
+* Version: 0.1.2.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -127,10 +127,10 @@ function belong_list_clients() {
 
     $clients = get_users( $user_args );   
     echo "<table>";
-    echo "<tr><td></td><td>Client Name</td><td>Registration Date</td></tr>";
+    echo "<tr><td></td><td>Client Name</td></tr>";
     foreach ( $clients as $client ) {
-        $registration_date = new DateTime($client->user_registered);
-        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td><td>" . $registration_date.format('F j, Y g:i a') . "</td></tr>";
+        $counter++;
+        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td></tr>";
     }
     echo "</table>";
     return ob_get_clean();
