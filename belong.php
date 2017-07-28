@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.1.6
+* Version: 0.1.1.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -121,21 +121,40 @@ function belong_list_modules_for_user() {
 
 add_shortcode('user_modules', 'belong_list_modules_for_user');
 
+/*********************************************************************************/
+function belong_list_clients() {
+    ob_start();
+    $counter = 0;
+    $user_args = array(
+    'role' => 'Client'
+    );
+
+    $clients = get_users( $user_args );   
+    echo "<table>";
+    foreach ( $clients as $client ) {
+        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td></tr>";
+    }
+    echo "</table>";
+    return ob_get_clean();
+}
+
+add_shortcode('belong_clients', 'belong_list_clients');
+
 
 /***********************************
 *        HELPER FUNCTIONS          *
 ************************************/
 
-/**********************************
-* Send a test SMS to me
-***********************************/
-function belong_send_SMS() {
+/**************************************************************
+* Send SMS to users number. Need to restrict lenght of message
+* $numbers is an array. $message is the message to send.
+***************************************************************/
+function belong_send_SMS($message, $numbers) {
     global $sms;
-    $sms->to = array('07412296609');
-    $sms->msg = "Sent from PHP";
+    $sms->to = array($numbers);
+    $sms->msg = $message;
     $sms->SendSMS();
 }
-
 
 /***********************************************
 Check if current user ID is in the mult-select
