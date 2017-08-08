@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.2.2
+* Version: 0.1.2.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -13,6 +13,19 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
+
+function my_custom_fonts() {
+  echo '<style>
+    body, td, textarea, input, select {
+      font-family: "Lucida Grande";
+      font-size: 12px;
+    } 
+  </style>';
+}
+
+add_action('admin_head', 'my_custom_fonts');
+
+/*********************************************************************************/
 function get_staff_list($options, $settings) {
     // $options = array();
     // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
