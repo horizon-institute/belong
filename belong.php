@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.2.3
+* Version: 0.1.2.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -13,19 +13,6 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-
-function my_custom_fonts() {
-  echo '<style>
-    body, td, textarea, input, select {
-      font-family: "Lucida Grande";
-      font-size: 12px;
-    } 
-  </style>';
-}
-
-add_action('admin_head', 'my_custom_fonts');
-
-/*********************************************************************************/
 function get_staff_list($options, $settings) {
     // $options = array();
     // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
@@ -44,22 +31,6 @@ function get_staff_list($options, $settings) {
 }
 
 add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
-
-/*********************************************************************************/
-function select_menu_for_role($args) {
-    $user = belong_get_user_info();
-    $role = belong_get_users_role($user->ID);
-    if ($args['theme_location'] == 'primary') {
-        if ($role == 'Client') {
-            $args['menu'] = 'client-top-menu';
-        } else {
-            $args['menu'] = 'staff-top-menu';
-        }
-    }
-    return $args;
-}
-
-add_filter('wp_nav_menu_args', 'select_menu_for_role');
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
@@ -85,7 +56,7 @@ function belong_list_events_for_user() {
                 $date = new DateTime($event_datetime);
                 $counter++;
                 $permalink = get_permalink($assignment_event->ID);
-                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
+                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $assignment_event->post_title . "</a></td>";
                 echo "<td>" . $date->format('F j, Y g:i a') . "</td></tr>";
             }
         }
@@ -120,7 +91,7 @@ function belong_list_modules_for_user() {
                 $date = new DateTime($assignment_date);
                 $counter++;
                 $permalink = get_permalink($assignment_module->ID);
-                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $post->post_title . "</a></td>";
+                echo "<tr><td>" . $counter . "</td><td><a href='" .$permalink. "'>". $assignment_module->post_title . "</a></td>";
                 echo "<td>" . $date->format('j M Y') . "</td></tr>";
             }
         }
