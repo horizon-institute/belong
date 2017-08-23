@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.2.5
+* Version: 0.1.2.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -14,8 +14,7 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 function get_staff_list($options, $settings) {
-    var_dump($options);
-    // $options = array();
+    $options = array();
     // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
     //     $args = array('role' => 'staff');
     //     $staff_members = get_users($args);
@@ -117,6 +116,8 @@ function belong_list_clients() {
     foreach ( $clients as $client ) {
         $counter++;
         echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td></tr>";
+        //permalink to clients profile -> this will involve comparing 
+        //the user ID's and retrieving the latest submissions
     }
     echo "</table>";
     return ob_get_clean();
