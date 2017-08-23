@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.2.7
+* Version: 0.1.2.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -13,24 +13,41 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-function get_staff_list($options, $settings) {
-    // $options = array();
-    // if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-    //     $args = array('role' => 'staff');
-    //     $staff_members = get_users($args);
-    //     foreach ($staff_members as $staff_member) {
-    //         $options[] = array(
-    //             'label' =>  $staff_member->display_name,
-    //             'value' =>  $staff_member->display_name,
-    //             'calc'  =>  null,
-    //             'selected' => 0
-    //             );
-    //     }
-    // }
-    // return $options;
-}
+// function get_staff_list($options, $settings) {
+//     $options = array();
+//     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+//         $args = array('role' => 'staff');
+//         $staff_members = get_users($args);ction get_staff_list($options, $settings) {
+//     $options = array();
+//     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+//         $args = array('role' => 'staff');
+//         $staff_members = get_users($args);
+//         foreach ($staff_members as $staff_member) {
+//             $options[] = array(
+//                 'label' =>  $staff_member->display_name,
+//                 'value' =>  $staff_member->display_name,
+//                 'calc'  =>  null,
+//                 'selected' => 0
+//                 );
+//         }
+//     }
+//     return $options;
+// }
 
-add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
+// add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
+//         foreach ($staff_members as $staff_member) {
+//             $options[] = array(
+//                 'label' =>  $staff_member->display_name,
+//                 'value' =>  $staff_member->display_name,
+//                 'calc'  =>  null,
+//                 'selected' => 0
+//                 );
+//         }
+//     }
+//     return $options;
+// }
+
+// add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
