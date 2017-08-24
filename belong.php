@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.5
+* Version: 0.1.3.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -41,19 +41,21 @@ if true then get data from database otherwise display blank form.
     echo '</p>';     
 
     echo '<p>';   
-    echo 'Client Number<br />';
+    echo 'CLIENT NUMBER<br />';
     echo '<input type="text" name="pw-client-number" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST["pw-client-number"] ) ? esc_attr( $_POST["pw-client-number"] ) : '' ) . '" size="40" />';
     echo '</p>';
 
     $staff_list = get_staff_list();
+    var_dump($staff_list);
+
     echo '<p>';   
     echo 'INTERVIEWERS NAME<br />';
-    echo '<select name="pw-interviewers-name">' . populate_select($staff_list) . '</select>';
+    echo populate_select($staff_list, "pw-interviewers-name");
     echo '</p>';
 
     echo '<p>';   
     echo 'CASE OWNER<br />';
-    echo '<select name="pw-case-owners">' . populate_select($staff_list) . '</select>';
+    echo populate_select($staff_list, "pw-case-owner");
     echo '</p>';
 
     echo '<p>';
@@ -112,11 +114,12 @@ function datepicker(){ ?>
 
 
 /* Dynamically populate select element from array */
-function populate_select($array) {
-  echo "<option selected='selected'> - </option>";
+function populate_select($array, $name) {
+  echo "<select name='". $name . "'><option selected='selected'>choose</option>";
   foreach($array as $item) {
     echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
    }
+   echo "</select>";
 }
 
 
