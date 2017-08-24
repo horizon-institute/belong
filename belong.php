@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.2
+* Version: 0.1.3.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -59,7 +59,8 @@ if true then get data from database otherwise display blank form.
     
     echo '<p>';
     echo 'List<br />';
-    echo populate_select(array("Mobile", "Laptop", "Tablet", "Camera"));
+    $cars = array("Volvo", "BMW", "Toyota");
+    echo populate_select($cars);
     echo '</p>';
     
     echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
@@ -83,7 +84,7 @@ function datepicker(){ ?>
 function populate_select($array) {
   echo "<select>";
   foreach($array as $item) {
-    echo "<option value=".strtolower($item);">".$item."</option>";
+    echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
    }
    echo "</select>";
 }
