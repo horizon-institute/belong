@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.1
+* Version: 0.1.3.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -54,8 +54,14 @@ if true then get data from database otherwise display blank form.
     echo '</p>';
     echo '<p>';
     echo 'Date<br />';
-    echo '<input  id="date" name="belong-date">' . ( isset( $_POST["belong-date"] ) ? esc_attr( $_POST["belong-date"] ) : '' ) . '< />';
+    echo '<input  id="date" name="belong-date" />';
     echo '</p>';
+    
+    echo '<p>';
+    echo 'List<br />';
+    echo populate_select(array("Mobile", "Laptop", "Tablet", "Camera"));
+    echo '</p>';
+    
     echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
     echo '</form>';
 
@@ -71,9 +77,16 @@ function datepicker(){ ?>
     });
     </script>
 <?php
-} // close add_datepicker_in_footer() here
-//add an action to call add_datepicker_in_footer function
-add_action('wp_footer','datepicker',10);
+}
+
+
+function populate_select($array) {
+  echo "<select>";
+  foreach($array as $item) {
+    echo "<option value=".strtolower($item);">".$item."</option>";
+   }
+   echo "</select>";
+}
 
 
 /*********************************************************************************/
