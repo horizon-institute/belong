@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.1
+* Version: 0.1.4.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -49,12 +49,12 @@ if true then get data from database otherwise display blank form.
 
     echo '<p>';   
     echo 'INTERVIEWERS NAME<br />';
-    echo populate_select($staff_list, "pw-interviewers-name");
+    echo populate_staff_select($staff_list, "pw-interviewers-name");
     echo '</p>';
 
     echo '<p>';   
     echo 'CASE OWNER<br />';
-    echo populate_select($staff_list, "pw-case-owner");
+    echo populate_staff_select($staff_list, "pw-case-owner");
     echo '</p>';
 
     echo '<p>';
@@ -112,10 +112,10 @@ function datepicker(){ ?>
 
 
 /* Dynamically populate select element from array */
-function populate_select($array, $name) {
+function populate_staff_select($array, $name) {
     echo "<select name='". $name . "'><option selected='selected'>choose</option>";
     foreach($array as $item) {
-        echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
+        echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
     }
     echo "</select>";
 }
@@ -272,7 +272,7 @@ function get_staff_list() {
     $args = array('role' => 'staff');
     $staff_members = get_users($args);
     foreach ($staff_members as $staff_member) {
-        $list[] = array($staff_member[0]->display_name);
+        $list[] = array($staff_member->display_name);
     }
     var_dump($list);
     return $list;
