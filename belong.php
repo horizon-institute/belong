@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.5
+* Version: 0.1.4.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -35,27 +35,14 @@ if true then get data from database otherwise display blank form.
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
 
-    echo '<p>';
-    echo 'DATE<br />';
-    echo '<input  id="date" name="pw-registration-date" />';
-    echo '</p>';     
-
+    date_field("pw-registration-date", "DATE"); 
     text_field("pw-client-number", "CLIENT NUMBER");
     staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
     staff_select_field("pw-case-owner", "CASE OWNER");
     text_field("pw-first-names", "FIRST NAMES");
     text_field("pw-surname", "SURNAME");
-
-    echo '<p>';
-    echo 'EMAIL ADDRESS<br />';
-    echo '<input type="email" name="pw-email" value="' . ( isset( $_POST["pw-email"] ) ? esc_attr( $_POST["pw-email"] ) : '' ) . '" size="40" />';
-    echo '</p>';
-
-    echo '<p>';
-    echo 'ADDRESS<br />';
-    echo '<textarea rows="5" cols="35" name="pw-address">' . ( isset( $_POST["pw-address"] ) ? esc_attr( $_POST["pw-address"] ) : '' ) . '</textarea>';
-    echo '</p>';
- 
+    email_field("EMAIL ADDRESS", "pw-email"); //should get this from wp user
+    textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
     text_field("pw-nationality", "NATIONALITY");
@@ -276,6 +263,37 @@ function text_field($name, $title) {
     echo $title . '<br />'; 
     echo '<input type="text" name="' .$name . '" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
     echo '</p>';
+}
+
+/***********************************************
+ jquery date picker field
+************************************************/
+function date_field($name, $title) {
+    date_picker();
+    echo '<p>';
+    echo $title . '<br />'; 
+    echo '<input  id="date" name="' .$name . '" />';
+    echo '</p>';  
+}
+
+/***********************************************
+ email field with validation
+************************************************/
+function email_field($name, $title) {
+    echo '<p>';
+    echo $title . '<br />'; 
+    echo '<input type="email" name="pw-email" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
+    echo '</p>';  
+}
+
+/***********************************************
+ textarea field 
+************************************************/
+function textarea_field($name, $title, $rows, $columns) {
+    echo '<p>';
+    echo $title . '<br />'; 
+    echo '<textarea rows="' . $rows .  '" cols="' . $columns . '" name="' . $name .'">' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '</textarea>';
+    echo '</p>';  
 }
 
 
