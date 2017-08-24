@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.6
+* Version: 0.1.4.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -21,7 +21,6 @@ wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui
 /*********************************************************************************/
 function client_registration() {
     ob_start();
-    datepicker();
     client_registration_form();
     return ob_get_clean();
 }
@@ -41,7 +40,7 @@ if true then get data from database otherwise display blank form.
     staff_select_field("pw-case-owner", "CASE OWNER");
     text_field("pw-first-names", "FIRST NAMES");
     text_field("pw-surname", "SURNAME");
-    email_field("EMAIL ADDRESS", "pw-email"); //should get this from wp user
+    email_field("pw-email", "EMAIL ADDRESS");
     textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
@@ -261,7 +260,7 @@ function select_field($array, $name, $title) {
 function text_field($name, $title) {
     echo '<p>';   
     echo $title . '<br />'; 
-    echo '<input type="text" name="' .$name . '" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
+    echo '<input type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
     echo '</p>';
 }
 
@@ -272,7 +271,7 @@ function date_field($name, $title) {
     date_picker();
     echo '<p>';
     echo $title . '<br />'; 
-    echo '<input  id="date" name="' .$name . '" />';
+    echo '<input  id="date" name="' . $name . '" />';
     echo '</p>';  
 }
 
@@ -282,7 +281,7 @@ function date_field($name, $title) {
 function email_field($name, $title) {
     echo '<p>';
     echo $title . '<br />'; 
-    echo '<input type="email" name="pw-email" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
+    echo '<input type="email" name="' . $name . '" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
     echo '</p>';  
 }
 
@@ -292,7 +291,7 @@ function email_field($name, $title) {
 function textarea_field($name, $title, $rows, $columns) {
     echo '<p>';
     echo $title . '<br />'; 
-    echo '<textarea rows="' . $rows .  '" cols="' . $columns . '" name="' . $name .'">' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '</textarea>';
+    echo '<textarea rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '</textarea>';
     echo '</p>';  
 }
 
