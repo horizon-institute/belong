@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.7
+* Version: 0.1.3.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -79,7 +79,7 @@ if true then get data from database otherwise display blank form.
 
     echo '<p>';
     echo 'ADDRESS<br />';
-    echo '<textarea rows="10" cols="35" name="pw-address">' . ( isset( $_POST["pw-address"] ) ? esc_attr( $_POST["pw-address"] ) : '' ) . '</textarea>';
+    echo '<textarea rows="5" cols="35" name="pw-address">' . ( isset( $_POST["pw-address"] ) ? esc_attr( $_POST["pw-address"] ) : '' ) . '</textarea>';
     echo '</p>';
  
     echo '<p>';
@@ -92,9 +92,8 @@ if true then get data from database otherwise display blank form.
     echo '<input type="text" name="pw-accomodation-type" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-accomodation-type"] ) ? esc_attr( $_POST["pw-accomodation-type"] ) : '' ) . '" size="40" />';
     echo '</p>';   
 
-    echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
+    echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
     echo '</form>';
-          var_dump($item);
 }
 
 /*********************************************************************************/
@@ -116,7 +115,7 @@ function datepicker(){ ?>
 function populate_select($array, $name) {
     echo "<select name='". $name . "'><option selected='selected'>choose</option>";
     foreach($array as $item) {
-        echo "<option value=" . strtolower($item->displayname) . ">" . $item->displayname . "</option>";
+        echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
     }
     echo "</select>";
 }
