@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.3
+* Version: 0.1.4.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -47,12 +47,12 @@ if true then get data from database otherwise display blank form.
 
     echo '<p>';   
     echo 'INTERVIEWERS NAME<br />';
-    echo populate_staff_select("pw-interviewers-name");
+    populate_staff_select("pw-interviewers-name");
     echo '</p>';
 
     echo '<p>';   
     echo 'CASE OWNER<br />';
-    echo populate_staff_select("pw-case-owner");
+    populate_staff_select("pw-case-owner");
     echo '</p>';
 
     echo '<p>';
@@ -102,7 +102,7 @@ if true then get data from database otherwise display blank form.
 
     echo '<p>';   
     echo 'RELATIONSHIP STATUS<br />';
-    echo populate_select(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status");
+    populate_select(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status");
     echo '</p>';
 
     echo '<p>';
@@ -272,7 +272,6 @@ function get_staff_list() {
     foreach ($staff_members as $staff_member) {
         $list[] = array($staff_member->display_name);
     }
-    var_dump($list);
     return $list;
 }
 
