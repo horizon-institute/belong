@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.6
+* Version: 0.1.3.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -32,7 +32,7 @@ function client_registration_form() {
 /* Get User ID and check database to see if exisiting registrtion 
 if true then get data from database otherwise display blank form.
 */
-    echo '<h2>PERSONAL DETAILS</h2>';
+    echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
 
     echo '<p>';
@@ -46,7 +46,6 @@ if true then get data from database otherwise display blank form.
     echo '</p>';
 
     $staff_list = get_staff_list();
-    var_dump($staff_list);
 
     echo '<p>';   
     echo 'INTERVIEWERS NAME<br />';
@@ -95,7 +94,7 @@ if true then get data from database otherwise display blank form.
 
     echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
     echo '</form>';
-
+          var_dump($item);
 }
 
 /*********************************************************************************/
@@ -115,11 +114,11 @@ function datepicker(){ ?>
 
 /* Dynamically populate select element from array */
 function populate_select($array, $name) {
-  echo "<select name='". $name . "'><option selected='selected'>choose</option>";
-  foreach($array as $item) {
-    echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
-   }
-   echo "</select>";
+    echo "<select name='". $name . "'><option selected='selected'>choose</option>";
+    foreach($array as $item) {
+        echo "<option value=" . strtolower($item->displayname) . ">" . $item->displayname . "</option>";
+    }
+    echo "</select>";
 }
 
 
