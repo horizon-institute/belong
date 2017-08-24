@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.2.9
+* Version: 0.1.3.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -13,24 +13,39 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-// function get_staff_list($options, $settings) {
-//     $options = array();
-//     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-//         $args = array('role' => 'staff');
-//         $staff_members = get_users($args);
-//         foreach ($staff_members as $staff_member) {
-//             $options[] = array(
-//                 'label' =>  $staff_member->display_name,
-//                 'value' =>  $staff_member->display_name,
-//                 'calc'  =>  null,
-//                 'selected' => 0
-//                 );
-//         }
-//     }
-//     return $options;
-// }
+add_shortcode('client_registration', 'client_registration');
 
-// add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
+function client_registration() {
+    ob_start();
+    client_registration_form();
+    return ob_get_clean();
+}
+
+function client_registration_form() {
+/* Get User ID and check database to see if exisiting registrtion 
+if true then get data from database otherwise display blank form.
+*/
+    echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+    echo '<p>';
+    echo 'Your Name (required) <br />';
+    echo '<input type="text" name="cf-name" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST["cf-name"] ) ? esc_attr( $_POST["cf-name"] ) : '' ) . '" size="40" />';
+    echo '</p>';
+    echo '<p>';
+    echo 'Your Email (required) <br />';
+    echo '<input type="email" name="cf-email" value="' . ( isset( $_POST["cf-email"] ) ? esc_attr( $_POST["cf-email"] ) : '' ) . '" size="40" />';
+    echo '</p>';
+    echo '<p>';
+    echo 'Subject (required) <br />';
+    echo '<input type="text" name="cf-subject" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["cf-subject"] ) ? esc_attr( $_POST["cf-subject"] ) : '' ) . '" size="40" />';
+    echo '</p>';
+    echo '<p>';
+    echo 'Your Message (required) <br />';
+    echo '<textarea rows="10" cols="35" name="cf-message">' . ( isset( $_POST["cf-message"] ) ? esc_attr( $_POST["cf-message"] ) : '' ) . '</textarea>';
+    echo '</p>';
+    echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
+    echo '</form>';
+
+}
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
@@ -175,6 +190,26 @@ function belong_get_users_role($user_id) {
     }
 }
 
+
+
+// function get_staff_list($options, $settings) {
+//     $options = array();
+//     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
+//         $args = array('role' => 'staff');
+//         $staff_members = get_users($args);
+//         foreach ($staff_members as $staff_member) {
+//             $options[] = array(
+//                 'label' =>  $staff_member->display_name,
+//                 'value' =>  $staff_member->display_name,
+//                 'calc'  =>  null,
+//                 'selected' => 0
+//                 );
+//         }
+//     }
+//     return $options;
+// }
+
+// add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
 
 
 ?>
