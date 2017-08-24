@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.4
+* Version: 0.1.4.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -40,35 +40,11 @@ if true then get data from database otherwise display blank form.
     echo '<input  id="date" name="pw-registration-date" />';
     echo '</p>';     
 
-    echo '<p>';   
-    echo 'CLIENT NUMBER<br />';
-    echo '<input type="text" name="pw-client-number" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST["pw-client-number"] ) ? esc_attr( $_POST["pw-client-number"] ) : '' ) . '" size="40" />';
-    echo '</p>';
-
-    echo '<p>';   
-    echo 'INTERVIEWERS NAME<br />';
-    populate_staff_select("pw-interviewers-name");
-    echo '</p>';
-
-    echo '<p>';   
-    echo 'CASE OWNER<br />';
-    populate_staff_select("pw-case-owner");
-    echo '</p>';
-
-    echo '<p>';
-    echo 'FIRST NAMES<br />';
-    echo '<input type="text" name="pw-first-names" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-first-names"] ) ? esc_attr( $_POST["pw-first-names"] ) : '' ) . '" size="40" />';
-    echo '</p>';
-
-    echo '<p>';
-    echo 'SURNAME<br />';
-    echo '<input type="text" name="pw-surname" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-surname"] ) ? esc_attr( $_POST["pw-surname"] ) : '' ) . '" size="40" />';
-    echo '</p>';  
-
-    echo '<p>';
-    echo 'SURNAME<br />';
-    echo '<input type="text" name="pw-telephone" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-telephone"] ) ? esc_attr( $_POST["pw-telephone"] ) : '' ) . '" size="40" />';
-    echo '</p>';       
+    text_field("pw-client-number", "CLIENT NUMBER");
+    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
+    staff_select_field("pw-case-owner", "CASE OWNER");
+    text_field("pw-first-names", "FIRST NAMES");
+    text_field("pw-surname", "SURNAME");
 
     echo '<p>';
     echo 'EMAIL ADDRESS<br />';
@@ -80,40 +56,13 @@ if true then get data from database otherwise display blank form.
     echo '<textarea rows="5" cols="35" name="pw-address">' . ( isset( $_POST["pw-address"] ) ? esc_attr( $_POST["pw-address"] ) : '' ) . '</textarea>';
     echo '</p>';
  
-    echo '<p>';
-    echo 'POST CODE<br />';
-    echo '<input type="text" name="pw-postcode" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-postcode"] ) ? esc_attr( $_POST["pw-postcode"] ) : '' ) . '" size="40" />';
-    echo '</p>';
-
-    echo '<p>';
-    echo 'ACCOMODATION TYPE<br />';
-    echo '<input type="text" name="pw-accomodation-type" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-accomodation-type"] ) ? esc_attr( $_POST["pw-accomodation-type"] ) : '' ) . '" size="40" />';
-    echo '</p>';   
-
-    echo '<p>';
-    echo 'NATIONALITY<br />';
-    echo '<input type="text" name="pw-nationality" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-nationality"] ) ? esc_attr( $_POST["pw-nationality"] ) : '' ) . '" size="40" />';
-    echo '</p>';  
-
-    echo '<p>';
-    echo 'CODE<br />';
-    echo '<input type="text" name="pw-nationality-code" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-nationality-code"] ) ? esc_attr( $_POST["pw-nationality-code"] ) : '' ) . '" size="40" />';
-    echo '</p>';  
-
-    echo '<p>';   
-    echo 'RELATIONSHIP STATUS<br />';
-    populate_select(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status");
-    echo '</p>';
-
-    echo '<p>';
-    echo 'RELIGION<br />';
-    echo '<input type="text" name="pw-religion" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-religion"] ) ? esc_attr( $_POST["pw-religion"] ) : '' ) . '" size="40" />';
-    echo '</p>';  
-
-    echo '<p>';
-    echo 'PLACE OF WORSHIP<br />';
-    echo '<input type="text" name="pw-placeofworship" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-placeofworship"] ) ? esc_attr( $_POST["pw-placeofworship"] ) : '' ) . '" size="40" />';
-    echo '</p>';          
+    text_field("pw-postcode", "POST CODE");
+    text_field("pw-accomodation-type", "ACCOMODATION TYPE");
+    text_field("pw-nationality", "NATIONALITY");
+    text_field("pw-nationality-code", "CODE");
+    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
+    text_field("pw-religion", "RELIGION");
+    text_field("pw-placeofworship", "PLACE OF WORSHIP");
 
     echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
     echo '</form>';
@@ -277,7 +226,7 @@ function get_staff_list() {
 
 
 /***********************************************
- Return a list of staff members
+ Display the date picker
 ************************************************/
 function datepicker(){ ?>
     <script type="text/javascript">
@@ -293,24 +242,40 @@ function datepicker(){ ?>
 /***********************************************
  Dynamically populate staff dropdown
 ************************************************/
-function populate_staff_select($name) {
+function staff_select_field($name, $title) {
     $staff_list = get_staff_list();
+    echo '<p>';   
+    echo $title . '<br />';
     echo "<select name='". $name . "'><option selected='selected'>choose</option>";
     foreach($staff_list as $item) {
         echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
     }
     echo "</select>";
+    echo '</p>';
 }
 
 /***********************************************
  Dynamically populate select element from array
 ************************************************/
-function populate_select($array, $name) {
+function select_field($array, $name, $title) {
+    echo '<p>';   
+    echo $title . '<br />';    
     echo "<select name='". $name . "'><option selected='selected'>choose</option>";
     foreach($array as $item) {
         echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
     }
     echo "</select>";
+    echo '</p>';
+}
+
+/***********************************************
+ Standard text field
+************************************************/
+function text_field($name, $title) {
+    echo '<p>';   
+    echo $title . '<br />'; 
+    echo '<input type="text" name="' .$name . '" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
+    echo '</p>';
 }
 
 
