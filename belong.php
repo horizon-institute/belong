@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.2
+* Version: 0.1.4.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -45,16 +45,14 @@ if true then get data from database otherwise display blank form.
     echo '<input type="text" name="pw-client-number" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST["pw-client-number"] ) ? esc_attr( $_POST["pw-client-number"] ) : '' ) . '" size="40" />';
     echo '</p>';
 
-    $staff_list = get_staff_list();
-
     echo '<p>';   
     echo 'INTERVIEWERS NAME<br />';
-    echo populate_staff_select($staff_list, "pw-interviewers-name");
+    echo populate_staff_select("pw-interviewers-name");
     echo '</p>';
 
     echo '<p>';   
     echo 'CASE OWNER<br />';
-    echo populate_staff_select($staff_list, "pw-case-owner");
+    echo populate_staff_select("pw-case-owner");
     echo '</p>';
 
     echo '<p>';
@@ -92,34 +90,34 @@ if true then get data from database otherwise display blank form.
     echo '<input type="text" name="pw-accomodation-type" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-accomodation-type"] ) ? esc_attr( $_POST["pw-accomodation-type"] ) : '' ) . '" size="40" />';
     echo '</p>';   
 
+    echo '<p>';
+    echo 'NATIONALITY<br />';
+    echo '<input type="text" name="pw-nationality" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-nationality"] ) ? esc_attr( $_POST["pw-nationality"] ) : '' ) . '" size="40" />';
+    echo '</p>';  
+
+    echo '<p>';
+    echo 'CODE<br />';
+    echo '<input type="text" name="pw-nationality-code" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-nationality-code"] ) ? esc_attr( $_POST["pw-nationality-code"] ) : '' ) . '" size="40" />';
+    echo '</p>';  
+
+    echo '<p>';   
+    echo 'RELATIONSHIP STATUS<br />';
+    echo populate_select(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status");
+    echo '</p>';
+
+    echo '<p>';
+    echo 'RELIGION<br />';
+    echo '<input type="text" name="pw-religion" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-religion"] ) ? esc_attr( $_POST["pw-religion"] ) : '' ) . '" size="40" />';
+    echo '</p>';  
+
+    echo '<p>';
+    echo 'PLACE OF WORSHIP<br />';
+    echo '<input type="text" name="pw-placeofworship" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-placeofworship"] ) ? esc_attr( $_POST["pw-placeofworship"] ) : '' ) . '" size="40" />';
+    echo '</p>';          
+
     echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
     echo '</form>';
 }
-
-/*********************************************************************************/
-
-
-function datepicker(){ ?>
-    <script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery('#date').datepicker({
-            dateFormat: 'dd-mm-yy'
-        });
-    });
-    </script>
-<?php
-}
-
-
-/* Dynamically populate select element from array */
-function populate_staff_select($array, $name) {
-    echo "<select name='". $name . "'><option selected='selected'>choose</option>";
-    foreach($array as $item) {
-        echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
-    }
-    echo "</select>";
-}
-
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
@@ -278,6 +276,43 @@ function get_staff_list() {
     return $list;
 }
 
+
+/***********************************************
+ Return a list of staff members
+************************************************/
+function datepicker(){ ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#date').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+    });
+    </script>
+<?php
+}
+
+/***********************************************
+ Dynamically populate staff dropdown
+************************************************/
+function populate_staff_select($name) {
+    $staff_list = get_staff_list();
+    echo "<select name='". $name . "'><option selected='selected'>choose</option>";
+    foreach($staff_list as $item) {
+        echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
+    }
+    echo "</select>";
+}
+
+/***********************************************
+ Dynamically populate select element from array
+************************************************/
+function populate_select($array, $name) {
+    echo "<select name='". $name . "'><option selected='selected'>choose</option>";
+    foreach($array as $item) {
+        echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
+    }
+    echo "</select>";
+}
 
 
 ?>
