@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.4
+* Version: 0.1.3.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -13,13 +13,10 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-
 wp_enqueue_script('jquery');
 wp_enqueue_script('jquery-ui-core');
 wp_enqueue_script('jquery-ui-datepicker');
 wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
-
-
 
 /*********************************************************************************/
 function client_registration() {
@@ -35,40 +32,73 @@ function client_registration_form() {
 /* Get User ID and check database to see if exisiting registrtion 
 if true then get data from database otherwise display blank form.
 */
+    echo '<h2>PERSONAL DETAILS</h2>';
     echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+
     echo '<p>';
-    echo 'Your Name (required) <br />';
-    echo '<input type="text" name="cf-name" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST["cf-name"] ) ? esc_attr( $_POST["cf-name"] ) : '' ) . '" size="40" />';
+    echo 'DATE<br />';
+    echo '<input  id="date" name="pw-registration-date" />';
+    echo '</p>';     
+
+    echo '<p>';   
+    echo 'Client Number<br />';
+    echo '<input type="text" name="pw-client-number" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST["pw-client-number"] ) ? esc_attr( $_POST["pw-client-number"] ) : '' ) . '" size="40" />';
     echo '</p>';
+
+    $staff_list = get_staff_list();
+    echo '<p>';   
+    echo 'INTERVIEWERS NAME<br />';
+    echo '<select name="pw-interviewers-name">' . populate_select($staff_list) . '</select>';
+    echo '</p>';
+
+    echo '<p>';   
+    echo 'CASE OWNER<br />';
+    echo '<select name="pw-case-owners">' . populate_select($staff_list) . '</select>';
+    echo '</p>';
+
     echo '<p>';
-    echo 'Your Email (required) <br />';
-    echo '<input type="email" name="cf-email" value="' . ( isset( $_POST["cf-email"] ) ? esc_attr( $_POST["cf-email"] ) : '' ) . '" size="40" />';
+    echo 'FIRST NAMES<br />';
+    echo '<input type="text" name="pw-first-names" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-first-names"] ) ? esc_attr( $_POST["pw-first-names"] ) : '' ) . '" size="40" />';
     echo '</p>';
+
     echo '<p>';
-    echo 'Subject (required) <br />';
-    echo '<input type="text" name="cf-subject" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["cf-subject"] ) ? esc_attr( $_POST["cf-subject"] ) : '' ) . '" size="40" />';
-    echo '</p>';
+    echo 'SURNAME<br />';
+    echo '<input type="text" name="pw-surname" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-surname"] ) ? esc_attr( $_POST["pw-surname"] ) : '' ) . '" size="40" />';
+    echo '</p>';  
+
     echo '<p>';
-    echo 'Your Message (required) <br />';
-    echo '<textarea rows="10" cols="35" name="cf-message">' . ( isset( $_POST["cf-message"] ) ? esc_attr( $_POST["cf-message"] ) : '' ) . '</textarea>';
-    echo '</p>';
+    echo 'SURNAME<br />';
+    echo '<input type="text" name="pw-telephone" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-telephone"] ) ? esc_attr( $_POST["pw-telephone"] ) : '' ) . '" size="40" />';
+    echo '</p>';       
+
     echo '<p>';
-    echo 'Date<br />';
-    echo '<input  id="date" name="belong-date" />';
+    echo 'EMAIL ADDRESS<br />';
+    echo '<input type="email" name="pw-email" value="' . ( isset( $_POST["pw-email"] ) ? esc_attr( $_POST["pw-email"] ) : '' ) . '" size="40" />';
     echo '</p>';
-    
+
     echo '<p>';
-    echo 'List<br />';
-    $cars = array("Volvo", "BMW", "Toyota");
-    echo populate_select($cars, "car_list");
+    echo 'ADDRESS<br />';
+    echo '<textarea rows="10" cols="35" name="pw-address">' . ( isset( $_POST["pw-address"] ) ? esc_attr( $_POST["pw-address"] ) : '' ) . '</textarea>';
     echo '</p>';
-    
+ 
+    echo '<p>';
+    echo 'POST CODE<br />';
+    echo '<input type="text" name="pw-postcode" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-postcode"] ) ? esc_attr( $_POST["pw-postcode"] ) : '' ) . '" size="40" />';
+    echo '</p>';
+
+    echo '<p>';
+    echo 'ACCOMODATION TYPE<br />';
+    echo '<input type="text" name="pw-accomodation-type" pattern="[a-zA-Z ]+" value="' . ( isset( $_POST["pw-accomodation-type"] ) ? esc_attr( $_POST["pw-accomodation-type"] ) : '' ) . '" size="40" />';
+    echo '</p>';   
+
     echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
     echo '</form>';
 
 }
 
 /*********************************************************************************/
+
+
 function datepicker(){ ?>
     <script type="text/javascript">
     jQuery(document).ready(function(){
@@ -82,12 +112,11 @@ function datepicker(){ ?>
 
 
 /* Dynamically populate select element from array */
-function populate_select($array, $name) {
-  echo "<select name=" . $name . "><option selected="selected"> - </option>";
+function populate_select($array) {
+  echo "<option selected='selected'> - </option>";
   foreach($array as $item) {
     echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
    }
-   echo "</select>";
 }
 
 
@@ -234,26 +263,18 @@ function belong_get_users_role($user_id) {
     }
 }
 
+/***********************************************
+Return a list of staff members
+************************************************/
+function get_staff_list() {
+    $args = array('role' => 'staff');
+    $staff_members = get_users($args);
+    foreach ($staff_members as $staff_member) {
+        $list[] = array($staff_member->display_name);
+    }
+    return $list;
+}
 
-
-// function get_staff_list($options, $settings) {
-//     $options = array();
-//     if( $settings['id'] == 87 || $settings['id'] == 88 ) {
-//         $args = array('role' => 'staff');
-//         $staff_members = get_users($args);
-//         foreach ($staff_members as $staff_member) {
-//             $options[] = array(
-//                 'label' =>  $staff_member->display_name,
-//                 'value' =>  $staff_member->display_name,
-//                 'calc'  =>  null,
-//                 'selected' => 0
-//                 );
-//         }
-//     }
-//     return $options;
-// }
-
-// add_filter('ninja_forms_render_options','get_staff_list', 10, 2);
 
 
 ?>
