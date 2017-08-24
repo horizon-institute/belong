@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.3.0
+* Version: 0.1.3.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -13,13 +13,23 @@
 // Prevent direct access
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-add_shortcode('client_registration', 'client_registration');
 
+wp_enqueue_script('jquery');
+wp_enqueue_script('jquery-ui-core');
+wp_enqueue_script('jquery-ui-datepicker');
+wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+
+
+
+/*********************************************************************************/
 function client_registration() {
     ob_start();
+    datepicker();
     client_registration_form();
     return ob_get_clean();
 }
+
+add_shortcode('client_registration', 'client_registration');
 
 function client_registration_form() {
 /* Get User ID and check database to see if exisiting registrtion 
@@ -42,10 +52,29 @@ if true then get data from database otherwise display blank form.
     echo 'Your Message (required) <br />';
     echo '<textarea rows="10" cols="35" name="cf-message">' . ( isset( $_POST["cf-message"] ) ? esc_attr( $_POST["cf-message"] ) : '' ) . '</textarea>';
     echo '</p>';
+    echo '<p>';
+    echo 'Date<br />';
+    echo '<input  id="date" name="belong-date">' . ( isset( $_POST["belong-date"] ) ? esc_attr( $_POST["belong-date"] ) : '' ) . '< />';
+    echo '</p>';
     echo '<p><input type="submit" name="cf-submitted" value="Send"/></p>';
     echo '</form>';
 
 }
+
+/*********************************************************************************/
+function datepicker(){ ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#date').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+    });
+    </script>
+<?php
+} // close add_datepicker_in_footer() here
+//add an action to call add_datepicker_in_footer function
+add_action('wp_footer','datepicker',10);
+
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
