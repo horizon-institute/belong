@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.0
+ * Version: 0.1.6.1
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -48,11 +48,16 @@ function client_registration_form()
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
 
+    echo '<table><tr>';
     children_field("1");
+    echo '</tr><tr>';
     children_field("2");
+    echo '</tr><tr>';
     children_field("3");
+    echo '</tr><tr>';
     children_field("4");
-
+    echo '</tr></table>';
+    
     echo '<p><input type="submit" name="pw-submitted" value="Save"/></p>';
     echo '</form>';
     return ob_get_clean();
@@ -417,19 +422,26 @@ function textarea_field($name, $title, $rows, $columns)
 
 function children_field($child_no)
 {
-    echo '<p>';
+    echo '<td>';
     echo 'NAME ';
+    echo '</td><td>';
     echo '<input type="text" name="pw_child_name_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';
+    echo '</td><td>';
     echo 'DOB ';
+    echo '</td><td>';
     echo '<input id="date" name="pw_child_dob_' . $child_no . '" />';
+    echo '</td><td>';
     echo 'UK?';
+    echo '</td><td>';
     echo "<select name='pw_child_uk_" . $child_no . "'><option selected='selected'>choose</option>";
     echo "<option value=" . strtolower("yes") . ">Yes</option>";
     echo "<option value=" . strtolower("yes") . ">No</option>";
     echo "</select>";
+    echo '</td><td>';
     echo "CN";
-    echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';  
-    echo '</p>';
+    echo '</td><td>';
+    echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';
+    echo '</td>';  
 }
 
 
