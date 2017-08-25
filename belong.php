@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.5
+ * Version: 0.1.6.6
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -304,7 +304,7 @@ function datepicker($date_id)
 ?>
    <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery(#<?php echo json_encode($date_id); ?>).datepicker({
+        jQuery("#"+<?php echo json_encode($date_id); ?>).datepicker({
             dateFormat: 'dd-mm-yy'
         });
     });
