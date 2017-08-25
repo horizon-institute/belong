@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.4
+ * Version: 0.1.6.5
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -304,7 +304,7 @@ function datepicker($date_id)
 ?>
    <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery(<?php echo json_encode($date_id); ?>).datepicker({
+        jQuery(#<?php echo json_encode($date_id); ?>).datepicker({
             dateFormat: 'dd-mm-yy'
         });
     });
@@ -422,18 +422,18 @@ function textarea_field($name, $title, $rows, $columns)
 function children_field($child_no)
 {
     echo '<td>';
-    echo 'NAME< /br>';
+    echo 'NAME<br />';
     echo '<input type="text" name="pw_child_name_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="20" />';
     echo '</td><td>';
     date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no);
     echo '</td><td>';
-    echo 'UK?< /br>';
+    echo 'UK?<br />';
     echo "<select name='pw_child_uk_" . $child_no . "'><option selected='selected'>choose</option>";
     echo "<option value=" . strtolower("yes") . ">Yes</option>";
     echo "<option value=" . strtolower("no") . ">No</option>";
     echo "</select>";
     echo '</td><td>';
-    echo "CN< /br>";
+    echo "CN<br />";
     echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="20" />';
     echo '</td>';  
 }
