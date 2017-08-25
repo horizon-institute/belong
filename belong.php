@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.6
+ * Version: 0.1.6.7
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -49,13 +49,13 @@ function client_registration_form()
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
 
     echo '<table><tr>';
-    children_field("1");
+    child_field("1");
     echo '</tr><tr>';
-    children_field("2");
+    child_field("2");
     echo '</tr><tr>';
-    children_field("3");
+    child_field("3");
     echo '</tr><tr>';
-    children_field("4");
+    child_field("4");
     echo '</tr></table>';
     
     echo '<p><input type="submit" name="pw-submitted" value="Save"/></p>';
@@ -100,10 +100,15 @@ function client_view_form()
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
 
-    children_field("1");
-    children_field("2");
-    children_field("3");
-    children_field("4");
+    echo '<table><tr>';
+    child_field("1");
+    echo '</tr><tr>';
+    child_field("2");
+    echo '</tr><tr>';
+    child_field("3");
+    echo '</tr><tr>';
+    child_field("4");
+    echo '</tr></table>';
 
     echo '</fieldset>';
     echo '</form>';
@@ -419,22 +424,16 @@ function textarea_field($name, $title, $rows, $columns)
     echo '</p>';
 }
 
-function children_field($child_no)
+function child_field($child_no)
 {
     echo '<td>';
-    echo 'NAME<br />';
-    echo '<input type="text" name="pw_child_name_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="20" />';
+    text_field("pw_child_name_" . $child_no, "NAME");
     echo '</td><td>';
     date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no);
     echo '</td><td>';
-    echo 'UK?<br />';
-    echo "<select name='pw_child_uk_" . $child_no . "'><option selected='selected'>choose</option>";
-    echo "<option value=" . strtolower("yes") . ">Yes</option>";
-    echo "<option value=" . strtolower("no") . ">No</option>";
-    echo "</select>";
+    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?");
     echo '</td><td>';
-    echo "CN<br />";
-    echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="20" />';
+    text_field("pw_child_cn_" . $child_no, "CN");
     echo '</td>';  
 }
 
