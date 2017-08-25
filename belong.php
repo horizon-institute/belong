@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.5.2
+* Version: 0.1.5.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -33,51 +33,49 @@ if true then get data from database otherwise display blank form.
 */
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
-    echo'<table>';
-    echo '<tr><td>';
     date_field("pw-registration-date", "DATE"); 
-    echo '</td><td>';
     text_field("pw-client-number", "CLIENT NUMBER");
-    echo '</td></tr>';
-    echo '<tr><td>';
     staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
-    echo '</td><td>';
     staff_select_field("pw-case-owner", "CASE OWNER");
-    echo '</td></tr>';
-    echo '<tr><td>';
     text_field("pw-first-names", "FIRST NAMES");
-    echo '</td><td>';
     text_field("pw-surname", "SURNAME");
-    echo '</td></tr>';
-    echo '<tr><td colspan="2">';
     email_field("pw-email", "EMAIL ADDRESS");
-    echo '</td></tr>';
-    echo '<tr><td colspan="2">';
     textarea_field("pw-address", "ADDRESS", "5", "35");
-    echo '</td></tr>';
-    echo '<tr><td>';
     text_field("pw-postcode", "POST CODE");
-    echo '</td><td>';
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
-    echo '</td></tr>';
-    echo '<tr><td>';
     text_field("pw-nationality", "NATIONALITY");
-    echo '</td><td>';
     text_field("pw-nationality-code", "CODE");
-    echo '</td></tr>';
-    echo '<tr><td>';
     select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
-    echo '</td><td>';
     text_field("pw-religion", "RELIGION");
-    echo '</td><tr>';
-    echo '<tr><td>';    
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
-    echo '</td><td>';
     echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
-    echo '</td></tr>';
-    echo '</table>';
     echo '</form>';
 }
+
+function client_view_form() {
+    echo '<h4>PERSONAL DETAILS</h4>';
+    echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+    echo '<fieldset>';
+    date_field("pw-registration-date", "DATE"); 
+    text_field("pw-client-number", "CLIENT NUMBER");
+    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
+    staff_select_field("pw-case-owner", "CASE OWNER");
+    text_field("pw-first-names", "FIRST NAMES");
+    text_field("pw-surname", "SURNAME");
+    email_field("pw-email", "EMAIL ADDRESS");
+    textarea_field("pw-address", "ADDRESS", "5", "35");
+    text_field("pw-postcode", "POST CODE");
+    text_field("pw-accomodation-type", "ACCOMODATION TYPE");
+    text_field("pw-nationality", "NATIONALITY");
+    text_field("pw-nationality-code", "CODE");
+    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
+    text_field("pw-religion", "RELIGION");
+    text_field("pw-placeofworship", "PLACE OF WORSHIP");
+    echo '</fieldset>';
+    echo '</form>';
+}
+
+add_shortcode('client_view', 'client_view_form');
 
 /*********************************************************************************/
 function belong_list_events_for_user() {
@@ -336,4 +334,52 @@ function textarea_field($name, $title, $rows, $columns) {
 }
 
 
+
+
+    // echo '<h4>PERSONAL DETAILS</h4>';
+    // echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+    // echo'<table>';
+    // echo '<tr><td>';
+    // date_field("pw-registration-date", "DATE"); 
+    // echo '</td><td>';
+    // text_field("pw-client-number", "CLIENT NUMBER");
+    // echo '</td></tr>';
+    // echo '<tr><td>';
+    // staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
+    // echo '</td><td>';
+    // staff_select_field("pw-case-owner", "CASE OWNER");
+    // echo '</td></tr>';
+    // echo '<tr><td>';
+    // text_field("pw-first-names", "FIRST NAMES");
+    // echo '</td><td>';
+    // text_field("pw-surname", "SURNAME");
+    // echo '</td></tr>';
+    // echo '<tr><td colspan="2">';
+    // email_field("pw-email", "EMAIL ADDRESS");
+    // echo '</td></tr>';
+    // echo '<tr><td colspan="2">';
+    // textarea_field("pw-address", "ADDRESS", "5", "35");
+    // echo '</td></tr>';
+    // echo '<tr><td>';
+    // text_field("pw-postcode", "POST CODE");
+    // echo '</td><td>';
+    // text_field("pw-accomodation-type", "ACCOMODATION TYPE");
+    // echo '</td></tr>';
+    // echo '<tr><td>';
+    // text_field("pw-nationality", "NATIONALITY");
+    // echo '</td><td>';
+    // text_field("pw-nationality-code", "CODE");
+    // echo '</td></tr>';
+    // echo '<tr><td>';
+    // select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
+    // echo '</td><td>';
+    // text_field("pw-religion", "RELIGION");
+    // echo '</td><tr>';
+    // echo '<tr><td>';    
+    // text_field("pw-placeofworship", "PLACE OF WORSHIP");
+    // echo '</td><td>';
+    // echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
+    // echo '</td></tr>';
+    // echo '</table>';
+    // echo '</form>';
 ?>
