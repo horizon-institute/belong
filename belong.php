@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.5.8
+ * Version: 0.1.5.9
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -39,14 +39,15 @@ function client_registration_form()
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
     text_field("pw-nationality", "NATIONALITY");
     text_field("pw-nationality-code", "CODE");
-    select_field(array(
-        "Single",
-        "Married",
-        "Civil Partnership",
-        "Common Law"
-    ), "pw-relationship-status", "RELATIONSHIP STATUS");
+    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
     text_field("pw-religion", "RELIGION");
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
+
+    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME");
+    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER");
+    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
+    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
+
     echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
     echo '</form>';
     return ob_get_clean();
@@ -84,6 +85,12 @@ function client_view_form()
     ), "pw-relationship-status", "RELATIONSHIP STATUS");
     text_field("pw-religion", "RELIGION");
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
+
+    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME");
+    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER");
+    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
+    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
+
     echo '</fieldset>';
     echo '</form>';
     return ob_get_clean();
