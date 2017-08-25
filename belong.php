@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.5.5
+* Version: 0.1.5.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -24,9 +24,6 @@ function client_registration_form() {
 if true then get data from database otherwise display blank form.
 */
     $id = $_GET['clientID'];
-    echo "user id: " . $id;
-    $user = belong_get_user_by("ID", $id);
-    var_dump($user);
 
     ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
@@ -35,8 +32,8 @@ if true then get data from database otherwise display blank form.
     text_field("pw-client-number", "CLIENT NUMBER");
     staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
     staff_select_field("pw-case-owner", "CASE OWNER");
-    text_field("pw-first-names", "FIRST NAMES");
-    text_field("pw-surname", "SURNAME");
+    user_field("pw-display_name", "DISPLAY NAME", "display_name", $id);
+    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id);
     email_field("pw-email", "EMAIL ADDRESS");
     textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
@@ -55,6 +52,10 @@ add_shortcode('client_registration', 'client_registration_form');
 
 /*********************************************************************************/
 function client_view_form() {
+
+    $user = get_current_user();
+    $id = $user->ID;
+
     ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form>';
@@ -63,9 +64,8 @@ function client_view_form() {
     text_field("pw-client-number", "CLIENT NUMBER");
     staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
     staff_select_field("pw-case-owner", "CASE OWNER");
-    text_field("pw-first-names", "FIRST NAMES");
-    text_field("pw-surname", "SURNAME");
-    email_field("pw-email", "EMAIL ADDRESS");
+    user_field("pw-display_name", "DISPLAY NAME", "display_name", $id);
+    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id);
     textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
@@ -318,6 +318,20 @@ function text_field($name, $title) {
     echo '<input type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . ( isset( $_POST[$name] ) ? esc_attr( $_POST[$name] ) : '' ) . '" size="40" />';
     echo '</p>';
 }
+
+
+/***********************************************
+ User text field
+************************************************/
+function user_field($name, $title, $field_name, $id) {
+    $user = belong_get_user_by("ID", $id);
+    $field = $user->$field_name;
+    echo '<p>';   
+    echo $title . '<br />'; 
+    echo '<input type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . ( isset($field) ? esc_attr($field) : '' ) . '" size="50" />';
+    echo '</p>';
+}
+
 
 /***********************************************
  jquery date picker field
