@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.8
+* Version: 0.1.4.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -137,7 +137,8 @@ function belong_list_clients() {
     echo "<tr><td></td><td>Client Name</td></tr>";
     foreach ( $clients as $client ) {
         $counter++;
-        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td></tr>";
+        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td>";
+        echo "<td><a href=" . esc_url( add_query_arg( 'clientID', $client->ID, site_url( '/client-profile.php/' ) ) ) . "VIEW</a></td></tr>">
         //permalink to clients profile -> this will involve comparing 
         //the user ID's and retrieving the latest submissions
     }
@@ -247,6 +248,21 @@ function select_field($array, $name, $title) {
     echo '<p>';   
     echo $title . '<br />';    
     echo "<select name='". $name . "'><option selected='selected'>choose</option>";
+    foreach($array as $item) {
+        echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
+    }
+    echo "</select>";
+    echo '</p>';
+}
+
+
+/***********************************************
+ Multi select element field from array
+************************************************/
+function select_multiple($array, $name, $title) {
+    echo '<p>';   
+    echo $title . '<br />';    
+    echo "<select name='". $name . "' multiple='multiple'><option selected='selected'>choose</option>";
     foreach($array as $item) {
         echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
     }
