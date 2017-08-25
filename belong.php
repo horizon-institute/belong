@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.5.4
+* Version: 0.1.5.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -19,18 +19,16 @@ wp_enqueue_script('jquery-ui-datepicker');
 wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 
 /*********************************************************************************/
-function client_registration() {
-    ob_start();
-    client_registration_form();
-    return ob_get_clean();
-}
-
-add_shortcode('client_registration', 'client_registration');
-
 function client_registration_form() {
 /* Get User ID and check database to see if exisiting registrtion 
 if true then get data from database otherwise display blank form.
 */
+    $id = $_GET['clientID'];
+    echo "user id: " . $id;
+    $user = belong_get_user_by("ID", $id);
+    var_dump($user);
+
+    ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
     date_field("pw-registration-date", "DATE"); 
@@ -50,9 +48,14 @@ if true then get data from database otherwise display blank form.
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
     echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
     echo '</form>';
+    return ob_get_clean();
 }
 
+add_shortcode('client_registration', 'client_registration_form');
+
+/*********************************************************************************/
 function client_view_form() {
+    ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form>';
     echo '<fieldset disabled>';
@@ -73,6 +76,7 @@ function client_view_form() {
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
     echo '</fieldset>';
     echo '</form>';
+    return ob_get_clean();
 }
 
 add_shortcode('client_view', 'client_view_form');
@@ -81,7 +85,7 @@ add_shortcode('client_view', 'client_view_form');
 function belong_list_events_for_user() {
     ob_start();
     $counter = 0;
-    $current_user = belong_get_user_info();
+    $current_user = belong_get_current_user();
     $assignment_args = array(
     'posts_per_page'   => -1,
     'post_type'        => 'assignments'
@@ -117,7 +121,7 @@ add_shortcode('user_events', 'belong_list_events_for_user');
 function belong_list_modules_for_user() {
     ob_start();
     $counter = 0;
-    $current_user = belong_get_user_info();
+    $current_user = belong_get_current_user();
     $assignment_args = array(
     'posts_per_page'   => -1,
     'post_type'        => 'assignments'
@@ -202,12 +206,25 @@ function belong_is_current_user_selected(array $array, $id) {
 /***********************************************
 Get current user
 ************************************************/
-function belong_get_user_info() {
+function belong_get_current_user() {
     $current_user = wp_get_current_user();
     if (!($current_user instanceof WP_User))
         return;
     return $current_user;
 }
+
+/***********************************************
+Get user object by method specified
+************************************************/
+function belong_get_user_by( $field, $value ) {
+    $userdata = WP_User::get_data_by( $field, $value );
+    if ( !$userdata )
+        return false;
+    $user = new WP_User;
+    $user->init( $userdata );
+    return $user;
+}
+
 
 /***********************************************
 Get role of current logged in user
