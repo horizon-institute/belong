@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.4.9
+* Version: 0.1.5.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -124,7 +124,9 @@ function belong_list_modules_for_user() {
 
 add_shortcode('user_modules', 'belong_list_modules_for_user');
 
-/*********************************************************************************/
+/**********************************************************
+* Displays a list of clients with links to their profiles
+***********************************************************/
 function belong_list_clients() {
     ob_start();
     $counter = 0;
@@ -137,10 +139,7 @@ function belong_list_clients() {
     echo "<tr><td></td><td>Client Name</td></tr>";
     foreach ( $clients as $client ) {
         $counter++;
-        echo "<tr><td>" . $counter . "</td><td>". esc_html( $client->display_name ) ."</td>";
-        echo "<td><a href=" . esc_url( add_query_arg( 'clientID', $client->ID, site_url( '/client-profile.php/' ) ) ) . "VIEW</a></td></tr>">
-        //permalink to clients profile -> this will involve comparing 
-        //the user ID's and retrieving the latest submissions
+        echo "<tr><td>" . $counter . "</td><td><a href=" . esc_url( add_query_arg( 'clientID', $client->ID, site_url( '/client-profile' ) ) ) . ">" . esc_html( $client->display_name ) . "</a></td></tr>";
     }
     echo "</table>";
     return ob_get_clean();
