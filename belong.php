@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.1
+ * Version: 0.1.6.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -67,8 +67,7 @@ add_shortcode('client_registration', 'client_registration_form');
 
 /*********************************************************************************/
 function client_view_form()
-{
-    
+{ 
     $current_user = belong_get_current_user();
     $id           = $current_user->ID;
     
@@ -429,13 +428,14 @@ function children_field($child_no)
     echo '</td><td>';
     echo 'DOB ';
     echo '</td><td>';
+    datepicker();
     echo '<input id="date" name="pw_child_dob_' . $child_no . '" />';
     echo '</td><td>';
     echo 'UK?';
     echo '</td><td>';
     echo "<select name='pw_child_uk_" . $child_no . "'><option selected='selected'>choose</option>";
     echo "<option value=" . strtolower("yes") . ">Yes</option>";
-    echo "<option value=" . strtolower("yes") . ">No</option>";
+    echo "<option value=" . strtolower("no") . ">No</option>";
     echo "</select>";
     echo '</td><td>';
     echo "CN";
