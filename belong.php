@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.5.9
+ * Version: 0.1.6.0
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -48,7 +48,12 @@ function client_registration_form()
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
 
-    echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
+    children_field("1");
+    children_field("2");
+    children_field("3");
+    children_field("4");
+
+    echo '<p><input type="submit" name="pw-submitted" value="Save"/></p>';
     echo '</form>';
     return ob_get_clean();
 }
@@ -90,6 +95,11 @@ function client_view_form()
     text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER");
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
+
+    children_field("1");
+    children_field("2");
+    children_field("3");
+    children_field("4");
 
     echo '</fieldset>';
     echo '</form>';
@@ -404,5 +414,23 @@ function textarea_field($name, $title, $rows, $columns)
     echo '<textarea rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '</textarea>';
     echo '</p>';
 }
+
+function children_field($child_no)
+{
+    echo '<p>';
+    echo 'NAME ';
+    echo '<input type="text" name="pw_child_name_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';
+    echo 'DOB ';
+    echo '<input id="date" name="pw_child_dob_' . $child_no . '" />';
+    echo 'UK?';
+    echo "<select name='pw_child_uk_" . $child_no . "'><option selected='selected'>choose</option>";
+    echo "<option value=" . strtolower("yes") . ">Yes</option>";
+    echo "<option value=" . strtolower("yes") . ">No</option>";
+    echo "</select>";
+    echo "CN";
+    echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';  
+    echo '</p>';
+}
+
 
 ?>
