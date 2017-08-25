@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.7
+ * Version: 0.1.6.8
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -34,6 +34,11 @@ function client_registration_form()
     user_field("pw-display_name", "DISPLAY NAME", "display_name", $id);
     user_field("pw-email", "EMAIL ADDRESS", "user_email", $id);
     echo '</fieldset>';
+
+    select_field(array("Male","Female"), "pw-client_gender", "GENDER");
+    text_field("pw-client-telephone", "TELEPHONE NUMBER");
+    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob");
+    
     textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
@@ -81,6 +86,11 @@ function client_view_form()
     staff_select_field("pw-case-owner", "CASE OWNER");
     user_field("pw-display_name", "DISPLAY NAME", "display_name", $id);
     user_field("pw-email", "EMAIL ADDRESS", "user_email", $id);
+
+    select_field(array("Male","Female"), "pw-client_gender", "GENDER");
+    text_field("pw-client-telephone", "TELEPHONE NUMBER");
+    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob");
+
     textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
