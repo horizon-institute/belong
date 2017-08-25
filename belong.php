@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.5.1
+* Version: 0.1.5.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -49,10 +49,10 @@ if true then get data from database otherwise display blank form.
     echo '</td><td>';
     text_field("pw-surname", "SURNAME");
     echo '</td></tr>';
-    echo '<tr><td>';
+    echo '<tr><td colspan="2">';
     email_field("pw-email", "EMAIL ADDRESS");
     echo '</td></tr>';
-    echo '<tr><td>';
+    echo '<tr><td colspan="2">';
     textarea_field("pw-address", "ADDRESS", "5", "35");
     echo '</td></tr>';
     echo '<tr><td>';
@@ -69,10 +69,12 @@ if true then get data from database otherwise display blank form.
     select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
     echo '</td><td>';
     text_field("pw-religion", "RELIGION");
-    echo '</td><td>';    
+    echo '</td><tr>';
+    echo '<tr><td>';    
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
-    echo '</td></tr>';
+    echo '</td><td>';
     echo '<p><input type="submit" name="pw-submitted" value="Send"/></p>';
+    echo '</td></tr>';
     echo '</table>';
     echo '</form>';
 }
