@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.1.5.6
+* Version: 0.1.5.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -34,7 +34,6 @@ if true then get data from database otherwise display blank form.
     staff_select_field("pw-case-owner", "CASE OWNER");
     user_field("pw-display_name", "DISPLAY NAME", "display_name", $id);
     user_field("pw-email", "EMAIL ADDRESS", "user_email", $id);
-    email_field("pw-email", "EMAIL ADDRESS");
     textarea_field("pw-address", "ADDRESS", "5", "35");
     text_field("pw-postcode", "POST CODE");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE");
@@ -53,8 +52,8 @@ add_shortcode('client_registration', 'client_registration_form');
 /*********************************************************************************/
 function client_view_form() {
 
-    $user = get_current_user();
-    $id = $user->ID;
+    $current_user = belong_get_current_user();
+    $id = $current_user->ID;
 
     ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
