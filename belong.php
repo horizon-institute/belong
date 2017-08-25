@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.6.2
+ * Version: 0.1.6.3
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -26,7 +26,7 @@ function client_registration_form()
     ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-    date_field("pw-registration-date", "DATE");
+    date_field("pw-registration-date", "DATE", "reg_date");
     text_field("pw-client-number", "CLIENT NUMBER");
     staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
     staff_select_field("pw-case-owner", "CASE OWNER");
@@ -75,7 +75,7 @@ function client_view_form()
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form>';
     echo '<fieldset disabled>';
-    date_field("pw-registration-date", "DATE");
+    date_field("pw-registration-date", "DATE", "reg_date");
     text_field("pw-client-number", "CLIENT NUMBER");
     staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
     staff_select_field("pw-case-owner", "CASE OWNER");
@@ -299,12 +299,12 @@ function get_staff_list()
 /***********************************************
 Display the date picker
 ************************************************/
-function datepicker()
+function datepicker($date_id)
 {
 ?>
    <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery('#date').datepicker({
+        jQuery($date_id).datepicker({
             dateFormat: 'dd-mm-yy'
         });
     });
@@ -388,12 +388,12 @@ function user_field($name, $title, $field_name, $id)
 /***********************************************
 jquery date picker field
 ************************************************/
-function date_field($name, $title)
+function date_field($name, $title, $date_id)
 {
-    datepicker();
+    datepicker($date_id);
     echo '<p>';
     echo $title . '<br />';
-    echo '<input  id="date" name="' . $name . '" />';
+    echo '<input  id="' . $date_id . '" name="' . $name . '" />';
     echo '</p>';
 }
 
@@ -422,25 +422,19 @@ function textarea_field($name, $title, $rows, $columns)
 function children_field($child_no)
 {
     echo '<td>';
-    echo 'NAME ';
+    echo 'NAME< /br>';
+    echo '<input type="text" name="pw_child_name_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="20" />';
     echo '</td><td>';
-    echo '<input type="text" name="pw_child_name_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';
+    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no);
     echo '</td><td>';
-    echo 'DOB ';
-    echo '</td><td>';
-    datepicker();
-    echo '<input id="date" name="pw_child_dob_' . $child_no . '" />';
-    echo '</td><td>';
-    echo 'UK?';
-    echo '</td><td>';
+    echo 'UK?< /br>';
     echo "<select name='pw_child_uk_" . $child_no . "'><option selected='selected'>choose</option>";
     echo "<option value=" . strtolower("yes") . ">Yes</option>";
     echo "<option value=" . strtolower("no") . ">No</option>";
     echo "</select>";
     echo '</td><td>';
-    echo "CN";
-    echo '</td><td>';
-    echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="50" />';
+    echo "CN< /br>";
+    echo '<input type="text" name="pw_child_cn_' . $child_no . '" pattern="[a-zA-Z0-9 ]+" size="20" />';
     echo '</td>';  
 }
 
