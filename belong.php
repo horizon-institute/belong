@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.7.3
+ * Version: 0.1.7.4
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -29,22 +29,6 @@ function client_registration_form()
     $id = $_GET['clientID'];
     
     ob_start();
-
-    echo '<div class="caption">';
-    echo '<h4>Bootstrap Test</h4>';
-    echo '</div>';
-    echo '<div class="row">';
-    echo '<div class="col-md-4"><b>60%</b><br/><small>Column 1</small></div>';
-    echo '<div class="col-md-4"><b>$400</b><br/><small>Column 2</small></div>';
-    echo '<div class="col-md-4"><b>18</b><br/><small>Column 3</small></div>';
-    echo '</div>';
-    echo '<div class="row">';
-    echo '<div class="col-md-4"><b>60%</b><br/><small>Column 1</small></div>';
-    echo '<div class="col-md-4"><b>$400</b><br/><small>Column 2</small></div>';
-    echo '<div class="col-md-4"><b>18</b><br/><small>Column 3</small></div>';
-    echo '</div>';
-    echo '<"*********************************">';
-
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     echo '<table>';
