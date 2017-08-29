@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.7.1
+ * Version: 0.1.7.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -26,7 +26,7 @@ function client_registration_form()
     ob_start();
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-    echo '<table>';
+    echo '<table bgcolor="#ffffff" border="0">';
     echo '<tr>';
     date_field("pw-registration-date", "DATE", "reg_date");
     text_field("pw-client-number", "CLIENT NUMBER");
@@ -44,6 +44,8 @@ function client_registration_form()
     echo '<tr>';
     select_field(array("Male","Female"), "pw-client_gender", "GENDER");
     text_field("pw-client-telephone", "TELEPHONE NUMBER");
+    echo '</tr>';
+    echo '<tr>';
     date_field("pw-client_dob", "DATE OF BIRTH", "client_dob");
     echo '</tr>';
     echo '<tr>';
@@ -58,6 +60,8 @@ function client_registration_form()
     echo '</tr>';
     echo '<tr>';
     select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
+    echo '</tr>';
+    echo '<tr>';
     text_field("pw-religion", "RELIGION");
     text_field("pw-placeofworship", "PLACE OF WORSHIP");
     echo '</tr>';
