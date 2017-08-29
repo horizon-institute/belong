@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.7.2
+ * Version: 0.1.7.3
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -18,15 +18,36 @@ wp_enqueue_script('jquery-ui-core');
 wp_enqueue_script('jquery-ui-datepicker');
 wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 
+wp_register_script('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+wp_enqueue_script('prefix_bootstrap');
+
+wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+wp_enqueue_style('prefix_bootstrap');
 /*********************************************************************************/
 function client_registration_form()
 {
     $id = $_GET['clientID'];
     
     ob_start();
+
+    echo '<div class="caption">';
+    echo '<h4>Bootstrap Test</h4>';
+    echo '</div>';
+    echo '<div class="row">';
+    echo '<div class="col-md-4"><b>60%</b><br/><small>Column 1</small></div>';
+    echo '<div class="col-md-4"><b>$400</b><br/><small>Column 2</small></div>';
+    echo '<div class="col-md-4"><b>18</b><br/><small>Column 3</small></div>';
+    echo '</div>';
+    echo '<div class="row">';
+    echo '<div class="col-md-4"><b>60%</b><br/><small>Column 1</small></div>';
+    echo '<div class="col-md-4"><b>$400</b><br/><small>Column 2</small></div>';
+    echo '<div class="col-md-4"><b>18</b><br/><small>Column 3</small></div>';
+    echo '</div>';
+    echo '<"*********************************">';
+
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-    echo '<table bgcolor="#ffffff" border="0">';
+    echo '<table>';
     echo '<tr>';
     date_field("pw-registration-date", "DATE", "reg_date");
     text_field("pw-client-number", "CLIENT NUMBER");
@@ -464,4 +485,4 @@ function child_field($child_no)
 }
 
 
-?>
+?>layout grid
