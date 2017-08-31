@@ -5,11 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
-<<<<<<< HEAD
  * Version: 0.1.7.5
-=======
- * Version: 0.1.7.4
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -33,7 +29,6 @@ function client_registration_form()
     $id = $_GET['clientID'];
     
     ob_start();
-<<<<<<< HEAD
     echo '<div class="container">';
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
@@ -85,63 +80,10 @@ function client_registration_form()
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "6");
     echo '</div>';  
 
-=======
-    echo '<h4>PERSONAL DETAILS</h4>';
-    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-    echo '<table>';
-    echo '<tr>';
-    date_field("pw-registration-date", "DATE", "reg_date");
-    text_field("pw-client-number", "CLIENT NUMBER");
-    echo '</tr>';
-    echo '<tr>';
-    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME");
-    staff_select_field("pw-case-owner", "CASE OWNER");
-    echo '</tr>';
-    echo '<fieldset disabled>';
-    echo '<tr>';
-    user_field("pw-display_name", "DISPLAY NAME", "display_name", $id);
-    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id);
-    echo '</tr>';
-    echo '</fieldset>';
-    echo '<tr>';
-    select_field(array("Male","Female"), "pw-client_gender", "GENDER");
-    text_field("pw-client-telephone", "TELEPHONE NUMBER");
-    echo '</tr>';
-    echo '<tr>';
-    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob");
-    echo '</tr>';
-    echo '<tr>';
-    textarea_field("pw-address", "ADDRESS", "5", "35");
-    echo '</tr>';
-    echo '<tr>';
-    text_field("pw-postcode", "POST CODE");
-    text_field("pw-accomodation-type", "ACCOMODATION TYPE");
-    echo '<tr>';
-    text_field("pw-nationality", "NATIONALITY");
-    text_field("pw-nationality-code", "CODE");
-    echo '</tr>';
-    echo '<tr>';
-    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS");
-    echo '</tr>';
-    echo '<tr>';
-    text_field("pw-religion", "RELIGION");
-    text_field("pw-placeofworship", "PLACE OF WORSHIP");
-    echo '</tr>';
-    echo '<tr>';
-    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME");
-    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER");
-    echo '</tr>';
-    echo '<tr>';
-    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
-    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
-    echo '</tr>';
-    
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
     child_field("1");
     child_field("2");
     child_field("3");
     child_field("4");
-<<<<<<< HEAD
 
     echo '<div class="row">';
     echo '<div class="col-md-12">';
@@ -150,12 +92,6 @@ function client_registration_form()
     echo '</div>';   
     echo '</form>';
     echo '</div>';
-=======
-    echo '</table>';
-    
-    echo '<p><input type="submit" name="pw-submitted" value="Save"/></p>';
-    echo '</form>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
     return ob_get_clean();
 }
 
@@ -420,111 +356,65 @@ function datepicker($date_id)
 /***********************************************
 Dynamically populate staff dropdown
 ************************************************/
-<<<<<<< HEAD
 function staff_select_field($name, $title, $col)
 {
     $staff_list = get_staff_list();
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-=======
-function staff_select_field($name, $title)
-{
-    $staff_list = get_staff_list();
-    echo '<td>';
-    echo $title . '<br />';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
     echo "<select name='" . $name . "'><option selected='selected'>choose</option>";
     foreach ($staff_list as $item) {
         echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
     }
     echo "</select>";
-<<<<<<< HEAD
     echo '</div>';
-=======
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 /***********************************************
 Dynamically populate select element from array
 ************************************************/
-<<<<<<< HEAD
 function select_field($array, $name, $title, $col)
 {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "'><option selected='selected'>choose</option>";
-=======
-function select_field($array, $name, $title)
-{
-    echo '<td>';
-    echo $title . '<br />';
-    echo "<select name='" . $name . "'><option selected='selected'>choose</option>";
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
     foreach ($array as $item) {
         echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
     }
     echo "</select>";
-<<<<<<< HEAD
     echo '</div>';
-=======
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 
 /***********************************************
 Multi select element field from array
 ************************************************/
-<<<<<<< HEAD
 function select_multiple($array, $name, $title, $col)
 {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "' multiple='multiple'><option selected='selected'>choose</option>";
-=======
-function select_multiple($array, $name, $title)
-{
-    echo '<td>';
-    echo $title . '<br />';
-    echo "<select name='" . $name . "' multiple='multiple'><option selected='selected'>choose</option>";
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
     foreach ($array as $item) {
         echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
     }
     echo "</select>";
-<<<<<<< HEAD
     echo '</div>';
-=======
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 /***********************************************
 Standard text field
 ************************************************/
-<<<<<<< HEAD
 function text_field($name, $title, $col)
 {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
     echo '</div>';
-=======
-function text_field($name, $title)
-{
-    echo '<td>';
-    echo $title . '<br />';
-    echo '<input type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 
 /***********************************************
 User text field
 ************************************************/
-<<<<<<< HEAD
 function user_field($name, $title, $field_name, $id, $col)
 {
     $user  = belong_get_user_by("ID", $id);
@@ -533,23 +423,12 @@ function user_field($name, $title, $field_name, $id, $col)
     echo '<label>' . $title . '</label>';
     echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($field) ? esc_attr($field) : '') . '" size="50" />';
     echo '</div>';
-=======
-function user_field($name, $title, $field_name, $id)
-{
-    $user  = belong_get_user_by("ID", $id);
-    $field = $user->$field_name;
-    echo '<td>';
-    echo $title . '<br />';
-    echo '<input type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($field) ? esc_attr($field) : '') . '" size="50" />';
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 
 /***********************************************
 jquery date picker field
 ************************************************/
-<<<<<<< HEAD
 function date_field($name, $title, $date_id, $col)
 {
     datepicker($date_id);
@@ -557,60 +436,32 @@ function date_field($name, $title, $date_id, $col)
     echo '<label>' . $title . '</label>';
     echo '<input  class="form-control" id="' . $date_id . '" name="' . $name . '" />';
     echo '</div>';
-=======
-function date_field($name, $title, $date_id)
-{
-    datepicker($date_id);
-    echo '<td>';
-    echo $title . '<br />';
-    echo '<input  id="' . $date_id . '" name="' . $name . '" />';
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 /***********************************************
 email field with validation
 ************************************************/
-<<<<<<< HEAD
 function email_field($name, $title, $col)
 {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo '<input class="form-control" type="email" name="' . $name . '" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
     echo '</div>';
-=======
-function email_field($name, $title)
-{
-    echo '<td>';
-    echo $title . '<br />';
-    echo '<input type="email" name="' . $name . '" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 /***********************************************
 textarea field 
 ************************************************/
-<<<<<<< HEAD
 function textarea_field($name, $title, $rows, $columns, $col)
 {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '</textarea>';
     echo '</div>';
-=======
-function textarea_field($name, $title, $rows, $columns)
-{
-    echo '<td>';
-    echo $title . '<br />';
-    echo '<textarea rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '</textarea>';
-    echo '</td>';
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 function child_field($child_no)
 {
-<<<<<<< HEAD
     echo '<div class="row">';
     text_field("pw_child_name_" . $child_no, "NAME", "6");
     date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "6");
@@ -619,18 +470,7 @@ function child_field($child_no)
     select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "6");
     text_field("pw_child_cn_" . $child_no, "CN", "6");
     echo '</div>';
-=======
-    echo '<tr><td>';
-    text_field("pw_child_name_" . $child_no, "NAME");
-    echo '</td><td>';
-    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no);
-    echo '</td></tr><tr><td>';
-    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?");
-    echo '</td><td>';
-    text_field("pw_child_cn_" . $child_no, "CN");
-    echo '</td></tr>';  
->>>>>>> 4ecb024663ccf461735308f4e5c10e01f96df2ee
 }
 
 
-?>layout grid
+?>
