@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.8.0
+ * Version: 0.1.8.1
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -29,30 +29,30 @@ function client_registration_form()
       
     ob_start();
     echo '<div class="container">';
-    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     
     echo '<ul class="nav nav-tabs">';
-
     echo '<li class="active">';
-    echo '<a href="#">PERSONAL DETAILS</a>';
-    personal_details();
+    echo '<a href="#personal" data-toggle="tab">PERSONAL DETAILS</a>';
+    echo '</li>';
+    echo '<a href="#education" data-toggle="tab">EDUCATION</a>';
     echo '</li>';
     echo '<li>';
-    echo '<a href="#">EDUCATION</a>';
-    education();
+    echo '<a href="#language" data-toggle="tab">LANGUAGE</a>';
     echo '</li>';
-    echo '<li>';
-    echo '<a href="#">LANGUAGE</a>';
-    language();
-    echo '</li>';
-
     echo '</ul>';
-    echo '<div class="row">';
-    echo '<div class="col-md-8">';
-    echo '<input type="submit" name="pw-submitted" value="Save"/>';
+  
+    echo '<div class="tab-content">';
+    echo '<div class="tab-pane active in" id="personal">';
+    personal_form();
     echo '</div>';
-    echo '</div>';   
-    echo '</form>';
+    echo '<div class="tab-pane fade" id="education">';
+    education_form();
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="language">';
+    language_form();
+    echo '</div>';
+    echo '</div>';
+
     echo '</div>';
     return ob_get_clean();
 }
@@ -62,6 +62,7 @@ add_shortcode('client_registration', 'client_registration_form');
 
 function personal_details() {
     $id = $_GET['clientID'];
+    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
     echo '<div class="row">';
     date_field("pw-registration-date", "DATE", "reg_date", "4");
     text_field("pw-client-number", "CLIENT NUMBER", "4");
@@ -114,15 +115,36 @@ function personal_details() {
     child_field("2");
     child_field("3");
     child_field("4");
+
+    echo '<div class="row">';
+    echo '<div class="col-md-8">';
+    echo '<input type="submit" name="pw-submitted" value="Update"/>';
+    echo '</div>';
+    echo '</div>'; 
+
+    echo '</form>';
 }
 
-
 function education() {
+    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab2">';
     text_field("pw-x1", "EDUCATION", "4");
+    echo '<div class="row">';
+    echo '<div class="col-md-8">';
+    echo '<input type="submit" name="pw-submitted" value="Update"/>';
+    echo '</div>';
+    echo '</div>'; 
+    echo '</form>';
 }
 
 function language() {
+    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab3">';
     text_field("pw-x2", "LANGUAGE", "4");
+    echo '<div class="row">';
+    echo '<div class="col-md-8">';
+    echo '<input type="submit" name="pw-submitted" value="Update"/>';
+    echo '</div>';
+    echo '</div>'; 
+    echo '</form>';
 }
 /*********************************************************************************/
 function client_view_form()
