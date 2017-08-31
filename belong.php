@@ -509,12 +509,12 @@ function textarea_field($name, $title, $rows, $columns, $col)
 function child_field($child_no)
 {
     echo '<div class="row">';
-    text_field("pw_child_name_" . $child_no, "NAME", "6");
-    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "6");
-    echo '</div>';
-    echo '<div class="row">';
-    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "6");
-    text_field("pw_child_cn_" . $child_no, "CN", "6");
+    text_field("pw_child_name_" . $child_no, "NAME", "4");
+    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "2");
+    // echo '</div>';
+    // echo '<div class="row">';
+    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "2");
+    text_field("pw_child_cn_" . $child_no, "CN", "4");
     echo '</div>';
 }
 
