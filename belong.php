@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.8.8
+ * Version: 0.1.8.9
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -85,15 +85,13 @@ function personal_form() {
     textarea_field("pw-address", "ADDRESS", "5", "35", "12");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-postcode", "POST CODE", "4");
+    text_field("pw-postcode", "POST CODE", "6");
     text_field("pw-accomodation-type", "ACCOMODATION TYPE", "6");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-nationality", "NATIONALITY", "6");
-    text_field("pw-nationality-code", "CODE", "6");
-    echo '</div>';
-    echo '<div class="row">';
-    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS", "12");
+    text_field("pw-nationality", "NATIONALITY", "4");
+    text_field("pw-nationality-code", "CODE", "4");
+    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS", "4");
     echo '</div>';
     echo '<div class="row">';
     text_field("pw-religion", "RELIGION", "6");
