@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.7.8
+ * Version: 0.1.7.9
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -30,8 +30,40 @@ function client_registration_form()
     
     ob_start();
     echo '<div class="container">';
-    echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    
+    echo '<ul class="nav nav-tabs">';
+
+    echo '<li class="active">';
+    personal_details();
+    echo '</li>';
+
+
+    echo '<li class="active">';
+    personal_details();
+    echo '</li>';
+
+
+    echo '<li class="active">';
+    personal_details();
+    echo '</li>';
+
+    echo '</ul>';
+    echo '<div class="row">';
+    echo '<div class="col-md-8">';
+    echo '<input type="submit" name="pw-submitted" value="Save"/>';
+    echo '</div>';
+    echo '</div>';   
+    echo '</form>';
+    echo '</div>';
+    return ob_get_clean();
+}
+
+add_shortcode('client_registration', 'client_registration_form');
+
+
+function personal_details() {
+    echo '<a href="#">PERSONAL DETAILS</ha>';
     echo '<div class="row">';
     date_field("pw-registration-date", "DATE", "reg_date", "4");
     text_field("pw-client-number", "CLIENT NUMBER", "4");
@@ -84,18 +116,8 @@ function client_registration_form()
     child_field("2");
     child_field("3");
     child_field("4");
-
-    echo '<div class="row">';
-    echo '<div class="col-md-8">';
-    echo '<input type="submit" name="pw-submitted" value="Save"/>';
-    echo '</div>';
-    echo '</div>';   
-    echo '</form>';
-    echo '</div>';
-    return ob_get_clean();
 }
 
-add_shortcode('client_registration', 'client_registration_form');
 
 /*********************************************************************************/
 function client_view_form()
