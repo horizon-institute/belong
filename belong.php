@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.7.6
+ * Version: 0.1.7.7
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -33,51 +33,51 @@ function client_registration_form()
     echo '<h4>PERSONAL DETAILS</h4>';
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     echo '<div class="row">';
-    date_field("pw-registration-date", "DATE", "reg_date", "6");
-    text_field("pw-client-number", "CLIENT NUMBER", "6");
+    date_field("pw-registration-date", "DATE", "reg_date", "4");
+    text_field("pw-client-number", "CLIENT NUMBER", "4");
     echo '</div>';
     echo '<div class="row">';
-    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME", "6");
-    staff_select_field("pw-case-owner", "CASE OWNER", "6");
+    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME", "4");
+    staff_select_field("pw-case-owner", "CASE OWNER", "4");
     echo '</div>';
     echo '<div class="row">';
     echo '<fieldset disabled>';
-    user_field("pw-display_name", "DISPLAY NAME", "display_name", $id, "6");
-    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id, "6");
+    user_field("pw-display_name", "DISPLAY NAME", "display_name", $id, "4");
+    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id, "4");
     echo '</fieldset>';
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Male","Female"), "pw-client_gender", "GENDER", "6");
-    text_field("pw-client-telephone", "TELEPHONE NUMBER", "6");
+    select_field(array("Male","Female"), "pw-client_gender", "GENDER", "4");
+    text_field("pw-client-telephone", "TELEPHONE NUMBER", "4");
     echo '</div>';
     echo '<div class="row">';
-    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob", "12");
+    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob", "8");
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-address", "ADDRESS", "5", "35", "12");
+    textarea_field("pw-address", "ADDRESS", "5", "35", "8");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-postcode", "POST CODE", "6");
-    text_field("pw-accomodation-type", "ACCOMODATION TYPE", "6");
+    text_field("pw-postcode", "POST CODE", "4");
+    text_field("pw-accomodation-type", "ACCOMODATION TYPE", "4");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-nationality", "NATIONALITY", "6");
-    text_field("pw-nationality-code", "CODE", "6");
+    text_field("pw-nationality", "NATIONALITY", "4");
+    text_field("pw-nationality-code", "CODE", "4");
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS", "12");
+    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS", "8");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-religion", "RELIGION", "6");
-    text_field("pw-placeofworship", "PLACE OF WORSHIP", "6");
+    text_field("pw-religion", "RELIGION", "4");
+    text_field("pw-placeofworship", "PLACE OF WORSHIP", "4");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME", "6");
-    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER", "6");
+    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME", "4");
+    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER", "4");
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT", "6");
-    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "6");
+    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT", "4");
+    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "4");
     echo '</div>';  
 
     child_field("1");
@@ -86,7 +86,7 @@ function client_registration_form()
     child_field("4");
 
     echo '<div class="row">';
-    echo '<div class="col-md-12">';
+    echo '<div class="col-md-8">';
     echo '<input type="submit" name="pw-submitted" value="Save"/>';
     echo '</div>';
     echo '</div>';   
@@ -463,12 +463,12 @@ function textarea_field($name, $title, $rows, $columns, $col)
 function child_field($child_no)
 {
     echo '<div class="row">';
-    text_field("pw_child_name_" . $child_no, "NAME", "6");
-    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "6");
+    text_field("pw_child_name_" . $child_no, "NAME", "4");
+    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "4");
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "6");
-    text_field("pw_child_cn_" . $child_no, "CN", "6");
+    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "4");
+    text_field("pw_child_cn_" . $child_no, "CN", "4");
     echo '</div>';
 }
 
