@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.1
+ * Version: 0.1.9.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -557,7 +557,7 @@ echo '</form>';
 //***************************************************************
     ?>
     <script>
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function($) {
         var titleValidators = {
                 row: '.col-md-4',
                 validators: {
