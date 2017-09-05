@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.0
+ * Version: 0.1.9.1
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -518,43 +518,48 @@ function child_field($child_no) {
 
 
 //***************************************************************
+echo '<form id="bookForm" method="post" class="form-horizontal">';
+echo '<div class="row">';
 echo '<div class="form-group">';
-echo '<label class="col-xs-1 control-label">Book</label>';
-echo '<div class="col-xs-4">';
+echo '<label class="col-md-1 control-label">Book</label>';
+echo '<div class="col-md-4">';
 echo '<input type="text" class="form-control" name="book[0].title" placeholder="Title" />';
 echo '</div>';
-echo '<div class="col-xs-4">';
+echo '<div class="col-md-4">';
 echo '<input type="text" class="form-control" name="book[0].isbn" placeholder="ISBN" />';
 echo '</div>';
-echo '<div class="col-xs-2">';
+echo '<div class="col-md-2">';
 echo '<input type="text" class="form-control" name="book[0].price" placeholder="Price" />';
 echo '</div>';
-echo '<div class="col-xs-1">';
+echo '<div class="col-md-1">';
 echo '<button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>';
 echo '</div>';
 echo '</div>';
+echo '</div>';
 
+echo '<div class="row">';
 echo '<div class="form-group hide" id="bookTemplate">';
-echo '<div class="col-xs-4 col-xs-offset-1">';
+echo '<div class="col-md-4 col-md-offset-1">';
 echo '<input type="text" class="form-control" name="title" placeholder="Title" />';
 echo '</div>';
-echo '<div class="col-xs-4">';
+echo '<div class="col-md-4">';
 echo '<input type="text" class="form-control" name="isbn" placeholder="ISBN" />';
 echo '</div>';
-echo '<div class="col-xs-2">';
+echo '<div class="col-md-2">';
 echo '<input type="text" class="form-control" name="price" placeholder="Price" />';
 echo '</div>';
-echo '<div class="col-xs-1">';
+echo '<div class="col-md-1">';
 echo '<button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>';
 echo '</div>';
 echo '</div>';
-
+echo '</div>';
+echo '</form>';
 //***************************************************************
     ?>
     <script>
     jQuery(document).ready(function() {
         var titleValidators = {
-                row: '.col-xs-4',   // The title is placed inside a <div class="col-xs-4"> element
+                row: '.col-md-4',
                 validators: {
                     notEmpty: {
                         message: 'The title is required'
@@ -562,7 +567,7 @@ echo '</div>';
                 }
             },
             isbnValidators = {
-                row: '.col-xs-4',
+                row: '.col-md-4',
                 validators: {
                     notEmpty: {
                         message: 'The ISBN is required'
@@ -573,7 +578,7 @@ echo '</div>';
                 }
             },
             priceValidators = {
-                row: '.col-xs-2',
+                row: '.col-md-2',
                 validators: {
                     notEmpty: {
                         message: 'The price is required'
