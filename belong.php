@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.2
+ * Version: 0.1.9.3
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -557,7 +557,7 @@ echo '</form>';
 //***************************************************************
     ?>
     <script>
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function() {
         var titleValidators = {
                 row: '.col-md-4',
                 validators: {
@@ -590,7 +590,7 @@ echo '</form>';
             },
             bookIndex = 0;
     
-        $('#bookForm')
+            jQuery('#bookForm')
             .formValidation({
                 framework: 'bootstrap',
                 icon: {
@@ -608,7 +608,7 @@ echo '</form>';
             // Add button click handler
             .on('click', '.addButton', function() {
                 bookIndex++;
-                var $template = $('#bookTemplate'),
+                var $template = jQuery('#bookTemplate'),
                     $clone    = $template
                                     .clone()
                                     .removeClass('hide')
@@ -624,7 +624,7 @@ echo '</form>';
     
                 // Add new fields
                 // Note that we also pass the validator rules for new field as the third parameter
-                $('#bookForm')
+                jQuery('#bookForm')
                     .formValidation('addField', 'book[' + bookIndex + '].title', titleValidators)
                     .formValidation('addField', 'book[' + bookIndex + '].isbn', isbnValidators)
                     .formValidation('addField', 'book[' + bookIndex + '].price', priceValidators);
@@ -636,7 +636,7 @@ echo '</form>';
                     index = $row.attr('data-book-index');
     
                 // Remove fields
-                $('#bookForm')
+                jQuery('#bookForm')
                     .formValidation('removeField', $row.find('[name="book[' + index + '].title"]'))
                     .formValidation('removeField', $row.find('[name="book[' + index + '].isbn"]'))
                     .formValidation('removeField', $row.find('[name="book[' + index + '].price"]'));
