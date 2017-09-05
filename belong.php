@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.3
+ * Version: 0.1.9.4
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -591,19 +591,19 @@ echo '</form>';
             bookIndex = 0;
     
             jQuery('#bookForm')
-            .formValidation({
-                framework: 'bootstrap',
-                icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    'book[0].title': titleValidators,
-                    'book[0].isbn': isbnValidators,
-                    'book[0].price': priceValidators
-                }
-            })
+            // .formValidation({
+            //     framework: 'bootstrap',
+            //     icon: {
+            //         valid: 'glyphicon glyphicon-ok',
+            //         invalid: 'glyphicon glyphicon-remove',
+            //         validating: 'glyphicon glyphicon-refresh'
+            //     },
+            //     fields: {
+            //         'book[0].title': titleValidators,
+            //         'book[0].isbn': isbnValidators,
+            //         'book[0].price': priceValidators
+            //     }
+            // })
     
             // Add button click handler
             .on('click', '.addButton', function() {
