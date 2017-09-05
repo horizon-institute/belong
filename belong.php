@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.4
+ * Version: 0.1.9.5
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -103,11 +103,10 @@ function personal_form() {
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT", "6");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "6");
     echo '</div>';  
-
+    
+    echo '<div class="row">';
     child_field("1");
-    // child_field("2");
-    // child_field("3");
-    // child_field("4");
+    echo '</div>';  
 
     echo '<div class="row">';
     echo '<div class="col-md-12">';
@@ -519,7 +518,7 @@ function child_field($child_no) {
 
 //***************************************************************
 echo '<form id="bookForm" method="post" class="form-horizontal">';
-echo '<div class="row">';
+
 echo '<div class="form-group">';
 echo '<label class="col-md-1 control-label">Book</label>';
 echo '<div class="col-md-4">';
@@ -532,12 +531,10 @@ echo '<div class="col-md-2">';
 echo '<input type="text" class="form-control" name="book[0].price" placeholder="Price" />';
 echo '</div>';
 echo '<div class="col-md-1">';
-echo '<button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>';
-echo '</div>';
+echo '<button type="button" class="btn btn-success add-more"><i class="glyphicon glyphicon-plus"></i>Add</button>';
 echo '</div>';
 echo '</div>';
 
-echo '<div class="row">';
 echo '<div class="form-group hide" id="bookTemplate">';
 echo '<div class="col-md-4 col-md-offset-1">';
 echo '<input type="text" class="form-control" name="title" placeholder="Title" />';
@@ -549,8 +546,7 @@ echo '<div class="col-md-2">';
 echo '<input type="text" class="form-control" name="price" placeholder="Price" />';
 echo '</div>';
 echo '<div class="col-md-1">';
-echo '<button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>';
-echo '</div>';
+echo '<button type="button" class="btn btn-danger remove"><i class="glyphicon glyphicon-remove"></i>Remove</button>';
 echo '</div>';
 echo '</div>';
 echo '</form>';
