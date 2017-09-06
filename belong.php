@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.6
+ * Version: 0.1.9.7
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -181,7 +181,7 @@ function client_view_form()
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU");
 
-    
+
     child_field("1");
     child_field("2");
     child_field("3");
@@ -512,7 +512,7 @@ function child_field($child_no) {
     text_field("pw_child_name_" . $child_no, "NAME", "4");
     date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "2");
     select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "2");
-    text_field("pw_child_cn_" . $child_no, "CN", "3");
+    text_field("pw_child_cn_" . $child_no, "CN", "4");
     echo '</div>';
 
 }
