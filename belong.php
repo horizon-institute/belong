@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.5
+ * Version: 0.1.9.6
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -103,10 +103,12 @@ function personal_form() {
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT", "6");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "6");
     echo '</div>';  
-    
-    echo '<div class="row">';
+  
     child_field("1");
-    echo '</div>';  
+    child_field("2");
+    child_field("3");
+    child_field("4");
+    child_field("5");
 
     echo '<div class="row">';
     echo '<div class="col-md-12">';
@@ -501,148 +503,17 @@ function textarea_field($name, $title, $rows, $columns, $col)
     echo '</div>';
 }
 
+
+/*****************************************************
+child input fields - this should be dynamic eventually 
+******************************************************/
 function child_field($child_no) {
-    // echo '<div class="row">';
-    // echo '<div class="form-group hide" id="childTemplate">';
-    // text_field("pw_child_name_" . $child_no, "NAME", "4");
-    // date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "2");
-    // select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "2");
-    // text_field("pw_child_cn_" . $child_no, "CN", "3");
-    // echo '<div class="col-md-1">';
-    // echo '<button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>';
-    // echo '</div>';
-    // echo '</div>';
-    // echo '</div>';
-
-
-
-//***************************************************************
-echo '<form id="bookForm" method="post" class="form-horizontal">';
-
-echo '<div class="form-group">';
-echo '<label class="col-md-1 control-label">Book</label>';
-echo '<div class="col-md-4">';
-echo '<input type="text" class="form-control" name="book[0].title" placeholder="Title" />';
-echo '</div>';
-echo '<div class="col-md-4">';
-echo '<input type="text" class="form-control" name="book[0].isbn" placeholder="ISBN" />';
-echo '</div>';
-echo '<div class="col-md-2">';
-echo '<input type="text" class="form-control" name="book[0].price" placeholder="Price" />';
-echo '</div>';
-echo '<div class="col-md-1">';
-echo '<button type="button" class="btn btn-success add-more"><i class="glyphicon glyphicon-plus"></i>Add</button>';
-echo '</div>';
-echo '</div>';
-
-echo '<div class="form-group hide" id="bookTemplate">';
-echo '<div class="col-md-4 col-md-offset-1">';
-echo '<input type="text" class="form-control" name="title" placeholder="Title" />';
-echo '</div>';
-echo '<div class="col-md-4">';
-echo '<input type="text" class="form-control" name="isbn" placeholder="ISBN" />';
-echo '</div>';
-echo '<div class="col-md-2">';
-echo '<input type="text" class="form-control" name="price" placeholder="Price" />';
-echo '</div>';
-echo '<div class="col-md-1">';
-echo '<button type="button" class="btn btn-danger remove"><i class="glyphicon glyphicon-remove"></i>Remove</button>';
-echo '</div>';
-echo '</div>';
-echo '</form>';
-//***************************************************************
-    ?>
-    <script>
-    jQuery(document).ready(function() {
-        var titleValidators = {
-                row: '.col-md-4',
-                validators: {
-                    notEmpty: {
-                        message: 'The title is required'
-                    }
-                }
-            },
-            isbnValidators = {
-                row: '.col-md-4',
-                validators: {
-                    notEmpty: {
-                        message: 'The ISBN is required'
-                    },
-                    isbn: {
-                        message: 'The ISBN is not valid'
-                    }
-                }
-            },
-            priceValidators = {
-                row: '.col-md-2',
-                validators: {
-                    notEmpty: {
-                        message: 'The price is required'
-                    },
-                    numeric: {
-                        message: 'The price must be a numeric number'
-                    }
-                }
-            },
-            bookIndex = 0;
-    
-            jQuery('#bookForm')
-            // .formValidation({
-            //     framework: 'bootstrap',
-            //     icon: {
-            //         valid: 'glyphicon glyphicon-ok',
-            //         invalid: 'glyphicon glyphicon-remove',
-            //         validating: 'glyphicon glyphicon-refresh'
-            //     },
-            //     fields: {
-            //         'book[0].title': titleValidators,
-            //         'book[0].isbn': isbnValidators,
-            //         'book[0].price': priceValidators
-            //     }
-            // })
-    
-            // Add button click handler
-            .on('click', '.addButton', function() {
-                bookIndex++;
-                var $template = jQuery('#bookTemplate'),
-                    $clone    = $template
-                                    .clone()
-                                    .removeClass('hide')
-                                    .removeAttr('id')
-                                    .attr('data-book-index', bookIndex)
-                                    .insertBefore($template);
-    
-                // Update the name attributes
-                $clone
-                    .find('[name="title"]').attr('name', 'book[' + bookIndex + '].title').end()
-                    .find('[name="isbn"]').attr('name', 'book[' + bookIndex + '].isbn').end()
-                    .find('[name="price"]').attr('name', 'book[' + bookIndex + '].price').end();
-    
-                // Add new fields
-                // Note that we also pass the validator rules for new field as the third parameter
-                jQuery('#bookForm')
-                    .formValidation('addField', 'book[' + bookIndex + '].title', titleValidators)
-                    .formValidation('addField', 'book[' + bookIndex + '].isbn', isbnValidators)
-                    .formValidation('addField', 'book[' + bookIndex + '].price', priceValidators);
-            })
-    
-            // Remove button click handler
-            .on('click', '.removeButton', function() {
-                var $row  = $(this).parents('.form-group'),
-                    index = $row.attr('data-book-index');
-    
-                // Remove fields
-                jQuery('#bookForm')
-                    .formValidation('removeField', $row.find('[name="book[' + index + '].title"]'))
-                    .formValidation('removeField', $row.find('[name="book[' + index + '].isbn"]'))
-                    .formValidation('removeField', $row.find('[name="book[' + index + '].price"]'));
-    
-                // Remove element containing the fields
-                $row.remove();
-            });
-    });
-    </script>
-<?php
+    echo '<div class="row">';
+    text_field("pw_child_name_" . $child_no, "NAME", "4");
+    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "2");
+    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "2");
+    text_field("pw_child_cn_" . $child_no, "CN", "3");
+    echo '</div>';
 
 }
 
