@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.3
+ * Version: 0.2.0.4
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -100,32 +100,26 @@ function client_registration($id) {
     language_form();
     echo '</div>';
 
-    echo '</div>';
     echo '<div class="tab-pane fade" id="immigration">';
     immigration_form();
     echo '</div>';
 
-    echo '</div>';
     echo '<div class="tab-pane fade" id="financial">';
     financial_form();
     echo '</div>';
 
-    echo '</div>';
     echo '<div class="tab-pane fade" id="work">';
     work_form();
     echo '</div>';
 
-    echo '</div>';
     echo '<div class="tab-pane fade" id="work_experience">';
     work_experience_form();
     echo '</div>';
 
-    echo '</div>';
     echo '<div class="tab-pane fade" id="health">';
     health_form();
     echo '</div>';
 
-    echo '</div>';
     echo '<div class="tab-pane fade" id="additional">';
     additional_form();
     echo '</div>';
@@ -238,40 +232,40 @@ function language_form() {
 
 function immigration_form() {
     echo '<div class="row">';
-    text_field("pw_", "TEST", "6");
+    text_field("pw_1", "TEST", "6");
     echo '</div>';
 }
 /*********************************************************************************/
 
 function financial_form() {
     echo '<div class="row">';
-    text_field("pw_", "TEST", "6");
+    text_field("pw_2", "TEST", "6");
     echo '</div>';
 }
 /*********************************************************************************/
 
 function work_form() {
     echo '<div class="row">';
-    text_field("pw_", "TEST", "6");
+    text_field("pw_3", "TEST", "6");
     echo '</div>'; 
 }
 /*********************************************************************************/
 
 function work_experience_form() {
     echo '<div class="row">';
-    text_field("pw_", "TEST", "6");
+    text_field("pw_4", "TEST", "6");
     echo '</div>';
 }
 /*********************************************************************************/
 function health_form() {
     echo '<div class="row">';
-    text_field("pw_", "TEST", "6");
+    text_field("pw_5", "TEST", "6");
     echo '</div>';
 }
 /*********************************************************************************/
 function additional_form() {
     echo '<div class="row">';
-    text_field("pw_", "TEST", "6");
+    text_field("pw_6", "TEST", "6");
     echo '</div>';
 }
 /*********************************************************************************/
