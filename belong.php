@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.7
+ * Version: 0.2.0.8
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -187,6 +187,8 @@ function personal_form($id) {
     child_field("3");
     child_field("4");
     child_field("5");
+
+    dynamic();
 }
 /*********************************************************************************/
 
@@ -583,6 +585,56 @@ function child_field($child_no) {
     text_field("pw_child_cn_" . $child_no, "CN", "4");
     echo '</div>';
 
+}
+
+
+
+function dynamic() {
+    echo '<div class="row">';
+    echo '<div class="control-group" id="fields">';
+    echo '<label class="control-label" for="field1">Nice Multiple Form Fields</label>';
+    echo '<div class="controls"> ';
+    echo '<div class="entry input-group col-xs-3">';
+    echo '<input class="form-control" name="fields[]" type="text" placeholder="Type something" />';
+    echo '<span class="input-group-btn">';
+    echo '<button class="btn btn-success btn-add" type="button">';
+    echo '<span class="glyphicon glyphicon-plus"></span>';
+    echo '</button>';
+    echo '</span>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+
+    ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery(document).on('click', '.btn-add', function(e)
+    {
+        e.preventDefault();
+
+        var controlForm = $('.controls form:first'),
+            currentEntry = $(this).parents('.entry:first'),
+            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+        newEntry.find('input').val('');
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('<span class="glyphicon glyphicon-minus"></span>');
+    }).on('click', '.btn-remove', function(e)
+    {
+		$(this).parents('.entry:first').remove();
+
+		e.preventDefault();
+		return false;
+	});
+
+
+    });
+    </script>
+
+<?php
 }
 
 
