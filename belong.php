@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.0
+ * Version: 0.2.0.1
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -30,12 +30,11 @@ function client_registration_form() {
     $id = $_GET['clientID'];
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
     client_registration($id);
-    // submit button
     echo '<div class="row">';
-    echo '<div class="col-md-12">';
-    echo '<input type="submit" class="form-control" name="pw-personal" value="Update"/>';
+    //echo '<div class="col-md-12">';
+    echo '<button type="submit" class="btn btn-default" name="pw-personal_form_submit">UPDATE</button>';
     echo '</div>';
-    echo '</div>'; 
+    //echo '</div>'; 
     echo '</form>';
     return ob_get_clean();
 }
@@ -147,7 +146,7 @@ function personal_form($id) {
 function education_form() {
     echo '<div class="row">';
     select_multiple(array("Primary School","Secondary School","6th Form College","College","University","Other"), "pw_education_attended", "HAVE YOU EVER ATTENDED ANY OF THE FOLLOWING?", "6");
-    text_field("pw_education_other", "EDUCATION", "6");
+    text_field("pw_education_other", "OTHER", "6");
     echo '</div>';
     echo '<div class="row">';
     echo '<h4>WHAT FORMAL QUALIFICATIONS DO YOU HAVE AND HAVE THEY BEEN RECOGNISED?</h4>';
