@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.2.0
+* Version: 0.2.2.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -581,25 +581,9 @@ function child_field($child_no) {
     
 }
 
-
-// function child($no) {
-//     echo '<div class="row">';
-//     echo '<div class="col-md-6">';
-//     echo '<label class="control-label">CHILD ' . $no . '</label>';
-//     echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-"' . $no . '" id="field' . $no . '" size="40 " data-items="8" />';
-//     echo '</div>';
-//     echo '<div class="col-md-1">';
-//     echo '<button id="b' . $no . '" class="btn add-more" type="button">+</button>';
-//     echo '</div>';
-//     echo '</div>';
-
-// }
-
-
 function children() {
-    echo '<div class="panel panel-default">';
-    echo '<div class="panel-heading">Dynamic Form Fields - Add & Remove Multiple fields</div>';
-    echo '<div class="panel-heading">Education Experience</div>';
+    echo '<div class="panel panel-primary">';
+    echo '<div class="panel-heading">CHILDREN</div>';
     echo '<div class="panel-body">';
     
     echo '<div id="education_fields">';
@@ -641,26 +625,8 @@ function children() {
     echo '<div class="clear"></div>';
     
     echo '</div>';
-    echo '<div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field :)</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove form field :)</small></div>';
-    echo '<div class="panel-footer"><small><em><a href="http://shafi.info/">More Info - Developer Shafi (Bangladesh)</a></em></em></small></div>';
+    echo '<div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove form field</small></div>';
     echo '</div>';
-    // echo '<div class="row">';
-    // echo '<input type="hidden" name="count" value="1" />';
-    // echo '<div class="control-group" id="fields">';
-    // echo '<label class="control-label" for="field1">CHILDREN</label>';
-    // echo '<div class="controls" id="profs">';
-    // echo '<div id="field">';
-    // echo '<div class="col-md-6">';
-    // echo '<label class="control-label">CHILD 1</label>';
-    // echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-1" id="field1" size="40 " data-items="8" />';
-    // echo '</div>';
-    // echo '<div class="col-md-1">';
-    // echo '<button id="b1" class="btn add-more" type="button">+</button>';
-    // echo '</div>';
-    // echo '</div>';
-    // echo '</div>';
-    // echo '</div>';
-    // echo '</div>';
     
     ?>
     <script type="text/javascript">
@@ -673,40 +639,12 @@ function children() {
         divtest.setAttribute("class", "form-group removeclass" + room);
         var rdiv = 'removeclass' + room;
         divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields(' + room + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
-
         objTo.appendChild(divtest)
       }
 
       function remove_education_fields(rid) {
         $('.removeclass' + rid).remove();
       }
-
-
-      //   jQuery(document).ready(function() {
-      //     var next = 1;
-      //     jQuery(".add-more").click(function(e){
-      //         e.preventDefault();
-      //         var addto = "#field" + next;
-      //         var addRemove = "#field" + (next);
-      //         next = next + 1;
-      //         var newIn = '<div class="form-inline>"><label class="control-label">CHILD ' + next + '</label><input autocomplete="off" class="form-control" type="text" name="pw-child-"' + next + '" id="field' + next + '" size="40 " data-items="8" /></div>';
-      //         var newInput = jQuery(newIn);
-      //         var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button>';
-      //         var removeButton = jQuery(removeBtn);
-      //         jQuery(addto).after(newInput);
-      //         jQuery(addRemove).after(removeButton);
-      //         jQuery("#field" + next).attr('data-source',jQuery(addto).attr('data-source'));
-      //         jQuery("#count").val(next);
-
-      //         jQuery('.remove-me').click(function(e){
-      //             e.preventDefault();
-      //             var fieldNum = this.id.charAt(this.id.length-1);
-      //             var fieldID = "#field" + fieldNum;
-      //             jQuery(this).remove();
-      //             jQuery(fieldID).remove();
-      //         });
-      //     });
-      //   });
     </script>
 
     <?php
