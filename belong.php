@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Plugin Name: Belong
- * Plugin URI: http://belong-horizon.cloudapp.net
- * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
- * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.8
- * Author: Javid Yousaf
- * License: GPL3
- */
+* Plugin Name: Belong
+* Plugin URI: http://belong-horizon.cloudapp.net
+* Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
+* Description: Custom functionality for Belong Nottingham CRM
+* Version: 0.2.0.9
+* Author: Javid Yousaf
+* License: GPL3
+*/
 
 // Prevent direct access
 defined('ABSPATH') or die('No script kiddies please!');
@@ -31,14 +31,14 @@ function client_registration_form() {
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
     echo '<div class="form-group">';
     client_registration($id);
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<div class="form-group">';
     echo '<button type="submit" class="btn btn-default" name="pw-personal_form_submit">UPDATE</button>';
     echo '</div>';
-    echo '</div>'; 
-    echo '</div>'; 
+    echo '</div>';
+    echo '</div>';
     echo '</form>';
     return ob_get_clean();
 }
@@ -46,7 +46,7 @@ function client_registration_form() {
 add_shortcode('client_registration', 'client_registration_form');
 /*********************************************************************************/
 
-function client_view_form() { 
+function client_view_form() {
     $current_user = belong_get_current_user();
     $id           = $current_user->ID;
     ob_start();
@@ -61,7 +61,7 @@ function client_view_form() {
 add_shortcode('client_view', 'client_view_form');
 /*********************************************************************************/
 
-function client_registration($id) {    
+function client_registration($id) {
     echo '<ul class="nav nav-tabs">';
     echo '<li class="active">';
     echo '<a href="#personal" data-toggle="tab">PERSONAL DETAILS</a>';
@@ -91,7 +91,7 @@ function client_registration($id) {
     echo '<a href="#additional" data-toggle="tab">ADDITIONAL INFORMATION</a>';
     echo '</li>';
     echo '</ul>';
-  
+    
     echo '<div class="tab-content">';
     echo '<div class="tab-pane active" id="personal">';
     personal_form($id);
@@ -102,36 +102,36 @@ function client_registration($id) {
     echo '<div class="tab-pane fade" id="language">';
     language_form();
     echo '</div>';
-
+    
     echo '<div class="tab-pane fade" id="immigration">';
     immigration_form();
     echo '</div>';
-
+    
     echo '<div class="tab-pane fade" id="financial">';
     financial_form();
     echo '</div>';
-
+    
     echo '<div class="tab-pane fade" id="work">';
     work_form();
     echo '</div>';
-
+    
     echo '<div class="tab-pane fade" id="work_experience">';
     work_experience_form();
     echo '</div>';
-
+    
     echo '<div class="tab-pane fade" id="health">';
     health_form();
     echo '</div>';
-
+    
     echo '<div class="tab-pane fade" id="additional">';
     additional_form();
     echo '</div>';
-
+    
     echo '</div>';
 }
 /*********************************************************************************/
 
-function personal_form($id) {  
+function personal_form($id) {
     echo '<div class="row">';
     date_field("pw-registration-date", "DATE", "reg_date", "6");
     text_field("pw-client-number", "CLIENT NUMBER", "6");
@@ -176,18 +176,18 @@ function personal_form($id) {
     echo '<div class="row">';
     select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT", "6");
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "6");
-    echo '</div>';  
-
+    echo '</div>';
+    
     echo '<div class="row">';
     echo '<h4>CHILDREN</h4>';
-    echo '</div>'; 
-
+    echo '</div>';
+    
     child_field("1");
     child_field("2");
     child_field("3");
     child_field("4");
     child_field("5");
-
+    
     dynamic();
 }
 /*********************************************************************************/
@@ -199,39 +199,39 @@ function education_form() {
     echo '</div>';
     echo '<div class="row">';
     echo '<h4>WHAT FORMAL QUALIFICATIONS DO YOU HAVE AND HAVE THEY BEEN RECOGNISED?</h4>';
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     text_field("pw_education_qualification_1", "QUALIFICATION", "10");
     select_field(array("Yes","No"), "pw-education_recognised_1", "RECOGNISED?", "2");
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     text_field("pw_education_qualification_2", "QUALIFICATION", "10");
     select_field(array("Yes","No"), "pw-education_recognised_2", "RECOGNISED?", "2");
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     text_field("pw_education_qualification_3", "QUALIFICATION", "10");
     select_field(array("Yes","No"), "pw-education_recognised_3", "RECOGNISED?", "2");
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     text_field("pw_education_qualification_4", "QUALIFICATION", "10");
     select_field(array("Yes","No"), "pw-education_recognised_4", "RECOGNISED?", "2");
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     text_field("pw_education_qualification_5", "QUALIFICATION", "10");
     select_field(array("Yes","No"), "pw-education_recognised_5", "RECOGNISED?", "2");
-    echo '</div>'; 
+    echo '</div>';
     echo '<div class="row">';
     textarea_field("pw-education_not_recognised", "IF THEY HAVE NOT BEEN RECOGNISED PLEASE TELL US WHY", "5", "35", "12");
     echo '</div>';
 }
 /*********************************************************************************/
 
-function language_form() { 
+function language_form() {
     echo '<div class="row">';
     text_field("pw_language_primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
     checkbox_field("pw_language_spoken", "SPOKEN", "2");
     checkbox_field("pw_language_written", "WRITTEN", "2");
-    echo '</div>'; 
+    echo '</div>';
 }
 /*********************************************************************************/
 
@@ -252,7 +252,7 @@ function financial_form() {
 function work_form() {
     echo '<div class="row">';
     text_field("pw_3", "TEST", "6");
-    echo '</div>'; 
+    echo '</div>';
 }
 /*********************************************************************************/
 
@@ -280,8 +280,8 @@ function belong_list_events_for_user() {
     $counter         = 0;
     $current_user    = belong_get_current_user();
     $assignment_args = array(
-        'posts_per_page' => -1,
-        'post_type' => 'assignments'
+    'posts_per_page' => -1,
+    'post_type' => 'assignments'
     );
     
     $assignment_posts = get_posts($assignment_args);
@@ -302,7 +302,7 @@ function belong_list_events_for_user() {
                 echo "<td>" . $date->format('F j, Y g:i a') . "</td></tr>";
             }
         }
-        echo "</table>";     
+        echo "</table>";
     }
     return ob_get_clean();
 }
@@ -315,8 +315,8 @@ function belong_list_modules_for_user() {
     $counter         = 0;
     $current_user    = belong_get_current_user();
     $assignment_args = array(
-        'posts_per_page' => -1,
-        'post_type' => 'assignments'
+    'posts_per_page' => -1,
+    'post_type' => 'assignments'
     );
     
     $assignment_posts = get_posts($assignment_args);
@@ -344,13 +344,13 @@ function belong_list_modules_for_user() {
 add_shortcode('user_modules', 'belong_list_modules_for_user');
 
 /**********************************************************
- * Displays a list of clients with links to their profiles
- ***********************************************************/
+* Displays a list of clients with links to their profiles
+***********************************************************/
 function belong_list_clients() {
     ob_start();
     $counter   = 0;
     $user_args = array(
-        'role' => 'Client'
+    'role' => 'Client'
     );
     $clients = get_users($user_args);
     echo "<table>";
@@ -367,17 +367,17 @@ add_shortcode('belong_clients', 'belong_list_clients');
 
 
 /***********************************
- *        HELPER FUNCTIONS          *
- ************************************/
+*        HELPER FUNCTIONS          *
+************************************/
 
 /**************************************************************
- * Send SMS to users number. Need to restrict lenght of message
- * $numbers is an array. $message is the message to send.
- ***************************************************************/
+* Send SMS to users number. Need to restrict lenght of message
+* $numbers is an array. $message is the message to send.
+***************************************************************/
 function belong_send_SMS($message, $numbers) {
     global $sms;
     $sms->to  = array(
-        $numbers
+    $numbers
     );
     $sms->msg = $message;
     $sms->SendSMS();
@@ -436,12 +436,12 @@ Return a list of staff members
 function get_staff_list() {
     $list          = array();
     $args          = array(
-        'role' => 'staff'
+    'role' => 'staff'
     );
     $staff_members = get_users($args);
     foreach ($staff_members as $staff_member) {
         $list[] = array(
-            $staff_member->display_name
+        $staff_member->display_name
         );
     }
     return $list;
@@ -452,17 +452,17 @@ function get_staff_list() {
 Display the date picker
 ************************************************/
 function datepicker($date_id) {
-?>
-   <script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery("#"+<?php echo json_encode($date_id); ?>).datepicker({
-            changeYear: true,
-            yearRange: "-100:+0",
-            dateFormat: 'dd-mm-yy'
-        });
+    ?>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      jQuery("#" + <?php echo json_encode($date_id); ?>).datepicker({
+        changeYear: true,
+        yearRange: "-100:+0",
+        dateFormat: 'dd-mm-yy'
+      });
     });
-    </script>
-<?php
+  </script>
+  <?php
 }
 
 /***********************************************
@@ -564,7 +564,7 @@ function email_field($name, $title, $col) {
 }
 
 /***********************************************
-textarea field 
+textarea field
 ************************************************/
 function textarea_field($name, $title, $rows, $columns, $col) {
     echo '<div class="col-md-' . $col . '" >';
@@ -575,7 +575,7 @@ function textarea_field($name, $title, $rows, $columns, $col) {
 
 
 /*****************************************************
-child input fields - this should be dynamic eventually 
+child input fields - this should be dynamic eventually
 ******************************************************/
 function child_field($child_no) {
     echo '<div class="row">';
@@ -584,7 +584,7 @@ function child_field($child_no) {
     select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "2");
     text_field("pw_child_cn_" . $child_no, "CN", "4");
     echo '</div>';
-
+    
 }
 
 
@@ -605,36 +605,30 @@ function dynamic() {
     echo '</div>';
     echo '</div>';
     echo '</div>';
-
+    
     ?>
     <script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery(document).on('click', '.btn-add', function(e)
-    {
-        e.preventDefault();
+      jQuery(document).ready(function() {
+        jQuery(document).on('click', '.btn-add', function(e) {
+          e.preventDefault();
+          var controlForm = jQuery('.controls form:first'),
+            currentEntry = jQuery(this).parents('.entry:first'),
+            newEntry = jQuery(currentEntry.clone()).appendTo(controlForm);
 
-        var controlForm = $('.controls form:first'),
-            currentEntry = $(this).parents('.entry:first'),
-            newEntry = $(currentEntry.clone()).appendTo(controlForm);
-
-        newEntry.find('input').val('');
-        controlForm.find('.entry:not(:last) .btn-add')
+          newEntry.find('input').val('');
+          controlForm.find('.entry:not(:last) .btn-add')
             .removeClass('btn-add').addClass('btn-remove')
             .removeClass('btn-success').addClass('btn-danger')
             .html('<span class="glyphicon glyphicon-minus"></span>');
-    }).on('click', '.btn-remove', function(e)
-    {
-		$(this).parents('.entry:first').remove();
-
-		e.preventDefault();
-		return false;
-	});
-
-
-    });
+        }).on('click', '.btn-remove', function(e) {
+          jQuery(this).parents('.entry:first').remove();
+          e.preventDefault();
+          return false;
+        });
+      });
     </script>
 
-<?php
+    <?php
 }
 
 
