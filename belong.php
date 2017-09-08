@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.2
+ * Version: 0.2.0.3
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -69,6 +69,24 @@ function client_registration($id) {
     echo '<li>';
     echo '<a href="#language" data-toggle="tab">LANGUAGE</a>';
     echo '</li>';
+    echo '<li>';
+    echo '<a href="#immigration" data-toggle="tab">IMMIGRATION STATUS</a>';
+    echo '</li>';
+    echo '<li>';
+    echo '<a href="#financial" data-toggle="tab">FINANCIAL NEEDS</a>';
+    echo '</li>';
+    echo '<li>';
+    echo '<a href="#work" data-toggle="tab">LOOKING FOR WORK</a>';
+    echo '</li>';
+    echo '<li>';
+    echo '<a href="#work_experience" data-toggle="tab">WORK EXPERIENCE</a>';
+    echo '</li>';
+    echo '<li>';
+    echo '<a href="#health" data-toggle="tab">HEALTH & WELLBEING</a>';
+    echo '</li>';
+    echo '<li>';
+    echo '<a href="#additional" data-toggle="tab">ADDITIONAL INFORMATION</a>';
+    echo '</li>';
     echo '</ul>';
   
     echo '<div class="tab-content">';
@@ -81,6 +99,37 @@ function client_registration($id) {
     echo '<div class="tab-pane fade" id="language">';
     language_form();
     echo '</div>';
+
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="immigration">';
+    immigration_form();
+    echo '</div>';
+
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="financial">';
+    financial_form();
+    echo '</div>';
+
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="work">';
+    work_form();
+    echo '</div>';
+
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="work_experience">';
+    work_experience_form();
+    echo '</div>';
+
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="health">';
+    health_form();
+    echo '</div>';
+
+    echo '</div>';
+    echo '<div class="tab-pane fade" id="additional">';
+    additional_form();
+    echo '</div>';
+
     echo '</div>';
 }
 /*********************************************************************************/
@@ -178,16 +227,55 @@ function education_form() {
 }
 /*********************************************************************************/
 
-function language_form() {
-    
+function language_form() { 
     echo '<div class="row">';
     text_field("pw_language_primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
     checkbox_field("pw_language_spoken", "SPOKEN", "2");
     checkbox_field("pw_language_written", "WRITTEN", "2");
     echo '</div>'; 
 }
-
 /*********************************************************************************/
+
+function immigration_form() {
+    echo '<div class="row">';
+    text_field("pw_", "TEST", "6");
+    echo '</div>';
+}
+/*********************************************************************************/
+
+function financial_form() {
+    echo '<div class="row">';
+    text_field("pw_", "TEST", "6");
+    echo '</div>';
+}
+/*********************************************************************************/
+
+function work_form() {
+    echo '<div class="row">';
+    text_field("pw_", "TEST", "6");
+    echo '</div>'; 
+}
+/*********************************************************************************/
+
+function work_experience_form() {
+    echo '<div class="row">';
+    text_field("pw_", "TEST", "6");
+    echo '</div>';
+}
+/*********************************************************************************/
+function health_form() {
+    echo '<div class="row">';
+    text_field("pw_", "TEST", "6");
+    echo '</div>';
+}
+/*********************************************************************************/
+function additional_form() {
+    echo '<div class="row">';
+    text_field("pw_", "TEST", "6");
+    echo '</div>';
+}
+/*********************************************************************************/
+
 function belong_list_events_for_user() {
     ob_start();
     $counter         = 0;
