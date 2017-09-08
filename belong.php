@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.6
+* Version: 0.2.1.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -182,13 +182,7 @@ function personal_form($id) {
     echo '<h4>CHILDREN</h4>';
     echo '</div>';
     
-    child_field("1");
-    child_field("2");
-    child_field("3");
-    child_field("4");
-    child_field("5");
-    
-    dynamic();
+    children();
 }
 /*********************************************************************************/
 
@@ -590,15 +584,19 @@ function child_field($child_no) {
 
 function child($no) {
     echo '<div class="row">';
+    echo '<div class="col-md-6">';
     echo '<label class="control-label">CHILD ' . $no . '</label>';
     echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-"' . $no . '" id="field' . $no . '" size="40 " data-items="8" />';
+    echo '</div>';
+    echo '<div class="col-md-1">';
     echo '<button id="b' . $no . '" class="btn add-more" type="button">+</button>';
+    echo '</div>';
     echo '</div>';
     
 }
 
 
-function dynamic() {
+function children() {
     echo '<div class="row">';
     echo '<input type="hidden" name="count" value="1" />';
     echo '<div class="control-group" id="fields">';
@@ -606,7 +604,6 @@ function dynamic() {
     echo '<div class="controls" id="profs">';
     echo '<div id="field">';
     child("1");
-    //echo '<input autocomplete="off" class="form-control" id="field1" name="prof1" type="text" data-items="8"/>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -621,9 +618,9 @@ function dynamic() {
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<label class="control-label">CHILD ' + next + '</label><input autocomplete="off" class="form-control" type="text" name="pw-child-"' + next + '" id="field' + next + '" size="40 " data-items="8" />';
+            var newIn = '<div class="row"><div class="col-md-6"><label class="control-label">CHILD ' + next + '</label><input autocomplete="off" class="form-control" type="text" name="pw-child-"' + next + '" id="field' + next + '" size="40 " data-items="8" /></div>';
             var newInput = jQuery(newIn);
-            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+            var removeBtn = '<div class="col-md-1"><button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div></div>';
             var removeButton = jQuery(removeBtn);
             jQuery(addto).after(newInput);
             jQuery(addRemove).after(removeButton);
