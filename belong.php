@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.1.9.9
+ * Version: 0.2.0.0
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -145,8 +145,36 @@ function personal_form($id) {
 /*********************************************************************************/
 
 function education_form() {
-    text_field("pw-x1", "EDUCATION", "4");
-
+    echo '<div class="row">';
+    select_multiple(array("Primary School","Secondary School","6th Form College","College","University","Other"), "pw_education_attended", "HAVE YOU EVER ATTENDED ANY OF THE FOLLOWING?", "6");
+    text_field("pw_education_other", "EDUCATION", "6");
+    echo '</div>';
+    echo '<div class="row">';
+    echo '<h4>WHAT FORMAL QUALIFICATIONS DO YOU HAVE AND HAVE THEY BEEN RECOGNISED?</h4>';
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw_education_qualification_1", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education_recognised_1", "RECOGNISED?", "2");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw_education_qualification_2", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education_recognised_2", "RECOGNISED?", "2");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw_education_qualification_3", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education_recognised_3", "RECOGNISED?", "2");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw_education_qualification_4", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education_recognised_4", "RECOGNISED?", "2");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw_education_qualification_5", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education_recognised_5", "RECOGNISED?", "2");
+    echo '</div>'; 
+    echo '<div class="row">';
+    textarea_field("pw-education_not_recognised", "IF THEY HAVE NOT BEEN RECOGNISED PLEASE TELL US WHY", "5", "35", "12");
+    echo '</div>';
 }
 /*********************************************************************************/
 
@@ -156,8 +184,7 @@ function language_form() {
 }
 
 /*********************************************************************************/
-function belong_list_events_for_user()
-{
+function belong_list_events_for_user() {
     ob_start();
     $counter         = 0;
     $current_user    = belong_get_current_user();
@@ -192,8 +219,7 @@ function belong_list_events_for_user()
 add_shortcode('user_events', 'belong_list_events_for_user');
 
 /*********************************************************************************/
-function belong_list_modules_for_user()
-{
+function belong_list_modules_for_user() {
     ob_start();
     $counter         = 0;
     $current_user    = belong_get_current_user();
@@ -229,14 +255,12 @@ add_shortcode('user_modules', 'belong_list_modules_for_user');
 /**********************************************************
  * Displays a list of clients with links to their profiles
  ***********************************************************/
-function belong_list_clients()
-{
+function belong_list_clients() {
     ob_start();
     $counter   = 0;
     $user_args = array(
         'role' => 'Client'
     );
-    
     $clients = get_users($user_args);
     echo "<table>";
     echo "<tr><td></td><td>Client Name</td></tr>";
@@ -259,8 +283,7 @@ add_shortcode('belong_clients', 'belong_list_clients');
  * Send SMS to users number. Need to restrict lenght of message
  * $numbers is an array. $message is the message to send.
  ***************************************************************/
-function belong_send_SMS($message, $numbers)
-{
+function belong_send_SMS($message, $numbers) {
     global $sms;
     $sms->to  = array(
         $numbers
@@ -273,8 +296,7 @@ function belong_send_SMS($message, $numbers)
 Check if current user ID is in the mult-select
 array for the particular assignment
 ***********************************************/
-function belong_is_current_user_selected(array $array, $id)
-{
+function belong_is_current_user_selected(array $array, $id) {
     foreach ($array as $element) {
         if ($element['ID'] == $id) {
             return true;
@@ -286,8 +308,7 @@ function belong_is_current_user_selected(array $array, $id)
 /***********************************************
 Get current user
 ************************************************/
-function belong_get_current_user()
-{
+function belong_get_current_user() {
     $current_user = wp_get_current_user();
     if (!($current_user instanceof WP_User))
         return;
@@ -297,8 +318,7 @@ function belong_get_current_user()
 /***********************************************
 Get user object by method specified
 ************************************************/
-function belong_get_user_by($field, $value)
-{
+function belong_get_user_by($field, $value) {
     $userdata = WP_User::get_data_by($field, $value);
     if (!$userdata)
         return false;
@@ -312,8 +332,7 @@ function belong_get_user_by($field, $value)
 Get role of current logged in user
 - only returns the first one.
 ************************************************/
-function belong_get_users_role($user_id)
-{
+function belong_get_users_role($user_id) {
     $user = new WP_User($user_id);
     if (!empty($user->roles) && is_array($user->roles)) {
         return $user->roles[0];
@@ -323,8 +342,7 @@ function belong_get_users_role($user_id)
 /***********************************************
 Return a list of staff members
 ************************************************/
-function get_staff_list()
-{
+function get_staff_list() {
     $list          = array();
     $args          = array(
         'role' => 'staff'
@@ -342,8 +360,7 @@ function get_staff_list()
 /***********************************************
 Display the date picker
 ************************************************/
-function datepicker($date_id)
-{
+function datepicker($date_id) {
 ?>
    <script type="text/javascript">
     jQuery(document).ready(function(){
@@ -360,8 +377,7 @@ function datepicker($date_id)
 /***********************************************
 Dynamically populate staff dropdown
 ************************************************/
-function staff_select_field($name, $title, $col)
-{
+function staff_select_field($name, $title, $col) {
     $staff_list = get_staff_list();
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
@@ -376,8 +392,7 @@ function staff_select_field($name, $title, $col)
 /***********************************************
 Dynamically populate select element from array
 ************************************************/
-function select_field($array, $name, $title, $col)
-{
+function select_field($array, $name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "'><option selected='selected'>choose</option>";
@@ -392,8 +407,7 @@ function select_field($array, $name, $title, $col)
 /***********************************************
 Multi select element field from array
 ************************************************/
-function select_multiple($array, $name, $title, $col)
-{
+function select_multiple($array, $name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "' multiple='multiple'><option selected='selected'>choose</option>";
@@ -407,8 +421,7 @@ function select_multiple($array, $name, $title, $col)
 /***********************************************
 Standard text field
 ************************************************/
-function text_field($name, $title, $col)
-{
+function text_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
@@ -419,8 +432,7 @@ function text_field($name, $title, $col)
 /***********************************************
 User text field
 ************************************************/
-function user_field($name, $title, $field_name, $id, $col)
-{
+function user_field($name, $title, $field_name, $id, $col) {
     $user  = belong_get_user_by("ID", $id);
     $field = $user->$field_name;
     echo '<div class="col-md-' . $col . '" >';
@@ -433,8 +445,7 @@ function user_field($name, $title, $field_name, $id, $col)
 /***********************************************
 jquery date picker field
 ************************************************/
-function date_field($name, $title, $date_id, $col)
-{
+function date_field($name, $title, $date_id, $col) {
     datepicker($date_id);
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
@@ -445,8 +456,7 @@ function date_field($name, $title, $date_id, $col)
 /***********************************************
 email field with validation
 ************************************************/
-function email_field($name, $title, $col)
-{
+function email_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo '<input class="form-control" type="email" name="' . $name . '" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
@@ -456,8 +466,7 @@ function email_field($name, $title, $col)
 /***********************************************
 textarea field 
 ************************************************/
-function textarea_field($name, $title, $rows, $columns, $col)
-{
+function textarea_field($name, $title, $rows, $columns, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '</textarea>';
