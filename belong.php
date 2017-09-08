@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.4
+* Version: 0.2.1.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -588,6 +588,15 @@ function child_field($child_no) {
 }
 
 
+function child($no) {
+    echo '<div class="row">';
+    echo '<label class="control-label">CHILD ' . $no . '</label>';
+    echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-"' . $no . '" id="field' . $no . '" size="40 " data-items="8" />';
+    echo '<button id="b' . $no . '" class="btn add-more" type="button">+</button>';
+    echo '</div>';
+    
+}
+
 
 function dynamic() {
     echo '<div class="row">';
@@ -595,9 +604,10 @@ function dynamic() {
     echo '<div class="control-group" id="fields">';
     echo '<label class="control-label" for="field1">CHILDREN</label>';
     echo '<div class="controls" id="profs">';
-    // echo '<form class="input-append">';
-    echo '<div id="field"><input autocomplete="off" class="form-control" id="field1" name="prof1" type="text" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>';
-    // echo '</form>';
+    echo '<div id="field">';
+    child("1");
+    //echo '<input autocomplete="off" class="form-control" id="field1" name="prof1" type="text" data-items="8"/>';
+    echo '</div>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -611,7 +621,7 @@ function dynamic() {
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+            var newIn = <?php "child(<script>document.write(next)</script>);" ?>;
             var newInput = jQuery(newIn);
             var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
             var removeButton = jQuery(removeBtn);
