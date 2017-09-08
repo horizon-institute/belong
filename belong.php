@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.7
+* Version: 0.2.1.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -618,9 +618,9 @@ function children() {
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<div class="row"><div class="col-md-6"><label class="control-label">CHILD ' + next + '</label><input autocomplete="off" class="form-control" type="text" name="pw-child-"' + next + '" id="field' + next + '" size="40 " data-items="8" /></div>';
+            var newIn = '<div class="form-inline>"><label class="control-label">CHILD ' + next + '</label><input autocomplete="off" class="form-control" type="text" name="pw-child-"' + next + '" id="field' + next + '" size="40 " data-items="8" /></div>';
             var newInput = jQuery(newIn);
-            var removeBtn = '<div class="col-md-1"><button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div></div>';
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button>';
             var removeButton = jQuery(removeBtn);
             jQuery(addto).after(newInput);
             jQuery(addRemove).after(removeButton);
