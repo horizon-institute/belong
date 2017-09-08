@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.6
+ * Version: 0.2.0.7
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -29,12 +29,15 @@ function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
+    echo '<div class="form-group">';
     client_registration($id);
-
+    echo '</div>'; 
     echo '<div class="row">';
     echo '<div class="col-md-12">';
+    echo '<div class="form-group">';
     echo '<button type="submit" class="btn btn-default" name="pw-personal_form_submit">UPDATE</button>';
     echo '</div>';
+    echo '</div>'; 
     echo '</div>'; 
     echo '</form>';
     return ob_get_clean();
@@ -509,7 +512,7 @@ Standard text field
 ************************************************/
 function text_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
-    echo '<h6><span class="label">' . $title . '</span></h6>';
+    echo '<label class="control-label">' . $title . '</label>';
     echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
