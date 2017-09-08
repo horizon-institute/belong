@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.8
+* Version: 0.2.1.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -179,7 +179,6 @@ function personal_form($id) {
     echo '</div>';
     
     echo '<div class="row">';
-    echo '<h4>CHILDREN</h4>';
     echo '</div>';
     
     children();
@@ -582,18 +581,18 @@ function child_field($child_no) {
 }
 
 
-function child($no) {
-    echo '<div class="row">';
-    echo '<div class="col-md-6">';
-    echo '<label class="control-label">CHILD ' . $no . '</label>';
-    echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-"' . $no . '" id="field' . $no . '" size="40 " data-items="8" />';
-    echo '</div>';
-    echo '<div class="col-md-1">';
-    echo '<button id="b' . $no . '" class="btn add-more" type="button">+</button>';
-    echo '</div>';
-    echo '</div>';
+// function child($no) {
+//     echo '<div class="row">';
+//     echo '<div class="col-md-6">';
+//     echo '<label class="control-label">CHILD ' . $no . '</label>';
+//     echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-"' . $no . '" id="field' . $no . '" size="40 " data-items="8" />';
+//     echo '</div>';
+//     echo '<div class="col-md-1">';
+//     echo '<button id="b' . $no . '" class="btn add-more" type="button">+</button>';
+//     echo '</div>';
+//     echo '</div>';
     
-}
+// }
 
 
 function children() {
@@ -603,7 +602,13 @@ function children() {
     echo '<label class="control-label" for="field1">CHILDREN</label>';
     echo '<div class="controls" id="profs">';
     echo '<div id="field">';
-    child("1");
+    echo '<div class="col-md-6">';
+    echo '<label class="control-label">CHILD 1</label>';
+    echo '<input autocomplete="off" class="form-control" type="text" name="pw-child-1" id="field1" size="40 " data-items="8" />';
+    echo '</div>';
+    echo '<div class="col-md-1">';
+    echo '<button id="b1" class="btn add-more" type="button">+</button>';
+    echo '</div>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
