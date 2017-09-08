@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.2
+* Version: 0.2.1.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -612,9 +612,9 @@ function dynamic() {
             var addRemove = "#field" + (next);
             next = next + 1;
             var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
-            var newInput = $(newIn);
+            var newInput = jQuery(newIn);
             var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-            var removeButton = $(removeBtn);
+            var removeButton = jQuery(removeBtn);
             jQuery(addto).after(newInput);
             jQuery(addRemove).after(removeButton);
             jQuery("#field" + next).attr('data-source',jQuery(addto).attr('data-source'));
