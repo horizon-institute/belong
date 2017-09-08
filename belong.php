@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.1
+* Version: 0.2.1.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -591,18 +591,12 @@ function child_field($child_no) {
 
 function dynamic() {
     echo '<div class="row">';
+    echo '<input type="hidden" name="count" value="1" />';
     echo '<div class="control-group" id="fields">';
     echo '<label class="control-label" for="field1">Nice Multiple Form Fields</label>';
-    echo '<div class="controls"> ';
-    echo '<form role="form" autocomplete="off">';
-    echo '<div class="entry input-group col-md-6">';
-    echo '<input class="form-control" name="fields[]" type="text" placeholder="Type something" />';
-    echo '<span class="input-group-btn">';
-    echo '<button class="btn btn-success btn-add" type="button">';
-    echo '+';
-    echo '</button>';
-    echo '</span>';
-    echo '</div>';
+    echo '<div class="controls" id="profs">';
+    echo '<form class="input-append">';
+    echo '<div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>';
     echo '</form>';
     echo '</div>';
     echo '</div>';
@@ -611,21 +605,28 @@ function dynamic() {
     ?>
     <script type="text/javascript">
       jQuery(document).ready(function() {
-        jQuery(document).on('click', '.btn-add', function(e) {
-          e.preventDefault();
-          var controlForm = jQuery('.controls form:first'),
-            currentEntry = jQuery(this).parents('.entry:first'),
-            newEntry = jQuery(currentEntry.clone()).appendTo(controlForm);
-
-          newEntry.find('input').val('');
-          controlForm.find('.entry:not(:last) .btn-add')
-            .removeClass('btn-add').addClass('btn-remove')
-            .removeClass('btn-success').addClass('btn-danger')
-            .html('-');
-        }).on('click', '.btn-remove', function(e) {
-          jQuery(this).parents('.entry:first').remove();
-          e.preventDefault();
-          return false;
+        var next = 1;
+        jQuery(".add-more").click(function(e){
+            e.preventDefault();
+            var addto = "#field" + next;
+            var addRemove = "#field" + (next);
+            next = next + 1;
+            var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+            var newInput = $(newIn);
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+            var removeButton = $(removeBtn);
+            jQuery(addto).after(newInput);
+            jQuery(addRemove).after(removeButton);
+            jQuery("#field" + next).attr('data-source',jQuery(addto).attr('data-source'));
+            jQuery("#count").val(next);  
+            
+            jQuery('.remove-me').click(function(e){
+                e.preventDefault();
+                var fieldNum = this.id.charAt(this.id.length-1);
+                var fieldID = "#field" + fieldNum;
+                jQuery(this).remove();
+                jQuery(fieldID).remove();
+            });
         });
       });
     </script>
