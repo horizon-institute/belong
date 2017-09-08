@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.2.2
+* Version: 0.2.2.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -582,6 +582,7 @@ function child_field($child_no) {
 }
 
 function children() {
+    echo '<div class="row">';
     echo '<div class="panel panel-primary">';
     echo '<div class="panel-heading">CHILDREN</div>';
     echo '<div class="panel-body">';
@@ -596,34 +597,36 @@ function children() {
     echo '</div>';
 
     echo '<div class="col-md-3 nopadding">';
-    echo ' <div class="form-group">';
-    echo '<input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major">';
+    echo '<div class="form-group">';
+    echo '<input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="DOB">';
     echo '</div>';
     echo '</div>';
 
     echo '<div class="col-md-3 nopadding">';
     echo '<div class="form-group">';
-    echo '<input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree">';
+    echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER">';
     echo '</div>';
     echo '</div>';
-    
+
     echo '<div class="col-md-3 nopadding">';
     echo '<div class="form-group">';
     echo '<div class="input-group">';
-    echo '<select class="form-control" id="educationDate" name="educationDate[]">';
-    echo '<option value="">Choose</option>';
+    echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
+    echo '<option value="">UK?</option>';
     echo '<option value="yes">YES</option>';
     echo '<option value="no">NO</option>';
     echo '</select>';
     echo '<div class="input-group-btn">';
-    echo '<button class="btn btn-success btn-md" type="button"  onclick="child_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>';
+    echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
+
     echo '<div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove form field</small></div>';
+    echo '</div>';
     echo '</div>';
     
     ?>
@@ -636,12 +639,12 @@ function children() {
         var divtest = document.createElement("div");
         divtest.setAttribute("class", "form-group removeclass" + child);
         var rdiv = 'removeclass' + child;
-        divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="School name"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger btn-md" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
+        divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="pw-child-dob"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="pw-child-cn"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
         objTo.appendChild(divtest)
       }
 
       function remove_child_fields(rid) {
-        $('.removeclass' + rid).remove();
+        jQuery('.removeclass' + rid).remove();
       }
     </script>
 
