@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.1
+ * Version: 0.2.0.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -30,11 +30,12 @@ function client_registration_form() {
     $id = $_GET['clientID'];
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
     client_registration($id);
+
     echo '<div class="row">';
-    //echo '<div class="col-md-12">';
+    echo '<div class="col-md-12">';
     echo '<button type="submit" class="btn btn-default" name="pw-personal_form_submit">UPDATE</button>';
     echo '</div>';
-    //echo '</div>'; 
+    echo '</div>'; 
     echo '</form>';
     return ob_get_clean();
 }
@@ -178,8 +179,12 @@ function education_form() {
 /*********************************************************************************/
 
 function language_form() {
-    text_field("pw-x2", "LANGUAGE", "4");
-
+    
+    echo '<div class="row">';
+    text_field("pw_language_primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    checkbox_field("pw_language_spoken", "SPOKEN", "2");
+    checkbox_field("pw_language_written", "WRITTEN", "2");
+    echo '</div>'; 
 }
 
 /*********************************************************************************/
@@ -427,7 +432,16 @@ function text_field($name, $title, $col) {
     echo '</div>';
 }
 
-
+/***********************************************
+Inline checkbox
+************************************************/
+function checkbox_field($name, $title, $col) {
+    echo '<div class="col-md-' . $col . '" >';
+    echo '<label class="checkbox-inline">';
+    echo '<input class="form-control" type="checkbox" name="' . $name . '"/>' . $title;
+    echo '</label>';
+    echo '</div>';
+}
 /***********************************************
 User text field
 ************************************************/
