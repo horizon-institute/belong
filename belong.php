@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.2.0.4
+ * Version: 0.2.0.5
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -509,7 +509,7 @@ Standard text field
 ************************************************/
 function text_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
-    echo '<label>' . $title . '</label>';
+    echo '<h6><label>' . $title . '</label></h6>';
     echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
