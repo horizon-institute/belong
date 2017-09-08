@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.0.9
+* Version: 0.2.1.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -18,10 +18,10 @@ wp_enqueue_script('jquery-ui-core');
 wp_enqueue_script('jquery-ui-datepicker');
 wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 
-wp_register_script('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+wp_register_script('prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
 wp_enqueue_script('prefix_bootstrap');
 
-wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+wp_register_style('prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 wp_enqueue_style('prefix_bootstrap');
 /*********************************************************************************/
 
@@ -594,7 +594,8 @@ function dynamic() {
     echo '<div class="control-group" id="fields">';
     echo '<label class="control-label" for="field1">Nice Multiple Form Fields</label>';
     echo '<div class="controls"> ';
-    echo '<div class="entry input-group col-xs-3">';
+    echo '<form role="form" autocomplete="off">';
+    echo '<div class="entry input-group col-md-6">';
     echo '<input class="form-control" name="fields[]" type="text" placeholder="Type something" />';
     echo '<span class="input-group-btn">';
     echo '<button class="btn btn-success btn-add" type="button">';
@@ -602,6 +603,7 @@ function dynamic() {
     echo '</button>';
     echo '</span>';
     echo '</div>';
+    echo '</form>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
