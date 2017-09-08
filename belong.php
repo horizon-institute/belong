@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.1.3
+* Version: 0.2.1.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -593,11 +593,11 @@ function dynamic() {
     echo '<div class="row">';
     echo '<input type="hidden" name="count" value="1" />';
     echo '<div class="control-group" id="fields">';
-    echo '<label class="control-label" for="field1">Nice Multiple Form Fields</label>';
+    echo '<label class="control-label" for="field1">CHILDREN</label>';
     echo '<div class="controls" id="profs">';
-    echo '<form class="input-append">';
-    echo '<div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>';
-    echo '</form>';
+    // echo '<form class="input-append">';
+    echo '<div id="field"><input autocomplete="off" class="form-control" id="field1" name="prof1" type="text" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>';
+    // echo '</form>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
