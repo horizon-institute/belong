@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.3.5
+* Version: 0.2.3.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -31,7 +31,6 @@ function client_registration_form() {
     echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
     echo '<div class="form-group">';
     client_registration($id);
-    echo '</div>';
     echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<div class="form-group">';
@@ -39,6 +38,8 @@ function client_registration_form() {
     echo '</div>';
     echo '</div>';
     echo '</div>';
+    echo '</div>';
+
     echo '</form>';
     return ob_get_clean();
 }
@@ -227,9 +228,13 @@ function language_form() {
     text_field("pw-language-primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
     select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-1", "ABILITY", "4");
     echo '</div>';
+
     echo '<div class="row">';
-    echo '<h4>DO YOU SPEAK ANY OTHER LANGUAGES?</h4>';
+    echo '<div class="col-md-12">';
+    echo '<label>DO YOU SPEAK ANY OTHER LANGUAGES?</label>';
     echo '</div>';
+    echo '</div>';
+
     echo '<div class="row">';
     text_field("pw-language-2", "LANGUAGE", "8");
     select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-2", "ABILITY", "4");
@@ -662,8 +667,6 @@ function children() {
     echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
-    
-    echo '<div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add a child</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove a child</small></div>';
     echo '</div>';
     echo '</div>';
     
