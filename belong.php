@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.3.2
+* Version: 0.2.3.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -518,7 +518,7 @@ Inline checkbox
 ************************************************/
 function checkbox_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
-    echo '<label class="checkbox-inline">';
+    echo '<label class="checkbox">';
     echo '<input class="form-control" type="checkbox" name="' . $name . '"/>' . $title;
     echo '</label>';
     echo '</div>';
@@ -569,18 +569,8 @@ function textarea_field($name, $title, $rows, $columns, $col) {
 
 
 /*****************************************************
-child input fields - this should be dynamic eventually
+child input fields
 ******************************************************/
-function child_field($child_no) {
-    echo '<div class="row">';
-    text_field("pw_child_name_" . $child_no, "NAME", "4");
-    date_field("pw_child_dob_" . $child_no, "DOB", "child_dob_" . $child_no, "2");
-    select_field(array("Yes","No"), "pw_child_uk_" . $child_no, "UK?", "2");
-    text_field("pw_child_cn_" . $child_no, "CN", "4");
-    echo '</div>';
-    
-}
-
 function children() {
     echo '<div class="col-md-12">';
     echo '<div class="panel panel-primary">';
@@ -633,18 +623,14 @@ function children() {
     ?>
     <script type="text/javascript">
       var child = 0;
+
       function child_fields() {
         child++;
         var objTo = document.getElementById('child_fields')
         var divtest = document.createElement("div");
-        
         divtest.setAttribute("class", "form-group removeclass" + child);
         var rdiv = 'removeclass' + child;
-        
-        //divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="pw-child-dob"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="pw-child-cn"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">UK?</option><option value="yes">YES</option><option value="no">NO</option></select><div class="input-group-btn"> <button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
-          divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="" placeholder="DOB"></div></div><div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">UK?</option><option value="yes">YES</option><option value="no">NO</option></select><div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
-         
-
+        divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="" placeholder="DOB"></div></div><div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">UK?</option><option value="yes">YES</option><option value="no">NO</option></select><div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
         objTo.appendChild(divtest);
         dob_picker("pw-child-dob" + child);
       }
@@ -663,9 +649,7 @@ function children() {
         });
       }
     </script>
-
     <?php
 }
-
 
 ?>
