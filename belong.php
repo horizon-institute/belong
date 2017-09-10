@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.2.4
+* Version: 0.2.2.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -597,7 +597,7 @@ function children() {
     echo '</div>';
     
     echo '<div class="col-md-3 nopadding">';
-    datepicker("pw-child-dob");
+    datepicker("pw-child-dob[]");
     echo '<div class="form-group">';
     echo '<input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="DOB">';
     echo '</div>';
@@ -626,7 +626,7 @@ function children() {
     echo '<div class="clear"></div>';
     echo '</div>';
 
-    echo '<div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove form field</small></div>';
+    echo '<div class="panel-footer"><small>Press <span class="glyphicon glyphicon-plus gs"></span> to add a child</small>, <small>Press <span class="glyphicon glyphicon-minus gs"></span> to remove a child</small></div>';
     echo '</div>';
     echo '</div>';
     
@@ -640,7 +640,11 @@ function children() {
         var divtest = document.createElement("div");
         divtest.setAttribute("class", "form-group removeclass" + child);
         var rdiv = 'removeclass' + child;
-        divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="pw-child-dob"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="pw-child-cn"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
+        //divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="pw-child-dob"></div></div><div class="col-md-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="pw-child-cn"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
+        
+        divtest.innerHTML = '<div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div><div class="col-md-3 nopadding"><?php datepicker("pw-child-dob[]");?><div class="form-group"><input type="text" class="form-control" id="pw-child-dob" name="pw-child-dob[]" value="" placeholder="DOB"></div></div><div class="col-md-3 nopadding"><div class="form-group"><input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER"></div></div><div class="col-md-3 nopadding"><div class="form-group"><div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]"><option value="">UK?</option><option value="yes">YES</option><option value="no">NO</option></select><div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div></div>';
+        
+        
         objTo.appendChild(divtest)
       }
 
