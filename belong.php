@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.3.3
+* Version: 0.2.3.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -188,43 +188,86 @@ function personal_form($id) {
 
 function education_form() {
     echo '<div class="row">';
-    select_multiple(array("Primary School","Secondary School","6th Form College","College","University","Other"), "pw_education_attended", "HAVE YOU EVER ATTENDED ANY OF THE FOLLOWING?", "6");
-    text_field("pw_education_other", "OTHER", "6");
+    select_multiple(array("Primary School","Secondary School","6th Form College","College","University","Other"), "pw-education-attended", "HAVE YOU EVER ATTENDED ANY OF THE FOLLOWING?", "6");
+    text_field("pw-education-other", "OTHER", "6");
     echo '</div>';
     echo '<div class="row">';
     echo '<h4>WHAT FORMAL QUALIFICATIONS DO YOU HAVE AND HAVE THEY BEEN RECOGNISED?</h4>';
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw_education_qualification_1", "QUALIFICATION", "10");
-    select_field(array("Yes","No"), "pw-education_recognised_1", "RECOGNISED?", "2");
+    text_field("pw-education-qualification-1", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education-recognised-1", "RECOGNISED?", "2");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw_education_qualification_2", "QUALIFICATION", "10");
-    select_field(array("Yes","No"), "pw-education_recognised_2", "RECOGNISED?", "2");
+    text_field("pw-education-qualification-2", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education-recognised-2", "RECOGNISED?", "2");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw_education_qualification_3", "QUALIFICATION", "10");
-    select_field(array("Yes","No"), "pw-education_recognised_3", "RECOGNISED?", "2");
+    text_field("pw-education-qualification-3", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education-recognised-3", "RECOGNISED?", "2");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw_education_qualification_4", "QUALIFICATION", "10");
-    select_field(array("Yes","No"), "pw-education_recognised_4", "RECOGNISED?", "2");
+    text_field("pw-education-qualification-4", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education-recognised-4", "RECOGNISED?", "2");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw_education_qualification_5", "QUALIFICATION", "10");
-    select_field(array("Yes","No"), "pw-education_recognised_5", "RECOGNISED?", "2");
+    text_field("pw-education-qualification-5", "QUALIFICATION", "10");
+    select_field(array("Yes","No"), "pw-education-recognised-5", "RECOGNISED?", "2");
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-education_not_recognised", "IF THEY HAVE NOT BEEN RECOGNISED PLEASE TELL US WHY", "5", "35", "12");
+    textarea_field("pw-education-not-recognised", "IF THEY HAVE NOT BEEN RECOGNISED PLEASE TELL US WHY", "5", "35", "12");
     echo '</div>';
 }
 /*********************************************************************************/
 
 function language_form() {
     echo '<div class="row">';
-    text_field("pw_language_primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
-    checkbox_field("pw_language_spoken", "SPOKEN", "2");
-    checkbox_field("pw_language_written", "WRITTEN", "2");
+    text_field("pw-language-primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-1", "ABILITY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    echo '<h4>DO YOU SPEAK ANY OTHER LANGUAGES?</h4>';
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-language-2", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-2", "ABILITY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-language-3", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-3", "ABILITY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-language-4", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-4", "ABILITY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-language-5", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-5", "ABILITY", "4");
+    echo '</div>';
+
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-education-translate", "ARE YOU PREPARED TO ASSIST IN TRANSLATION?", "6");
+    select_field(array("Yes","No"), "pw-language-assistance", "DO YOU NEED ASSISTANCE WITH ENGLISH?", "6");
+    echo '</div>';
+    
+    echo '<div class="row">';
+    echo '<h4>IF YOU ARE ALREADY ON A COURSE PLEASE PROVIDE DETAILS</h4>';
+    echo '</div>';
+
+    echo '<div class="row">';
+    text_field("pw-language-course-with", "WHO WITH?", "6");
+    date_field("pw-language-course-date", "START DATE", "pw-language-course-date", "6");
+    echo '</div>';
+
+    echo '<div class="row">';
+    text_field("pw-language-course-length", "LENGTH OF COURSE", "6");
+    text_field("pw-language-course-title", "COURSE TITLE/LEVEL", "6");
+    echo '</div>';   
+
+    echo '<div class="row">';
+    select_field(array("ESOL","PRE ENTRY","ENTRY 1","ENTRY 2","ENTRY 3","LEVEL 1","LEVEL 2","COVERSATION GROUP"), "pw-language-course-title", "COURSE TYPE", "6");
+    echo '</div>';   
+
     echo '</div>';
 }
 /*********************************************************************************/
