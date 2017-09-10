@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.3.6
+* Version: 0.2.3.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -28,9 +28,10 @@ wp_enqueue_style('prefix_bootstrap');
 function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
-    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
+    echo '<form action="" method="post" id="tab">';
     echo '<div class="form-group">';
     client_registration($id);
+    echo '</div>';
     echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<div class="form-group">';
@@ -38,8 +39,6 @@ function client_registration_form() {
     echo '</div>';
     echo '</div>';
     echo '</div>';
-    echo '</div>';
-
     echo '</form>';
     return ob_get_clean();
 }
@@ -51,7 +50,7 @@ function client_view_form() {
     $current_user = belong_get_current_user();
     $id           = $current_user->ID;
     ob_start();
-    echo '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post" id="tab">';
+    echo '<form action="" method="post" id="tab">';
     echo '<fieldset disabled>';
     client_registration($id);
     echo '</fieldset>';
@@ -182,8 +181,7 @@ function personal_form($id) {
     echo '<div class="row">';
     children();
     echo '</div>';
-    
-    
+      
 }
 /*********************************************************************************/
 
@@ -276,8 +274,6 @@ function language_form() {
     echo '<div class="row">';
     select_field(array("ESOL","PRE ENTRY","ENTRY 1","ENTRY 2","ENTRY 3","LEVEL 1","LEVEL 2","COVERSATION GROUP"), "pw-language-course-title", "COURSE TYPE", "6");
     echo '</div>';   
-
-    echo '</div>';
 }
 /*********************************************************************************/
 
