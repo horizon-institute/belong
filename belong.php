@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.3.4
+* Version: 0.2.3.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -192,7 +192,9 @@ function education_form() {
     text_field("pw-education-other", "OTHER", "6");
     echo '</div>';
     echo '<div class="row">';
-    echo '<h4>WHAT FORMAL QUALIFICATIONS DO YOU HAVE AND HAVE THEY BEEN RECOGNISED?</h4>';
+    echo '<div class="col-md-12">';
+    echo '<label>WHAT FORMAL QUALIFICATIONS DO YOU HAVE AND HAVE THEY BEEN RECOGNISED?</label>';
+    echo '</div>';
     echo '</div>';
     echo '<div class="row">';
     text_field("pw-education-qualification-1", "QUALIFICATION", "10");
@@ -229,19 +231,19 @@ function language_form() {
     echo '<h4>DO YOU SPEAK ANY OTHER LANGUAGES?</h4>';
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-2", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    text_field("pw-language-2", "LANGUAGE", "8");
     select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-2", "ABILITY", "4");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-3", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    text_field("pw-language-3", "LANGUAGE", "8");
     select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-3", "ABILITY", "4");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-4", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    text_field("pw-language-4", "LANGUAGE", "8");
     select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-4", "ABILITY", "4");
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-5", "WHAT IS YOUR PRIMARY LANGUAGE?", "8");
+    text_field("pw-language-5", "LANGUAGE", "8");
     select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-5", "ABILITY", "4");
     echo '</div>';
 
@@ -251,7 +253,9 @@ function language_form() {
     echo '</div>';
     
     echo '<div class="row">';
-    echo '<h4>IF YOU ARE ALREADY ON A COURSE PLEASE PROVIDE DETAILS</h4>';
+    echo '<div class="col-md-12">';
+    echo '<label>IF YOU ARE ALREADY ON A COURSE PLEASE PROVIDE DETAILS</label>';
+    echo '</div>';
     echo '</div>';
 
     echo '<div class="row">';
