@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.0
+* Version: 0.2.4.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -627,26 +627,26 @@ function children() {
     echo '<div id="child_fields">';
     echo '</div>';
     
-    echo '<div class="col-md-3 nopadding">';
+    echo '<div class="col-md-3">';
     echo '<div class="form-group">';
     echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME">';
     echo '</div>';
     echo '</div>';
     
-    echo '<div class="col-md-3 nopadding">';
+    echo '<div class="col-md-3">';
     datepicker("pw-child-dob0");
     echo '<div class="form-group">';
     echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="" placeholder="DOB">';
     echo '</div>';
     echo '</div>';
     
-    echo '<div class="col-md-3 nopadding">';
+    echo '<div class="col-md-3">';
     echo '<div class="form-group">';
     echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER">';
     echo '</div>';
     echo '</div>';
     
-    echo '<div class="col-md-3 nopadding">';
+    echo '<div class="col-md-3">';
     echo '<div class="form-group">';
     echo '<div class="input-group">';
     echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
@@ -662,7 +662,7 @@ function children() {
     // echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
-    //echo '</div>';
+    echo '</div>';
     echo '</div>';
     
     ?>
