@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.3.7
+* Version: 0.2.3.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -622,7 +622,8 @@ child input fields
 function children() {
     echo '<div class="col-md-12">';
     echo '<div class="panel panel-primary">';
-    echo '<div class="panel-heading">CHILDREN</div>';
+    //echo '<div class="panel-heading">CHILDREN</div>';
+    echo '<label>CHILDREN</label>';
     echo '<div class="panel-body">';
     
     echo '<div id="child_fields">';
@@ -663,7 +664,7 @@ function children() {
     echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
-    echo '</div>';
+    //echo '</div>';
     echo '</div>';
     
     ?>
