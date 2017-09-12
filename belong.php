@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.5
+* Version: 0.2.4.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -460,15 +460,15 @@ function work_experience_form() {
 
     echo '<div class="row">';
     select_field(array("Yes","No"), "pw-experience-vocational", "DO YOU HAVE ANY VOCATIONAL QUALIFICATIONS?", "4");
-    textarea_field("pw--experience-vocational-description", "DESCRIPTION","5", "35", "8");
+    textarea_field("pw-experience-vocational-description", "DESCRIPTION","5", "35", "8");
     echo '</div>';
     echo '<div class="row">';
     select_field(array("Yes","No"), "pw-experience-recognised", "HAS YOUR TRAINING BEEN RECOGNISED?", "4");
-    textarea_field("pw--experience-recognised-description", "DESCRIPTION","5", "35", "8");
+    textarea_field("pw-experience-recognised-description", "DESCRIPTION","5", "35", "8");
     echo '</div>';
     echo '<div class="row">';
     select_field(array("Yes","No"), "pw-experience-volunteering", "DO YOU HAVE ANY EXPERIENCE VOLUNTEERING?", "4");
-    textarea_field("pw--experience-volunteering-description", "DESCRIPTION","5", "35", "8");
+    textarea_field("pw-experience-volunteering-description", "DESCRIPTION","5", "35", "8");
     echo '</div>';
     echo '<div class="row">';
     textarea_field("pw-experience-aspirations", "WHAT ARE YOUR FUTURE ASPIRATIONS?","5", "35", "12");
@@ -479,13 +479,29 @@ function work_experience_form() {
 /*********************************************************************************/
 function health_form() {
     echo '<div class="row">';
-    text_field("pw_5", "TEST", "6");
+    select_field(array("Yes","No"), "pw-health-doctor", "ARE YOU REGISTERED WITH A DOCTOR?", "4");
+    textarea_field("pw-health-doctor-address", "DOCTORS NAME & ADDRESS","5", "35", "8");
+    echo '</div>';
+
+    echo '<div class="row">';
+    textarea_field("pw-health-issues", "DO YOU HAVE ANY CURRENT MEDICAL ISSUES?","5", "35", "12");
+    echo '</div>';
+
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-health-dentist", "ARE YOU REGISTERED WITH A DENTIST?", "4");
+    textarea_field("pw-health-dentist-address", "DENTISTS NAME & ADDRESS","5", "35", "8");
     echo '</div>';
 }
 /*********************************************************************************/
 function additional_form() {
     echo '<div class="row">';
-    text_field("pw_6", "TEST", "6");
+    select_field(array("Yes","No"), "pw-additional-assistance", "IS THERE ANY ONE ELSE ASSISTING YOU?", "6");
+    echo '</div>';
+    echo '<div class="row">';
+    textarea_field("pw-additional-assistance-description", "DESCRIPTION","5", "35", "12");
+    echo '</div>';
+    echo '<div class="row">';
+    textarea_field("pw-additional-notes", "ADDITIONAL NOTES","20", "35", "12");
     echo '</div>';
 }
 /*********************************************************************************/
