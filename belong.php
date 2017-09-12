@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.4
+* Version: 0.2.4.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -384,25 +384,20 @@ function financial_form() {
 
 function work_form() {
     echo '<div class="row">';
-    text_field("pw-work-ni-number", "NATIONAL INSURANCE NUMBER", "6");
-    select_field(array("NOT YET ELIGIBLE","NOT APPLIED"), "pw-work-ni-none", "NO NATIONAL INSURANCE NUMBER - WHY?", "6");
+    text_field("pw-work-ni-number", "NATIONAL INSURANCE NUMBER", "4");
+    select_field(array("NOT YET ELIGIBLE","NOT APPLIED"), "pw-work-ni-none", "NO NATIONAL INSURANCE NUMBER - WHY?", "4");
+    select_field(array("Yes","No"), "pw-work-registered", "HAVE YOU REGISTERED AS UNEMPLOYED?", "4");
     echo '</div>';
 
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-work-registered", "HAVE YOU REGISTERED AS UNEMPLOYED?", "6");
-    select_field(array("Yes","No"), "pw-work-cv", "DO YOU HAVE A CV?", "6");
+    select_field(array("Yes","No"), "pw-work-cv", "DO YOU HAVE A CV?", "4");
+    select_field(array("Yes","No"), "pw-work-assistance", "DO YOU NEED ASSISTANCE IN SEARCHING FOR WORK?", "4");
+    select_field(array("Yes","No"), "pw-work-computer", "ARE YOU ABLE TO USE A COMPUTER?", "4");
     echo '</div>';
 
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-work-assistance", "DO YOU NEED ASSISTANCE IN SEARCHING FOR WORK?", "6");
-    select_field(array("Yes","No"), "pw-work-computer", "ARE YOU ABLE TO USE A COMPUTER?", "6");
-    echo '</div>';
-
-    echo '<div class="row">';
-    select_field(array("0-6 MONTHS","7-12 MONTHS","13-24 MONTHS","24 MONTHS +"), "pw-work-how-long", "HOW LONG HAVE YOU BEEN LOOKING FOR WORK?", "6");
-    echo '</div>';
-    echo '<div class="row">';
-    textarea_field("pw-work-barriers", "ARE THERE ANY BARRIERS STOPPING YOU FROM WORKING? PLEASE LIST THEM.", "5", "35", "12");
+    select_field(array("0-6 MONTHS","7-12 MONTHS","13-24 MONTHS","24 MONTHS +"), "pw-work-how-long", "HOW LONG HAVE YOU BEEN LOOKING FOR WORK?", "4");
+    textarea_field("pw-work-barriers", "ARE THERE ANY BARRIERS STOPPING YOU FROM WORKING? PLEASE LIST THEM.", "5", "35", "8");
     echo '</div>';
 
     echo '<div class="row">';
@@ -418,8 +413,8 @@ function work_form() {
     echo '</div>';
 
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-work-assistance", "ARE YOU RECEIVING ASSISTANCE TO FIND WORK ELSEWHERE?", "6");
-    textarea_field("pw-work-assistance-whom", "IF YES FROM WHOM?","5", "35", "6");
+    select_field(array("Yes","No"), "pw-work-assistance", "ARE YOU RECEIVING ASSISTANCE TO FIND WORK ELSEWHERE?", "4");
+    textarea_field("pw-work-assistance-whom", "IF YES FROM WHOM?","5", "35", "8");
     echo '</div>';
 }
 
@@ -427,8 +422,59 @@ function work_form() {
 
 function work_experience_form() {
     echo '<div class="row">';
-    text_field("pw_4", "TEST", "6");
+    echo '<div class="col-md-12">';
+    echo '<label>PLEASE TELL US ABOUT YOUR WORK EXPERIENCE?</label>';
     echo '</div>';
+    echo '</div>';
+
+    echo '<div class="row">';
+    date_field("pw-experience-from-1", "FROM", "pw-experience-from-1", "2");
+    date_field("pw-experience-to-1", "TO", "pw-experience-to-1", "2");
+    text_field("pw-experience-role-1", "ROLE", "4");
+    text_field("pw-experience-role-where-1", "WHERE", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    date_field("pw-experience-from-2", "FROM", "pw-experience-from-2", "2");
+    date_field("pw-experience-to-2", "TO", "pw-experience-to-2", "2");
+    text_field("pw-experience-role-2", "ROLE", "4");
+    text_field("pw-experience-role-where-2", "WHERE", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    date_field("pw-experience-from-3", "FROM", "pw-experience-from-3", "2");
+    date_field("pw-experience-to-3", "TO", "pw-experience-to-3", "2");
+    text_field("pw-experience-role-3", "ROLE", "4");
+    text_field("pw-experience-role-where-3", "WHERE", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    date_field("pw-experience-from-4", "FROM", "pw-experience-from-4", "2");
+    date_field("pw-experience-to-4", "TO", "pw-experience-to-4", "2");
+    text_field("pw-experience-role-4", "ROLE", "4");
+    text_field("pw-experience-role-where-4", "WHERE", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    date_field("pw-experience-from-5", "FROM", "pw-experience-from-5", "2");
+    date_field("pw-experience-to-5", "TO", "pw-experience-to-5", "2");
+    text_field("pw-experience-role-5", "ROLE", "4");
+    text_field("pw-experience-role-where-5", "WHERE", "4");
+    echo '</div>';
+
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-experience-vocational", "DO YOU HAVE ANY VOCATIONAL QUALIFICATIONS?", "4");
+    textarea_field("pw--experience-vocational-description", "DESCRIPTION","5", "35", "8");
+    echo '</div>';
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-experience-recognised", "HAS YOUR TRAINING BEEN RECOGNISED?", "4");
+    textarea_field("pw--experience-recognised-description", "DESCRIPTION","5", "35", "8");
+    echo '</div>';
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-experience-volunteering", "DO YOU HAVE ANY EXPERIENCE VOLUNTEERING?", "4");
+    textarea_field("pw--experience-volunteering-description", "DESCRIPTION","5", "35", "8");
+    echo '</div>';
+    echo '<div class="row">';
+    textarea_field("pw-experience-aspirations", "WHAT ARE YOUR FUTURE ASPIRATIONS?","5", "35", "12");
+    echo '</div>';
+
+
 }
 /*********************************************************************************/
 function health_form() {
