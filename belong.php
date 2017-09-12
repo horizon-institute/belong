@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.6
+* Version: 0.2.4.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -28,14 +28,21 @@ wp_enqueue_style('prefix_bootstrap');
 function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
-    echo '<form action="" method="post" id="tab">';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST)) {
+            var_dump($_POST);
+        }
+    }
+
+    echo '<form action="belong.php" method="post" id="tab">';
     echo '<div class="form-group">';
     client_registration($id);
     echo '</div>';
     echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<div class="form-group">';
-    echo '<button type="submit" class="btn btn-default" name="pw-personal_form_submit">UPDATE</button>';
+    echo '<button type="submit" class="btn btn-default" name="submit">UPDATE</button>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
