@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.1
+* Version: 0.2.4.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -279,7 +279,52 @@ function language_form() {
 
 function immigration_form() {
     echo '<div class="row">';
-    text_field("pw_1", "TEST", "6");
+    select_field(array("ASYLUM SEEKER","REFUGEE","BRITISH","EU CITIZEN","ECONOMIC MIGRANT","OTHER"), "pw-immigration-status", "IMMIGRATION STATUS", "6");
+    text_field("pw-immigration-status-other", "OTHER", "6");
+    echo '</div>';  
+
+    echo '<div class="row">';
+    date_field("pw-immigration-arrival-date", "WHAT DATE DID YOU ARRIVE IN THE UK?", "pw-immigration-arrival-date", "6");
+    select_field(array("Yes","No"), "pw-immigration-travel-directly", "DID YOU TRAVEL DIRECTLY FROM YOUR COUNTRY?", "6");
+    echo '</div>';
+
+    echo '<div class="col-md-12">';
+    echo '<label>IF NO WHAT COUNTRIES DID YOU VISIT AND HOW LONG DID YOU STAY?</label>';
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-immigration-country-1", "COUNTRY", "6");
+    text_field("pw-immigration-country-stay-1", "MONTHS", "6");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw-immigration-country-2", "COUNTRY", "6");
+    text_field("pw-immigration-country-stay-2", "MONTHS", "6");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw-immigration-country-3", "COUNTRY", "6");
+    text_field("pw-immigration-country-stay-3", "MONTHS", "6");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw-immigration-country-4", "COUNTRY", "6");
+    text_field("pw-immigration-country-stay-4", "MONTHS", "6");
+    echo '</div>'; 
+    echo '<div class="row">';
+    textarea_field("pw-immigration-why", "WHY DID YOU CHOOSE TO SETTLE IN THE UK?", "5", "35", "12");
+    echo '</div>';
+
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-immigration-assistance", "DO YOU NEED ASSISTANCE APPLYING FOR UK CITIZENSHIP?", "6");
+    select_field(array("Yes","No"), "pw-immigration-assistance-help", "IS SOMEONE ALREADY ASSISTING YOU WITH YOUR APLICATION?", "6");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-immigration-organisation-name", "NAME OF ORGANISATION", "6");
+    text_field("pw-immigration-organisation-solicitor", "SOLICITOR", "6");
+    echo '</div>'; 
+    echo '<div class="row">';
+    text_field("pw-immigration-organisation-stage", "AT WHAT STAGE IS YOUR APPLICATION?", "6");
+    date_field("pw-immigration-organisation-appointment", "WHEN IS YOUR NEXT APPOINTMENT?", "pw-immigration-organisation-appointment", "6");
+    echo '</div>'; 
+    echo '<div class="row">';
+    textarea_field("pw-immigration-organisation-purpose", "WHAT IS THE PURPOSE OF THE APPOINTMENT?", "5", "35", "12");
     echo '</div>';
 }
 /*********************************************************************************/
@@ -489,7 +534,6 @@ function get_staff_list() {
     return $list;
 }
 
-
 /***********************************************
 Display the date picker
 ************************************************/
@@ -562,7 +606,7 @@ function text_field($name, $title, $col) {
 }
 
 /***********************************************
-Inline checkbox
+Checkbox
 ************************************************/
 function checkbox_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
@@ -617,13 +661,11 @@ function textarea_field($name, $title, $rows, $columns, $col) {
 
 
 /*****************************************************
-child input fields
+Dynamic child input fields
 ******************************************************/
 function children() {
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
-    // echo '<div class="panel panel-primary">';
-    // echo '<div class="panel-body">';
     echo '<div id="child_fields">';
     echo '</div>';
     
@@ -658,8 +700,6 @@ function children() {
     echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
     echo '</div>';
     echo '</div>';
-    // echo '</div>';
-    // echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
     echo '</div>';
@@ -668,7 +708,6 @@ function children() {
     ?>
     <script type="text/javascript">
       var child = 0;
-
       function child_fields() {
         child++;
         var objTo = document.getElementById('child_fields')
