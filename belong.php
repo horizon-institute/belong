@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.2
+* Version: 0.2.4.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -174,8 +174,8 @@ function personal_form($id) {
     text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER", "6");
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT", "6");
-    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU", "6");
+    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT?", "6");
+    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU?", "6");
     echo '</div>';
     
     echo '<div class="row">';
@@ -287,10 +287,13 @@ function immigration_form() {
     date_field("pw-immigration-arrival-date", "WHAT DATE DID YOU ARRIVE IN THE UK?", "pw-immigration-arrival-date", "6");
     select_field(array("Yes","No"), "pw-immigration-travel-directly", "DID YOU TRAVEL DIRECTLY FROM YOUR COUNTRY?", "6");
     echo '</div>';
-
+   
+    echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<label>IF NO WHAT COUNTRIES DID YOU VISIT AND HOW LONG DID YOU STAY?</label>';
     echo '</div>';
+    echo '</div>';
+    
     echo '<div class="row">';
     text_field("pw-immigration-country-1", "COUNTRY", "6");
     text_field("pw-immigration-country-stay-1", "MONTHS", "6");
@@ -331,8 +334,49 @@ function immigration_form() {
 
 function financial_form() {
     echo '<div class="row">';
-    text_field("pw_2", "TEST", "6");
+    select_field(array("Yes","No"), "pw-financial-bank", "DO YOU HAVE A UK BANK ACCOUNT?", "6");
+    select_field(array("Yes","No"), "pw-financial-benefits-claaming", "ARE YOU CURRENTLY CLAIMING BENEFITS FROM THE UK GVERNMENT?", "6");
     echo '</div>';
+    echo '<div class="row">';
+    select_field(array("Yes","No"), "pw-financial-benefits-assessment", "HAVE YOU HAD AN INDEPENDENT ASSESSMENT OF THE BENEFITS YOU MAY BE ELIGIBLE FOR?", "6");
+    echo '</div>';
+    
+    echo '<div class="row">';
+    echo '<div class="col-md-12">';
+    echo '<label>TELL US WHAT BENTFITS YOU ARE CURRENTLY IN RECIEPT OF?</label>';
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-financial-benefit-1", "BENEFIT", "4");
+    text_field("pw-financial-benefit-amount-1", "AMOUNT", "4");
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-1", "FREQUENCY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-financial-benefit-2", "BENEFIT", "4");
+    text_field("pw-financial-benefit-amount-2", "AMOUNT", "4");
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-2", "FREQUENCY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-financial-benefit-3", "BENEFIT", "4");
+    text_field("pw-financial-benefit-amount-3", "AMOUNT", "4");
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-3", "FREQUENCY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-financial-benefit-4", "BENEFIT", "4");
+    text_field("pw-financial-benefit-amount-4", "AMOUNT", "4");
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-4", "FREQUENCY", "4");
+    echo '</div>';
+    echo '<div class="row">';
+    text_field("pw-financial-benefit-5", "BENEFIT", "4");
+    text_field("pw-financial-benefit-amount-5", "AMOUNT", "4");
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-5", "FREQUENCY", "4");
+    echo '</div>';
+
+    echo '<div class="row">';
+    select_multiple(array("RENT","COUNCIL TAX","GAS","ELECTRICITY","WATER RATES","TV LICENCE","HEALTH CARE COSTS","SCHOOL TEAMS","CREDIT CARDS","TRANSPORT","TELEPHONE","MOBILE PHONES"), "pw-financial-understand", "DO YOU UNDERSTND THE FOLLOWING?", "6");
+    echo '</div>';
+
+
 }
 /*********************************************************************************/
 
