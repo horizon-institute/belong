@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.7.2
+* Version: 0.2.7.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -167,7 +167,7 @@ function personal_form($id, $cm) {
     echo '</div>';
     echo '<div class="row">';
     select_field(array("Male","Female"), "pw-client-gender", "GENDER", "6", $cm);
-    text_field("pw-client-telephone", "TELEPHONE NUMBER", "6");
+    text_field("pw-client-telephone", "TELEPHONE NUMBER", "6", $cm);
     echo '</div>';
     echo '<div class="row">';
     date_field("pw-client_dob", "DATE OF BIRTH", "client_dob", "12", $cm);
@@ -762,6 +762,8 @@ function select_multiple($array, $name, $title, $col, $cm) {
 Standard text field
 ************************************************/
 function text_field($name, $title, $col, $cm) {
+    echo ("field name 0:: " .$cm[$name][0]);
+    echo ("field name:: " .$cm[$name]);
     echo '<div class="col-md-' . $col . '" >';
     echo '<label class="control-label">' . $title . '</label>';
     echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . $cm[$name][0]  . '" size="40" />';
