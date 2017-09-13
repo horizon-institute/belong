@@ -35,7 +35,6 @@ function client_registration_form() {
             $meta = get_post_meta($post_id);
             echo ("Client ID: " . $_POST["pw-client-id"]);
     
- 
         }
     }
 
