@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.9
+* Version: 0.2.5.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -34,8 +34,8 @@ function client_registration_form() {
             $post_id = get_the_ID();
             $meta = get_post_meta($post_id);
 
-            var_dump($post_id);
-            var_dump($meta);
+            echo ("post id: " . $post_id);
+            echo ("Meta: " . $meta);
         }
     }
 
