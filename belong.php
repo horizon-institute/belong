@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.5.3
+* Version: 0.2.5.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -26,23 +26,22 @@ wp_enqueue_style('prefix_bootstrap');
 /*********************************************************************************/
 
 function client_registration_form() {
-    ob_start();
+    global $cm;
     $id = $_GET['clientID'];
+    $post_id = get_the_ID();
+    $cm = get_post_meta($post_id, "client_profile_" . $id);
+    ob_start();
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
         if(isset($_POST)) {
-            $post_id = get_the_ID();
-
+            /** Add or update client profile in meta table */
             if (! add_post_meta($post_id, "client_profile_" . $id, $_POST, true)) {
                 update_post_meta($post_id, "client_profile_" . $id, $_POST);
             }
+            /** get selected clients profile from meta table */
+            $cm = get_post_meta($post_id, "client_profile_" . $id);
 
-            $allmeta = get_post_meta($post_id);
-            $this_meta = get_post_meta($post_id, "client_profile_" . $id);
-            var_dump($allmeta);
-            var_dump($this_meta);
-            //echo ("Client ID: " . $_POST["pw-client-id"]);
-    
         }
     }
 
@@ -764,7 +763,7 @@ Standard text field
 function text_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label class="control-label">' . $title . '</label>';
-    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
+    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
 
@@ -808,7 +807,7 @@ email field with validation
 function email_field($name, $title, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<input class="form-control" type="email" name="' . $name . '" value="' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '" size="40" />';
+    echo '<input class="form-control" type="email" name="' . $name . '" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
 
@@ -818,7 +817,7 @@ textarea field
 function textarea_field($name, $title, $rows, $columns, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$name]) ? esc_attr($_POST[$name]) : '') . '</textarea>';
+    echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$cm]) ? esc_attr($_POST[$cm]) : '') . '</textarea>';
     echo '</div>';
 }
 
