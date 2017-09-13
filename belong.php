@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.5.4
+* Version: 0.2.5.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -26,12 +26,11 @@ wp_enqueue_style('prefix_bootstrap');
 /*********************************************************************************/
 
 function client_registration_form() {
+    ob_start();
     global $cm;
     $id = $_GET['clientID'];
     $post_id = get_the_ID();
-    $cm = get_post_meta($post_id, "client_profile_" . $id);
-    ob_start();
-    
+    $cm = get_post_meta($post_id, "client_profile_" . $id);   
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
         if(isset($_POST)) {
@@ -41,7 +40,6 @@ function client_registration_form() {
             }
             /** get selected clients profile from meta table */
             $cm = get_post_meta($post_id, "client_profile_" . $id);
-
         }
     }
 
@@ -797,7 +795,7 @@ function date_field($name, $title, $date_id, $col) {
     datepicker($date_id);
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<input  class="form-control" id="' . $date_id . '" name="' . $name . '" />';
+    echo '<input  class="form-control" id="' . $date_id . '" name="' . $name . '" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" />';
     echo '</div>';
 }
 
@@ -817,7 +815,7 @@ textarea field
 function textarea_field($name, $title, $rows, $columns, $col) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($_POST[$cm]) ? esc_attr($_POST[$cm]) : '') . '</textarea>';
+    echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '</textarea>';
     echo '</div>';
 }
 
