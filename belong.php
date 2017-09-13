@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.4.8
+* Version: 0.2.4.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -29,9 +29,13 @@ function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
         if(isset($_POST)) {
-            var_dump($_POST);
+            $post_id = get_the_ID();
+            $meta = get_post_meta($post_id);
+
+            var_dump($post_id);
+            var_dump($meta);
         }
     }
 
@@ -140,7 +144,8 @@ function client_registration($id) {
 
 function personal_form($id) {
     echo '<div class="row">';
-    date_field("pw-registration-date", "DATE", "reg_date", "6");
+    echo '<input type="hidden" name="pw-client-id" value="' . $id . '" />';
+    date_field("pw-registration-date", "DATE", "pw-registration-date", "6");
     text_field("pw-client-number", "CLIENT NUMBER", "6");
     echo '</div>';
     echo '<div class="row">';
@@ -149,12 +154,12 @@ function personal_form($id) {
     echo '</div>';
     echo '<div class="row">';
     echo '<fieldset disabled>';
-    user_field("pw-display_name", "DISPLAY NAME", "display_name", $id, "6");
+    user_field("pw-display-name", "DISPLAY NAME", "display_name", $id, "6");
     user_field("pw-email", "EMAIL ADDRESS", "user_email", $id, "6");
     echo '</fieldset>';
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Male","Female"), "pw-client_gender", "GENDER", "6");
+    select_field(array("Male","Female"), "pw-client-gender", "GENDER", "6");
     text_field("pw-client-telephone", "TELEPHONE NUMBER", "6");
     echo '</div>';
     echo '<div class="row">';
