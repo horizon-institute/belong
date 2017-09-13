@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.7.1
+* Version: 0.2.7.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -28,10 +28,12 @@ function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
     $post_id = get_the_ID();
-    $client_meta = get_post_meta($post_id, "client_profile_" . $id);
-    foreach($client_meta as $cm) { 
-        $cm = unserialize($cm); 
-    }
+    $cm = get_post_meta($post_id, "client_profile_" . $id);
+    $cm = unserialize($cm);
+    // $client_meta = get_post_meta($post_id, "client_profile_" . $id);
+    // foreach($client_meta as $cm) { 
+    //     $cm = unserialize($cm); 
+    // }
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST)) {
@@ -762,7 +764,7 @@ Standard text field
 function text_field($name, $title, $col, $cm) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label class="control-label">' . $title . '</label>';
-    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . $cm[$name]  . '" size="40" />';
+    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . $cm[$name][0]  . '" size="40" />';
     echo '</div>';
 }
 
