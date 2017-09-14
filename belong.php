@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.8.7
+* Version: 0.2.8.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -28,7 +28,6 @@ function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
     $post_id = get_the_ID();
-    echo $post_id;
     $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -64,7 +63,7 @@ function client_view_form() {
     ob_start();
     $current_user = belong_get_current_user();
     $id           = $current_user->ID;
-    $post_id = 337; //post_id for clinet profile post
+    $post_id = 337; //post_id for client profile post
     $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
 
     echo '<form action="" method="post" id="tab">';
@@ -149,7 +148,7 @@ function client_registration($id, $cm) {
 /*********************************************************************************/
 
 function personal_form($id, $cm) {
-    // var_dump($cm);
+    var_dump($cm);
     echo '<div class="row">';
     echo '<input type="hidden" name="pw-client-id" value="' . $id . '" />';
     date_field("pw-registration-date", "DATE", "pw-registration-date", "6", $cm);
@@ -762,7 +761,7 @@ function select_multiple($array, $name, $title, $col, $cm) {
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "' multiple='multiple'><option>choose</option>";
     foreach ($array as $item) {
-        echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
+        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . ">" . $item . "</option>";
     }
     echo "</select>";
     echo '</div>';
