@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.8.0
+* Version: 0.2.8.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -730,9 +730,14 @@ Dynamically populate select element from array
 function select_field($array, $name, $title, $col, $cm) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo "<select class='form-control' name='" . $name . "'><option selected='selected'>choose</option>";
+    echo "<select class='form-control' name='" . $name . "'><option>choose</option>";
     foreach ($array as $item) {
-        echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
+        echo "<option value=" . strtolower($item) . " ";
+        if($cm[$name] == $item) {
+            echo "selected='selected'";
+        }  
+        echo ">" . $item;
+        echo "</option>";
     }
     echo "</select>";
     echo '</div>';
