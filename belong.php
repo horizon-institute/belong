@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.8.8
+* Version: 0.2.8.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -759,7 +759,7 @@ Multi select element field from array
 function select_multiple($array, $name, $title, $col, $cm) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo "<select class='form-control' name='" . $name . "' multiple='multiple'><option>choose</option>";
+    echo "<select class='form-control' name='" . $name . "[]' multiple='multiple'><option>choose</option>";
     foreach ($array as $item) {
         echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . ">" . $item . "</option>";
     }
