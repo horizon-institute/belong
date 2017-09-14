@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.8.9
+* Version: 0.2.9.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -148,7 +148,6 @@ function client_registration($id, $cm) {
 /*********************************************************************************/
 
 function personal_form($id, $cm) {
-    var_dump($cm);
     echo '<div class="row">';
     echo '<input type="hidden" name="pw-client-id" value="' . $id . '" />';
     date_field("pw-registration-date", "DATE", "pw-registration-date", "6", $cm);
@@ -761,7 +760,16 @@ function select_multiple($array, $name, $title, $col, $cm) {
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "[]' multiple='multiple'><option>choose</option>";
     foreach ($array as $item) {
-        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . ">" . $item . "</option>";
+        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
+        foreach($cm[$name] as $selected) {
+            if($selected == strtolower(str_replace(' ', '_',$item))) {
+                echo "selected='selected'";
+            }
+        }
+
+        echo ">" . str_replace('_', ' ',$item);
+        echo "</option>";
+       // echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . ">" . $item . "</option>";
     }
     echo "</select>";
     echo '</div>';
