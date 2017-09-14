@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.8.3
+* Version: 0.2.8.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -145,6 +145,7 @@ function client_registration($id, $cm) {
 /*********************************************************************************/
 
 function personal_form($id, $cm) {
+    var_dump($cm);
     echo '<div class="row">';
     echo '<input type="hidden" name="pw-client-id" value="' . $id . '" />';
     date_field("pw-registration-date", "DATE", "pw-registration-date", "6", $cm);
@@ -716,7 +717,7 @@ function staff_select_field($name, $title, $col, $cm) {
     $staff_list = get_staff_list();
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo "<select class='form-control' name='" . $name . "'><option selected='selected'>choose</option>";
+    echo "<select class='form-control' name='" . $name . "'><option>choose</option>";
     foreach ($staff_list as $item) {
         echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
     }
@@ -732,11 +733,10 @@ function select_field($array, $name, $title, $col, $cm) {
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "'><option>choose</option>";
     foreach ($array as $item) {
-        echo ($cm[$name] . " :: " . $item);
         echo "<option value=" . strtolower($item) . " ";
         if($cm[$name] == strtolower($item)) {
             echo "selected='selected'";
-        }  
+        }
         echo ">" . $item;
         echo "</option>";
     }
@@ -751,7 +751,7 @@ Multi select element field from array
 function select_multiple($array, $name, $title, $col, $cm) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo "<select class='form-control' name='" . $name . "' multiple='multiple'><option selected='selected'>choose</option>";
+    echo "<select class='form-control' name='" . $name . "' multiple='multiple'><option>choose</option>";
     foreach ($array as $item) {
         echo "<option value=" . strtolower($item) . ">" . $item . "</option>";
     }
