@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.8.5
+* Version: 0.2.8.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -719,7 +719,12 @@ function staff_select_field($name, $title, $col, $cm) {
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "'><option>choose</option>";
     foreach ($staff_list as $item) {
-        echo "<option value=" . strtolower($item[0]) . ">" . $item[0] . "</option>";
+        echo "<option value=" . strtolower(str_replace(' ', '_',$item[0])) . " ";
+        if($cm[$name] == strtolower(str_replace(' ', '_',$item[0]))) {
+            echo "selected='selected'";
+        }
+        echo ">" . str_replace('_', ' ',$item[0] );
+        echo "</option>";
     }
     echo "</select>";
     echo '</div>';
