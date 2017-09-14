@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.7.7
+* Version: 0.2.7.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -28,7 +28,7 @@ function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
     $post_id = get_the_ID();
-    $cm = get_post_meta($post_id, "client_profile_" . $id);
+    $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST)) {
@@ -37,7 +37,7 @@ function client_registration_form() {
                 update_post_meta($post_id, "client_profile_" . $id, $_POST);
             }
             /** get selected clients profile from meta table */
-            $cm = get_post_meta($post_id, "client_profile_" . $id);
+            $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
         }
     }
     
@@ -145,7 +145,7 @@ function client_registration($id, $cm) {
 /*********************************************************************************/
 
 function personal_form($id, $cm) {
-    var_dump($cm[0]);
+    var_dump($cm);
     echo '<div class="row">';
     echo '<input type="hidden" name="pw-client-id" value="' . $id . '" />';
     date_field("pw-registration-date", "DATE", "pw-registration-date", "6", $cm);
