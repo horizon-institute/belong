@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.7.8
+* Version: 0.2.7.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -110,34 +110,34 @@ function client_registration($id, $cm) {
     personal_form($id, $cm);
     echo '</div>';
     echo '<div class="tab-pane fade" id="education">';
-    education_form();
+    education_form($cm);
     echo '</div>';
     echo '<div class="tab-pane fade" id="language">';
-    language_form();
+    language_form($cm);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="immigration">';
-    immigration_form();
+    immigration_form($cm);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="financial">';
-    financial_form();
+    financial_form($cm);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="work">';
-    work_form();
+    work_form($cm);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="work_experience">';
-    work_experience_form();
+    work_experience_form($cm);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="health">';
-    health_form();
+    health_form($cm);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="additional">';
-    additional_form();
+    additional_form($cm);
     echo '</div>';
     
     echo '</div>';
@@ -758,11 +758,9 @@ function select_multiple($array, $name, $title, $col, $cm) {
 Standard text field
 ************************************************/
 function text_field($name, $title, $col, $cm) {
-    // echo ("field name 0:: " .$cm[$name][0]);
-    // echo ("field name:: " .$cm[$name]);
     echo '<div class="col-md-' . $col . '" >';
     echo '<label class="control-label">' . $title . '</label>';
-    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . $cm[$name]  . '" size="40" />';
+    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
 
