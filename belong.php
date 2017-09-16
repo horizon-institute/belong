@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.9.5
+* Version: 0.2.9.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -846,8 +846,8 @@ Dynamic child input fields
 function children($cm) {
 
     $child_names = $cm["pw-child-name"];
-    var_dump ($child_names);
- 
+    var_dump ($child_names[0]);
+    var_dump ($child_names[1]);
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
