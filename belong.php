@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.0.2
+* Version: 0.3.0.3
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -844,16 +844,9 @@ Dynamic child input fields
 function children($cm) {
 
     $child_names = $cm["pw-child-name"];
-    if(isset($child_names)) {
-        $child_dob = $cm["pw-child-dob"];
-        $child_cn = $cm["pw-child-cn"];
-        $child_uk = $cm["pw-child-uk"];
-        $count = 0;
-        foreach($child_names as $child) {
-            echo $child . " : " . $child_dob[$count] . " : " . $child_cn[$count] . " : " . $child_uk[$count] . "<br />";
-            $count++;
-        }
-    }
+    $child_dob = $cm["pw-child-dob"];
+    $child_cn = $cm["pw-child-cn"];
+    $child_uk = $cm["pw-child-uk"];
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
@@ -893,27 +886,33 @@ function children($cm) {
         echo ">" . str_replace('_', ' ',$item);
         echo "</option>";
     }
-    // echo '<option value="">UK?</option>';
-    // echo '<option value="yes">YES</option>';
-    // echo '<option value="no">NO</option>';
     echo '</select>';
 
-
-
     echo '<div class="input-group-btn">';
-    echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
+    echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
     echo '</div>';
     echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
     echo '</div>';
+
+    if(isset($child_names)) {
+        $count = count($child_names) - 1;
+        for($i=0; $i < $count; $i++) {
+            echo '<script>child_fields(</script> . $cm . <script>);</script>';
+        }
+    }
     echo '</div>';
     
     ?>
     <script type="text/javascript">
       var child = 0;
 
-      function child_fields() {
+      function child_fields(cm) {
+        var child_names = cm["pw-child-name"];
+        var child_dob = cm["pw-child-dob"];
+        var child_cn = cm["pw-child-cn"];
+        var child_uk = cm["pw-child-uk"];
         child++;
         var objTo = document.getElementById('child_fields')
         var divtest = document.createElement("div");
@@ -922,11 +921,11 @@ function children($cm) {
         var html = [];
         html.push(
         '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div>',
+        '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + child_names[child] + '" placeholder="CHILD NAME"></div></div>',
         '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="" placeholder="DOB"></div></div>',
+        '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + child_dob[child] + '" placeholder="DOB"></div></div>',
         '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER"></div></div>',
+        '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + child_cn[child] + '" placeholder="CLIENT NUMBER"></div></div>',
         '<div class="col-md-3 nopadding"><div class="form-group">',
         '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
         '<option value="">UK?</option><option value="yes">YES</option>',
