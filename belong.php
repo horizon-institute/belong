@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.0.6
+* Version: 0.3.0.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -65,7 +65,7 @@ function client_view_form() {
     $id           = $current_user->ID;
     $post_id = 337; //post_id for client profile post
     $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
-
+    
     echo '<form action="" method="post" id="tab">';
     echo '<fieldset disabled>';
     client_registration($id, $cm);
@@ -842,12 +842,12 @@ function textarea_field($name, $title, $rows, $columns, $col, $cm) {
 Dynamic child input fields
 ******************************************************/
 function children($cm) {
-
+    
     $child_names = $cm["pw-child-name"];
     $child_dob = $cm["pw-child-dob"];
     $child_cn = $cm["pw-child-cn"];
     $child_uk = $cm["pw-child-uk"];
-
+    
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
     echo '<div id="child_fields">';
@@ -876,7 +876,7 @@ function children($cm) {
     echo '<div class="form-group">';
     echo '<div class="input-group">';
     echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
-
+    
     $array = ["UK?","Yes","No"];
     foreach ($array as $item) {
         echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
@@ -887,13 +887,18 @@ function children($cm) {
         echo "</option>";
     }
     echo '</select>';
-
+    
     echo '<div class="input-group-btn">';
     echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
     if(isset($child_names)) {
         $count = count($child_names) - 1;
-        for($i=0; $i < $count; $i++) {
-            echo '<script>child_fields(</script>' . $cm . '<script>);</script>';
+        for($i=0; $i < $count; $i++) { ?>
+
+        <script type="text/javascript">
+            child_fields(<?php echo $cm ?>);
+        </script>
+
+    <?php
         }
     }
     
@@ -903,58 +908,56 @@ function children($cm) {
     echo '</div>';
     echo '</div>';
     echo '</div>';
-
-
-
+    
     ?>
-    <script type="text/javascript">
-      var child = 0;
+      <script type="text/javascript">
+        var child = 0;
 
-      function child_fields(cm) {
-        var child_names = cm["pw-child-name"];
-        var child_dob = cm["pw-child-dob"];
-        var child_cn = cm["pw-child-cn"];
-        var child_uk = cm["pw-child-uk"];
-        child++;
-        var objTo = document.getElementById('child_fields')
-        var divtest = document.createElement("div");
-        divtest.setAttribute("class", "form-group removeclass" + child);
-        var rdiv = 'removeclass' + child;
-        var html = [];
-        html.push(
-        '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + child_names[child] + '" placeholder="CHILD NAME"></div></div>',
-        '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + child_dob[child] + '" placeholder="DOB"></div></div>',
-        '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + child_cn[child] + '" placeholder="CLIENT NUMBER"></div></div>',
-        '<div class="col-md-3 nopadding"><div class="form-group">',
-        '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
-        '<option value="">UK?</option><option value="yes">YES</option>',
-        '<option value="no">NO</option></select>',
-        '<div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');">',
-        '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
-        );
-        divtest.innerHTML = html.join('');
-        objTo.appendChild(divtest);
-        dob_picker("pw-child-dob" + child);
-      }
+        function child_fields(cm) {
+          var child_names = cm["pw-child-name"];
+          var child_dob = cm["pw-child-dob"];
+          var child_cn = cm["pw-child-cn"];
+          var child_uk = cm["pw-child-uk"];
+          child++;
+          var objTo = document.getElementById('child_fields')
+          var divtest = document.createElement("div");
+          divtest.setAttribute("class", "form-group removeclass" + child);
+          var rdiv = 'removeclass' + child;
+          var html = [];
+          html.push(
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + child_names[child] + '" placeholder="CHILD NAME"></div></div>',
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + child_dob[child] + '" placeholder="DOB"></div></div>',
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + child_cn[child] + '" placeholder="CLIENT NUMBER"></div></div>',
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
+            '<option value="">UK?</option><option value="yes">YES</option>',
+            '<option value="no">NO</option></select>',
+            '<div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');">',
+            '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
+          );
+          divtest.innerHTML = html.join('');
+          objTo.appendChild(divtest);
+          dob_picker("pw-child-dob" + child);
+        }
 
-      function remove_child_fields(rid) {
-        jQuery('.removeclass' + rid).remove();
-      }
+        function remove_child_fields(rid) {
+          jQuery('.removeclass' + rid).remove();
+        }
 
-      function dob_picker(dob_id) {
-        jQuery(document).ready(function() {
-          jQuery("#" + dob_id).datepicker({
-            changeYear: true,
-            yearRange: "-100:+0",
-            dateFormat: 'dd-mm-yy'
+        function dob_picker(dob_id) {
+          jQuery(document).ready(function() {
+            jQuery("#" + dob_id).datepicker({
+              changeYear: true,
+              yearRange: "-100:+0",
+              dateFormat: 'dd-mm-yy'
+            });
           });
-        });
-      }
-    </script>
-    <?php
+        }
+      </script>
+      <?php
 }
 
 ?>
