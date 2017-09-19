@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.0.1
+* Version: 0.3.0.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -766,10 +766,8 @@ function select_multiple($array, $name, $title, $col, $cm) {
                 echo "selected='selected'";
             }
         }
-
         echo ">" . str_replace('_', ' ',$item);
         echo "</option>";
-       // echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . ">" . $item . "</option>";
     }
     echo "</select>";
     echo '</div>';
@@ -885,10 +883,23 @@ function children($cm) {
     echo '<div class="form-group">';
     echo '<div class="input-group">';
     echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
-    echo '<option value="">UK?</option>';
-    echo '<option value="yes">YES</option>';
-    echo '<option value="no">NO</option>';
+
+    $array = ["UK?","Yes","No"];
+    foreach ($array as $item) {
+        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
+        if($child_uk[0] == strtolower(str_replace(' ', '_',$item))) {
+            echo "selected='selected'";
+        }
+        echo ">" . str_replace('_', ' ',$item);
+        echo "</option>";
+    }
+    // echo '<option value="">UK?</option>';
+    // echo '<option value="yes">YES</option>';
+    // echo '<option value="no">NO</option>';
     echo '</select>';
+
+
+
     echo '<div class="input-group-btn">';
     echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
     echo '</div>';
@@ -924,7 +935,6 @@ function children($cm) {
         '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
         );
         divtest.innerHTML = html.join('');
-        console.log(html);
         objTo.appendChild(divtest);
         dob_picker("pw-child-dob" + child);
       }
