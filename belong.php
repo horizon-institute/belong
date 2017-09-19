@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.2.9.8
+* Version: 0.2.9.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -845,8 +845,8 @@ Dynamic child input fields
 ******************************************************/
 function children($cm) {
 
-    $child_name = $cm["pw-child-name"];
-    if(isset($child_name)) {
+    $child_names = $cm["pw-child-name"];
+    if(isset($child_names)) {
         $child_dob = $cm["pw-child-dob"];
         $child_cn = $cm["pw-child-cn"];
         $child_uk = $cm["pw-child-uk"];
@@ -864,7 +864,7 @@ function children($cm) {
     
     echo '<div class="col-md-3">';
     echo '<div class="form-group">';
-    echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_name[0]) ? esc_attr($child_name[0]) : '') . '" placeholder="CHILD NAME">';
+    echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_names[0]) ? esc_attr($child_names[0]) : '') . '" placeholder="CHILD NAME">';
     echo '</div>';
     echo '</div>';
     
@@ -921,7 +921,7 @@ function children($cm) {
         '<option value="">UK?</option><option value="yes">YES</option>',
         '<option value="no">NO</option></select>',
         '<div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');">',
-        '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>';
+        '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
         );
         divtest.innerHTML = html;
         objTo.appendChild(divtest);
