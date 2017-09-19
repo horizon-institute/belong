@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.0.0
+* Version: 0.3.0.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -923,7 +923,7 @@ function children($cm) {
         '<div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');">',
         '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
         );
-        divtest.innerHTML = html;
+        divtest.innerHTML = html.join('');
         console.log(html);
         objTo.appendChild(divtest);
         dob_picker("pw-child-dob" + child);
