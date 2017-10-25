@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.2.6
+* Version: 0.3.2.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -847,7 +847,6 @@ function children($cm) {
     $child_dobs = $cm["pw-child-dob"];
     $child_cns = $cm["pw-child-cn"];
     $child_uks = $cm["pw-child-uk"];
-//var_dump($cm);
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
@@ -857,41 +856,50 @@ function children($cm) {
 
     if (isset($child_names)) {
         for($index = 0; $index <= count($child_names); $index++) {
-            echo '<div class="col-md-3">';
-            echo '<div class="form-group">';
-            echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_names[$index]) ? esc_attr($child_names[$index]) : '') . '" placeholder="CHILD NAME">';
-            echo '</div>';
-            echo '</div>';
-            
-            echo '<div class="col-md-3">';
-            datepicker("pw-child-dob0");
-            echo '<div class="form-group">';
-            echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="' . (isset($child_dob[$index]) ? esc_attr($child_dob[$index]) : '') . '" placeholder="DOB">';
-            echo '</div>';
-            echo '</div>';
-            
-            echo '<div class="col-md-3">';
-            echo '<div class="form-group">';
-            echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' . (isset($child_cn[$index]) ? esc_attr($child_cn[$index]) : '') . '" placeholder="CLIENT NUMBER">';
-            echo '</div>';
-            echo '</div>';
-            
-            echo '<div class="col-md-3">';
-            echo '<div class="form-group">';
-            echo '<div class="input-group">';
-            echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
-            
-            $array = ["UK?","Yes","No"];
-            foreach ($array as $item) {
-                echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
-                if($child_uk[$index] == strtolower(str_replace(' ', '_',$item))) {
-                    echo "selected='selected'";
+
+            if($index == 0) {
+                echo '<div class="col-md-3">';
+                echo '<div class="form-group">';
+                echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_names[$index]) ? esc_attr($child_names[$index]) : '') . '" placeholder="CHILD NAME">';
+                echo '</div>';
+                echo '</div>';
+                
+                echo '<div class="col-md-3">';
+                datepicker("pw-child-dob0");
+                echo '<div class="form-group">';
+                echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="' . (isset($child_dob[$index]) ? esc_attr($child_dob[$index]) : '') . '" placeholder="DOB">';
+                echo '</div>';
+                echo '</div>';
+                
+                echo '<div class="col-md-3">';
+                echo '<div class="form-group">';
+                echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' . (isset($child_cn[$index]) ? esc_attr($child_cn[$index]) : '') . '" placeholder="CLIENT NUMBER">';
+                echo '</div>';
+                echo '</div>';
+                
+                echo '<div class="col-md-3">';
+                echo '<div class="form-group">';
+                echo '<div class="input-group">';
+                echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
+                
+                $array = ["UK?","Yes","No"];
+                foreach ($array as $item) {
+                    echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
+                    if($child_uk[$index] == strtolower(str_replace(' ', '_',$item))) {
+                        echo "selected='selected'";
+                    }
+                    echo ">" . str_replace('_', ' ',$item);
+                    echo "</option>";
                 }
-                echo ">" . str_replace('_', ' ',$item);
-                echo "</option>";
+                echo '</select>';
+                echo '<div class="input-group-btn">';
+                echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
+                echo '</div>';
+            } else {
+                //call the js to generate a new line ???
+                echo '<script type="text/javascript">child_fields(' . $cm . ');</script>';
+
             }
-            echo '</select>';
-            echo '<br />';
         }
 
     } else {
@@ -927,12 +935,11 @@ function children($cm) {
         }
         echo '</select>';
 
+        echo '<div class="input-group-btn">';
+        echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
+        echo '</div>';
+
     }
-
-    echo '<div class="input-group-btn">';
-    echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
-
-    echo '</div>';
     echo '</div>';
     echo '<div class="clear"></div>';
     echo '</div>';
