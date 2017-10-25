@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.3.6
+* Version: 0.3.3.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -957,8 +957,9 @@ function children($cm) {
         var child = 0;
 
         function child_fields(cm) {
-            console.log("CM variable: " + cm);
+            //console.log("CM variable: " + cm);
           child++;
+          console.log("CM:" + cm, " -- Child no: " + child);
           var objTo = document.getElementById('child_fields')
           var childData = document.createElement("div");
           childData.setAttribute("class", "form-group removeclass" + child);
@@ -973,11 +974,11 @@ function children($cm) {
             var child_uks = cm["pw-child-uk"];
             html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child] || '') + '" placeholder="CHILD NAME"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child]) + '" placeholder="CHILD NAME"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child] || '')  + '" placeholder="DOB"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child])  + '" placeholder="DOB"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child] || '')  + '" placeholder="CLIENT NUMBER"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child])  + '" placeholder="CLIENT NUMBER"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
             '<option value="">UK?</option><option value="yes">YES</option>',
