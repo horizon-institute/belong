@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.3.1
+* Version: 0.3.3.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -957,24 +957,28 @@ function children($cm) {
         var child = 0;
 
         function child_fields(cm) {
-         console.log("CM variable: " + cm);
-          var child_names = cm["pw-child-name"];
-          var child_dobs = cm["pw-child-dob"];
-          var child_cns = cm["pw-child-cn"];
-          var child_uks = cm["pw-child-uk"];
+
           child++;
           var objTo = document.getElementById('child_fields')
           var childData = document.createElement("div");
           childData.setAttribute("class", "form-group removeclass" + child);
           var rdiv = 'removeclass' + child;
           var html = [];
-          html.push(
+
+
+        if(cm["pw-child-name"]) {
+            console.log("CM variable: " + cm);
+            var child_names = cm["pw-child-name"];
+            var child_dobs = cm["pw-child-dob"];
+            var child_cns = cm["pw-child-cn"];
+            var child_uks = cm["pw-child-uk"];
+            html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child] ? child_names[child] : '') + '" placeholder="CHILD NAME"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child] || '') + '" placeholder="CHILD NAME"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child] ? child_dobs[child] : '')  + '" placeholder="DOB"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child] || '')  + '" placeholder="DOB"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child] ? child_cns[child] : '')  + '" placeholder="CLIENT NUMBER"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child] || '')  + '" placeholder="CLIENT NUMBER"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
             '<option value="">UK?</option><option value="yes">YES</option>',
@@ -982,6 +986,25 @@ function children($cm) {
             '<div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');">',
             '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
           );
+
+        } else {
+            html.push(
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div>',
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="" placeholder="DOB"></div></div>',
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER"></div></div>',
+            '<div class="col-md-3 nopadding"><div class="form-group">',
+            '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
+            '<option value="">UK?</option><option value="yes">YES</option>',
+            '<option value="no">NO</option></select>',
+            '<div class="input-group-btn"><button class="btn btn-danger btn-sm" type="button" onclick="remove_child_fields(' + child + ');">',
+            '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></div></div></div><div class="clear"></div>'
+          );
+
+        }
+
           childData.innerHTML = html.join('');
           objTo.appendChild(childData);
           dob_picker("pw-child-dob" + child);
