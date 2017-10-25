@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.2.5
+* Version: 0.3.2.6
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -843,8 +843,11 @@ function textarea_field($name, $title, $rows, $columns, $col, $cm) {
 Dynamic child input fields
 ******************************************************/
 function children($cm) {
-    
-var_dump($cm);
+    $child_names = $cm["pw-child-name"];
+    $child_dobs = $cm["pw-child-dob"];
+    $child_cns = $cm["pw-child-cn"];
+    $child_uks = $cm["pw-child-uk"];
+//var_dump($cm);
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
@@ -852,55 +855,80 @@ var_dump($cm);
     echo '</div>';
     
 
-    if (isset($cm)) {
-    
-        $child_name = $cm["pw-child-name"];
-        $child_dob = $cm["pw-child-dob"];
-        $child_cn = $cm["pw-child-cn"];
-        $child_uk = $cm["pw-child-uk"];
-
-
+    if (isset($child_names)) {
+        for($index = 0; $index <= count($child_names); $index++) {
+            echo '<div class="col-md-3">';
+            echo '<div class="form-group">';
+            echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_names[$index]) ? esc_attr($child_names[$index]) : '') . '" placeholder="CHILD NAME">';
+            echo '</div>';
+            echo '</div>';
+            
+            echo '<div class="col-md-3">';
+            datepicker("pw-child-dob0");
+            echo '<div class="form-group">';
+            echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="' . (isset($child_dob[$index]) ? esc_attr($child_dob[$index]) : '') . '" placeholder="DOB">';
+            echo '</div>';
+            echo '</div>';
+            
+            echo '<div class="col-md-3">';
+            echo '<div class="form-group">';
+            echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' . (isset($child_cn[$index]) ? esc_attr($child_cn[$index]) : '') . '" placeholder="CLIENT NUMBER">';
+            echo '</div>';
+            echo '</div>';
+            
+            echo '<div class="col-md-3">';
+            echo '<div class="form-group">';
+            echo '<div class="input-group">';
+            echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
+            
+            $array = ["UK?","Yes","No"];
+            foreach ($array as $item) {
+                echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
+                if($child_uk[$index] == strtolower(str_replace(' ', '_',$item))) {
+                    echo "selected='selected'";
+                }
+                echo ">" . str_replace('_', ' ',$item);
+                echo "</option>";
+            }
+            echo '</select>';
+            echo '<br />';
+        }
 
     } else {
-
-
-    }
-
-    echo '<div class="col-md-3">';
-    echo '<div class="form-group">';
-    echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_names[0]) ? esc_attr($child_names[0]) : '') . '" placeholder="CHILD NAME">';
-    echo '</div>';
-    echo '</div>';
-    
-    echo '<div class="col-md-3">';
-    datepicker("pw-child-dob0");
-    echo '<div class="form-group">';
-    echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="' . (isset($child_dob[0]) ? esc_attr($child_dob[0]) : '') . '" placeholder="DOB">';
-    echo '</div>';
-    echo '</div>';
-    
-    echo '<div class="col-md-3">';
-    echo '<div class="form-group">';
-    echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' . (isset($child_cn[0]) ? esc_attr($child_cn[0]) : '') . '" placeholder="CLIENT NUMBER">';
-    echo '</div>';
-    echo '</div>';
-    
-    echo '<div class="col-md-3">';
-    echo '<div class="form-group">';
-    echo '<div class="input-group">';
-    echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
-    
-    $array = ["UK?","Yes","No"];
-    foreach ($array as $item) {
-        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
-        if($child_uk[0] == strtolower(str_replace(' ', '_',$item))) {
-            echo "selected='selected'";
+        echo '<div class="col-md-3">';
+        echo '<div class="form-group">';
+        echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME">';
+        echo '</div>';
+        echo '</div>';
+        
+        echo '<div class="col-md-3">';
+        datepicker("pw-child-dob0");
+        echo '<div class="form-group">';
+        echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="" placeholder="DOB">';
+        echo '</div>';
+        echo '</div>';
+        
+        echo '<div class="col-md-3">';
+        echo '<div class="form-group">';
+        echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="" placeholder="CLIENT NUMBER">';
+        echo '</div>';
+        echo '</div>';
+        
+        echo '<div class="col-md-3">';
+        echo '<div class="form-group">';
+        echo '<div class="input-group">';
+        echo '<select class="form-control" id="pw-child-uk" name="pw-child-uk[]">';
+        
+        $array = ["UK?","Yes","No"];
+        foreach ($array as $item) {
+            echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
+            echo ">" . str_replace('_', ' ',$item);
+            echo "</option>";
         }
-        echo ">" . str_replace('_', ' ',$item);
-        echo "</option>";
+        echo '</select>';
+
     }
-    echo '</select>';
-    
+
     echo '<div class="input-group-btn">';
     echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
 
