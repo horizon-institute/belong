@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.4.0
+* Version: 0.3.4.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -899,9 +899,10 @@ function children($cm) {
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
+                echo '</div>';
 
             } else {
-                //subsequent lined shoul generate dynamically ???
+                //subsequent lines should generate dynamically ???
                 ?>
                 <script type="text/javascript">
                 jQuery(document).ready(function() {
@@ -949,6 +950,7 @@ function children($cm) {
         echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
         echo '</div>';
         echo '<div class="clear"></div>';
+        echo '</div>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
