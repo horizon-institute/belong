@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.2.9
+* Version: 0.3.3.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -857,7 +857,7 @@ function children($cm) {
     if (isset($child_names)) {
         for($index = 0; $index <= count($child_names); $index++) {
 
-            if($index == 0) {
+            if($index == 0) { //manually generate first line
                 echo '<div class="col-md-3">';
                 echo '<div class="form-group">';
                 echo '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' . (isset($child_names[$index]) ? esc_attr($child_names[$index]) : '') . '" placeholder="CHILD NAME">';
@@ -896,7 +896,7 @@ function children($cm) {
                 echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
                 echo '</div>';
             } else {
-                //call the js to generate a new line ???
+                //call the js to generate a new line dynamically ???
                 ?>
                 <script type="text/javascript">
                 jQuery(document).ready(function() {
@@ -970,11 +970,11 @@ function children($cm) {
           var html = [];
           html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child] || '') + '" placeholder="CHILD NAME"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child] ? child_names[child] : '') + '" placeholder="CHILD NAME"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child] || '')  + '" placeholder="DOB"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child] ? child_dobs[child] : '')  + '" placeholder="DOB"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child] || '')  + '" placeholder="CLIENT NUMBER"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child] ? child_cns[child] : '')  + '" placeholder="CLIENT NUMBER"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
             '<option value="">UK?</option><option value="yes">YES</option>',
