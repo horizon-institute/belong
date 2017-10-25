@@ -867,13 +867,13 @@ function children($cm) {
                 echo '<div class="col-md-3">';
                 datepicker("pw-child-dob0");
                 echo '<div class="form-group">';
-                echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="' . (isset($child_dob[$index]) ? esc_attr($child_dob[$index]) : '') . '" placeholder="DOB">';
+                echo '<input type="text" class="form-control" id="pw-child-dob0" name="pw-child-dob[]" value="' . (isset($child_dobs[$index]) ? esc_attr($child_dobs[$index]) : '') . '" placeholder="DOB">';
                 echo '</div>';
                 echo '</div>';
                 
                 echo '<div class="col-md-3">';
                 echo '<div class="form-group">';
-                echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' . (isset($child_cn[$index]) ? esc_attr($child_cn[$index]) : '') . '" placeholder="CLIENT NUMBER">';
+                echo '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' . (isset($child_cns[$index]) ? esc_attr($child_cns[$index]) : '') . '" placeholder="CLIENT NUMBER">';
                 echo '</div>';
                 echo '</div>';
                 
@@ -885,7 +885,7 @@ function children($cm) {
                 $array = ["UK?","Yes","No"];
                 foreach ($array as $item) {
                     echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
-                    if($child_uk[$index] == strtolower(str_replace(' ', '_',$item))) {
+                    if($child_uks[$index] == strtolower(str_replace(' ', '_',$item))) {
                         echo "selected='selected'";
                     }
                     echo ">" . str_replace('_', ' ',$item);
@@ -897,8 +897,13 @@ function children($cm) {
                 echo '</div>';
             } else {
                 //call the js to generate a new line ???
-                echo '<script type="text/javascript">child_fields(' . $cm . ');</script>';
-
+                ?>
+                <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    child_fields(<?php $cm; ?>);
+                });
+                </script>
+                <?php
             }
         }
 
@@ -954,11 +959,9 @@ function children($cm) {
         function child_fields(cm) {
          console.log("CM variable: " + cm);
           var child_names = cm["pw-child-name"];
-          var child_dob = cm["pw-child-dob"];
-          
-          var child_cn = cm["pw-child-cn"];
-          var child_uk = cm["pw-child-uk"];
-          console.log(child_names, child_dob, child_cn, child_uk);
+          var child_dobs = cm["pw-child-dob"];
+          var child_cns = cm["pw-child-cn"];
+          var child_uks = cm["pw-child-uk"];
           child++;
           var objTo = document.getElementById('child_fields')
           var childData = document.createElement("div");
@@ -969,9 +972,9 @@ function children($cm) {
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child] || '') + '" placeholder="CHILD NAME"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dob[child] || '')  + '" placeholder="DOB"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-dob' + child + '" name="pw-child-dob[]" value="' + (child_dobs[child] || '')  + '" placeholder="DOB"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
-            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cn[child] || '')  + '" placeholder="CLIENT NUMBER"></div></div>',
+            '<input type="text" class="form-control" id="pw-child-cn" name="pw-child-cn[]" value="' + (child_cns[child] || '')  + '" placeholder="CLIENT NUMBER"></div></div>',
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<div class="input-group"><select class="form-control" id="pw-child-uk" name="pw-child-uk[]">',
             '<option value="">UK?</option><option value="yes">YES</option>',
