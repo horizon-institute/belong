@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.4.8
+* Version: 0.3.4.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -620,7 +620,6 @@ add_shortcode('belong_clients', 'belong_list_clients');
 ***********************************************************/
 function export_data_to_csv() {
     ob_start();
-    $counter   = 0;
     $user_args = array(
     'role' => 'Client'
     );
@@ -630,13 +629,12 @@ function export_data_to_csv() {
     echo '<label>Select Client</label>';
     echo "<select class='form-control' name='export_client_select'><option>choose</option>";
     foreach ($clients as $client) {
-        echo "<option value=" . $client->display_name . ">"; 
+        echo "<option value=" . strtolower(str_replace(' ', '_', $client->display_name)) . " "; 
+        echo ">" . str_replace('_', ' ', $client->display_name);
         echo "</option>";
     }
     echo "</select>";
-
-
-
+    echo '</div>';
     return ob_get_clean();
 }
 
