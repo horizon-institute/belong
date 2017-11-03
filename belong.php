@@ -991,6 +991,7 @@ function children($cm) {
           );
 
         } else {
+            
             html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div>',
