@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.5.0
+* Version: 0.3.5.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -623,7 +623,8 @@ function export_data_to_csv() {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST)) {
-            echo $_POST["export_client_select"];
+            $id = $_POST["export_client_select"];
+            CSV_export_client($id);
         }
     }
 
@@ -635,8 +636,7 @@ function export_data_to_csv() {
     echo '<form action="" method="post" id="export">';
     echo '<div class="form-group">';
     echo '<div class="col-md-3" >';
-    echo '<label>Select Client</label>';
-    echo "<select class='form-control' name='export_client_select'><option>choose</option>";
+    echo "Select Client <select class='form-control' name='export_client_select'><option>choose</option>";
     foreach ($clients as $client) {
         echo "<option value=" . $client->ID . " "; 
         echo ">" . str_replace('_', ' ', $client->display_name);
@@ -657,6 +657,36 @@ function export_data_to_csv() {
 }
 
 add_shortcode('belong_csv_export', 'export_data_to_csv');
+
+/**************************************************************
+* Export an individual clients data to CSV  
+***************************************************************/
+function CSV_export_client($id) {
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=pathways.csv');
+
+    $post_id = 337; //post_id for client profile post
+    $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
+    $output = fopen('php://output', 'w');
+    //output client info 
+    fputcsv($output, $cm);
+}
+
+/**************************************************************
+* Export an individual clients data to CSV  
+***************************************************************/
+function CSV_export_clients() {
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=pathways.csv');
+    $output = fopen('php://output', 'w');
+    // output the column headings
+    fputcsv($output, array('Column 1', 'Column 2', 'Column 3')); // get this dynamically by iterating over the data
+    foreach ($data as $item) {
+        fputcsv($output, $item);
+    }
+
+}
+
 /***********************************
 *        HELPER FUNCTIONS          *
 ************************************/
@@ -1085,17 +1115,5 @@ function children($cm) {
         }
 }
 
-
-function export_to_CSV($data) {
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=pathways.csv');
-    $output = fopen('php://output', 'w');
-    // output the column headings
-    fputcsv($output, array('Column 1', 'Column 2', 'Column 3')); // get this dynamically by iterating over the data
-    foreach ($data as $item) {
-        fputcsv($output, $item);
-    }
-
-}
 
 ?>
