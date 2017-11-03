@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.4.6
+* Version: 0.3.4.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -23,6 +23,9 @@ wp_enqueue_script('prefix_bootstrap');
 
 wp_register_style('prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 wp_enqueue_style('prefix_bootstrap');
+
+header('Content-Type: text/csv; charset=utf-8');
+header('Content-Disposition: attachment; filename=pathways.csv');
 /*********************************************************************************/
 function client_registration_form() {
     ob_start();
@@ -614,7 +617,29 @@ function belong_list_clients() {
 
 add_shortcode('belong_clients', 'belong_list_clients');
 
+/**********************************************************
+* CSV export
+***********************************************************/
+function export_data_to_csv() {
+    ob_start();
+    $counter   = 0;
+    $user_args = array(
+    'role' => 'Client'
+    );
+    $clients = get_users($user_args);
 
+    echo '<div class="col-md-3" >';
+    echo '<label>Select Client</label>';
+    echo "<select class='form-control' name='export_client_select'><option>choose</option>";
+    foreach ($clients as $client) {
+        echo "<option value=" . $client->display_name . ">"; 
+        echo "</option>";
+    }
+    echo "</select>";
+    return ob_get_clean();
+}
+
+add_shortcode('belong_csv_export', 'export_data_to_csv');
 /***********************************
 *        HELPER FUNCTIONS          *
 ************************************/
@@ -991,7 +1016,7 @@ function children($cm) {
           );
 
         } else {
-            
+
             html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="" placeholder="CHILD NAME"></div></div>',
@@ -1041,6 +1066,17 @@ function children($cm) {
                 <?php
             }
         }
+}
+
+
+function export_to_CSV($data) {
+    $output = fopen('php://output', 'w');
+    // output the column headings
+    fputcsv($output, array('Column 1', 'Column 2', 'Column 3')); // get this dynamically by iterating over the data
+    foreach ($data as $item) {
+        fputcsv($output, $item);
+    }
+
 }
 
 ?>
