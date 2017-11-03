@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.4.9
+* Version: 0.3.5.0
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -620,21 +620,39 @@ add_shortcode('belong_clients', 'belong_list_clients');
 ***********************************************************/
 function export_data_to_csv() {
     ob_start();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST)) {
+            echo $_POST["export_client_select"];
+        }
+    }
+
     $user_args = array(
     'role' => 'Client'
     );
     $clients = get_users($user_args);
 
+    echo '<form action="" method="post" id="export">';
+    echo '<div class="form-group">';
     echo '<div class="col-md-3" >';
     echo '<label>Select Client</label>';
     echo "<select class='form-control' name='export_client_select'><option>choose</option>";
     foreach ($clients as $client) {
-        echo "<option value=" . strtolower(str_replace(' ', '_', $client->display_name)) . " "; 
+        echo "<option value=" . $client->ID . " "; 
         echo ">" . str_replace('_', ' ', $client->display_name);
         echo "</option>";
     }
     echo "</select>";
     echo '</div>';
+
+    echo '<div class="col-md-3" >';
+    echo '<div class="form-group">';
+    echo '<button type="submit" class="btn btn-default" name="submit">EXPORT</button>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '</div>';
+    echo '</form>';
     return ob_get_clean();
 }
 
