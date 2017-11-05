@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.5.8
+* Version: 0.3.5.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -624,8 +624,16 @@ function export_data_to_csv() {
         if(isset($_POST)) {
             $id = $_POST["export_client_select"];
             CSV_export_client($id);
-            header('Content-Type: text/csv; charset=utf-8');
-            header('Content-Disposition: attachment; filename=pathways.csv');
+            // header('Content-Type: text/csv; charset=utf-8');
+            // header('Content-Disposition: attachment; filename=pathways.csv');
+
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private", false);
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment; filename=\"report.csv\";" );
+            header("Content-Transfer-Encoding: binary");
         }
     }
     $user_args = array(
