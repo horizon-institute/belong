@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.5.4
+* Version: 0.3.5.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -23,6 +23,9 @@ wp_enqueue_script('prefix_bootstrap');
 
 wp_register_style('prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 wp_enqueue_style('prefix_bootstrap');
+
+header('Content-Type: text/csv; charset=utf-8');
+header('Content-Disposition: attachment; filename=pathways.csv');
 
 /*********************************************************************************/
 function client_registration_form() {
@@ -620,23 +623,22 @@ add_shortcode('belong_clients', 'belong_list_clients');
 ***********************************************************/
 function export_data_to_csv() {
     ob_start();
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST)) {
             $id = $_POST["export_client_select"];
             CSV_export_client($id);
         }
     }
-
     $user_args = array(
     'role' => 'Client'
     );
     $clients = get_users($user_args);
 
     echo '<form action="" method="post" id="export">';
+    echo '<div class="row">';
     echo '<div class="form-group">';
     echo '<div class="col-md-3" >';
-    echo "Select Client <select class='form-control' name='export_client_select'><option>choose</option>";
+    echo "<select class='form-control' name='export_client_select'><option>choose</option>";
     foreach ($clients as $client) {
         echo "<option value=" . $client->ID . " "; 
         echo ">" . str_replace('_', ' ', $client->display_name);
@@ -650,7 +652,7 @@ function export_data_to_csv() {
     echo '<button type="submit" class="btn btn-default" name="submit">EXPORT</button>';
     echo '</div>';
     echo '</div>';
-
+    echo '</div>';
     echo '</div>';
     echo '</form>';
     return ob_get_clean();
@@ -662,8 +664,6 @@ add_shortcode('belong_csv_export', 'export_data_to_csv');
 * Export an individual clients data to CSV  
 ***************************************************************/
 function CSV_export_client($id) {
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=pathways.csv');
     $post_id = 337; //post_id for client profile post
     $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
     var_dump($cm);
