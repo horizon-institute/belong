@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.6.0
+* Version: 0.3.6.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -620,15 +620,18 @@ add_shortcode('belong_clients', 'belong_list_clients');
 ***********************************************************/
 function export_data_to_csv() {
     ob_start();
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST)) {
+            $id = $_POST["export_client_select"];
+            CSV_export_client($id);
+        }
+    }
     $user_args = array(
     'role' => 'Client'
     );
     $clients = get_users($user_args);
 
-    echo '<form action="export.php" method="post" id="export">';
+    echo '<form action="" method="post" id="export">';
     echo '<div class="row">';
     echo '<div class="form-group">';
     echo '<div class="col-md-3" >';
@@ -657,12 +660,19 @@ add_shortcode('belong_csv_export', 'export_data_to_csv');
 /**************************************************************
 * Export an individual clients data to CSV  
 ***************************************************************/
-// function CSV_export_client($id) {
-
-// }
+function CSV_export_client($id) {
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=pathways.csv');
+    $post_id = 337; //post_id for client profile post
+    $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
+    $output = fopen('php://output', 'w');
+    //output client info 
+    fputcsv($output, explode(',', $cm));
+    fclose($output);
+}
 
 /**************************************************************
-* Export an individual clients data to CSV  
+* Export all clients to CSV  
 ***************************************************************/
 // function CSV_export_clients() {
 //     header('Content-Type: text/csv; charset=utf-8');
