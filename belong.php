@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * Bitbucket Plugin URI: https://javidyousaf@bitbucket.org/javidyousaf/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.6.3
+* Version: 0.3.6.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -29,7 +29,7 @@ function client_registration_form() {
     ob_start();
     $id = $_GET['clientID'];
     $post_id = get_the_ID();
-    $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
+    $client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST)) {
@@ -38,13 +38,13 @@ function client_registration_form() {
                 update_post_meta($post_id, "client_profile_" . $id, $_POST);
             }
             /** get selected clients profile from meta table */
-            $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
+            $client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
         }
     }
     
     echo '<form action="" method="post" id="tab">';
     echo '<div class="form-group">';
-    client_registration($id, $cm);
+    client_registration($id, $client_profile);
     echo '</div>';
     echo '<div class="row">';
     echo '<div class="col-md-12">';
@@ -65,11 +65,11 @@ function client_view_form() {
     $current_user = belong_get_current_user();
     $id           = $current_user->ID;
     $post_id = 337; //post_id for client profile post
-    $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
+    $client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
     
     echo '<form action="" method="post" id="tab">';
     echo '<fieldset disabled>';
-    client_registration($id, $cm);
+    client_registration($id, $client_profile);
     echo '</fieldset>';
     echo '</form>';
     return ob_get_clean();
@@ -78,7 +78,7 @@ function client_view_form() {
 add_shortcode('client_view', 'client_view_form');
 /*********************************************************************************/
 
-function client_registration($id, $cm) {
+function client_registration($id, $client_profile) {
     echo '<ul class="nav nav-tabs">';
     echo '<li class="active">';
     echo '<a href="#personal" data-toggle="tab">PERSONAL DETAILS</a>';
@@ -111,103 +111,103 @@ function client_registration($id, $cm) {
     
     echo '<div class="tab-content">';
     echo '<div class="tab-pane active" id="personal">';
-    personal_form($id, $cm);
+    personal_form($id, $client_profile);
     echo '</div>';
     echo '<div class="tab-pane fade" id="education">';
-    education_form($cm);
+    education_form($client_profile);
     echo '</div>';
     echo '<div class="tab-pane fade" id="language">';
-    language_form($cm);
+    language_form($client_profile);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="immigration">';
-    immigration_form($cm);
+    immigration_form($client_profile);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="financial">';
-    financial_form($cm);
+    financial_form($client_profile);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="work">';
-    work_form($cm);
+    work_form($client_profile);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="work_experience">';
-    work_experience_form($cm);
+    work_experience_form($client_profile);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="health">';
-    health_form($cm);
+    health_form($client_profile);
     echo '</div>';
     
     echo '<div class="tab-pane fade" id="additional">';
-    additional_form($cm);
+    additional_form($client_profile);
     echo '</div>';
     
     echo '</div>';
 }
 /*********************************************************************************/
 
-function personal_form($id, $cm) {
+function personal_form($id, $client_profile) {
     echo '<div class="row">';
     echo '<input type="hidden" name="pw-client-id" value="' . $id . '" />';
-    date_field("pw-registration-date", "DATE", "pw-registration-date", "4", $cm);
-    text_field("pw-source", "SOURCE", "4", $cm);
-    text_field("pw-client-number", "CLIENT NUMBER", "4", $cm);
+    date_field("pw-registration-date", "DATE", "pw-registration-date", "4", $client_profile);
+    text_field("pw-source", "SOURCE", "4", $client_profile);
+    text_field("pw-client-number", "CLIENT NUMBER", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME", "6", $cm);
-    staff_select_field("pw-case-owner", "CASE OWNER", "6", $cm);
+    staff_select_field("pw-interviewers-name", "INTERVIEWERS NAME", "6", $client_profile);
+    staff_select_field("pw-case-owner", "CASE OWNER", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     echo '<fieldset disabled>';
-    user_field("pw-display-name", "DISPLAY NAME", "display_name", $id, "6", $cm);
-    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id, "6", $cm);
+    user_field("pw-display-name", "DISPLAY NAME", "display_name", $id, "6", $client_profile);
+    user_field("pw-email", "EMAIL ADDRESS", "user_email", $id, "6", $client_profile);
     echo '</fieldset>';
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Male","Female"), "pw-client-gender", "GENDER", "6", $cm);
-    text_field("pw-client-telephone", "TELEPHONE NUMBER", "6", $cm);
+    select_field(array("Male","Female"), "pw-client-gender", "GENDER", "6", $client_profile);
+    text_field("pw-client-telephone", "TELEPHONE NUMBER", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob", "12", $cm);
+    date_field("pw-client_dob", "DATE OF BIRTH", "client_dob", "12", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-address", "ADDRESS", "5", "35", "12", $cm);
+    textarea_field("pw-address", "ADDRESS", "5", "35", "12", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-postcode", "POST CODE", "6", $cm);
-    text_field("pw-accomodation-type", "ACCOMODATION TYPE", "6", $cm);
+    text_field("pw-postcode", "POST CODE", "6", $client_profile);
+    text_field("pw-accomodation-type", "ACCOMODATION TYPE", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-nationality", "NATIONALITY", "4", $cm);
-    text_field("pw-nationality-code", "CODE", "4", $cm);
-    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS", "4", $cm);
+    text_field("pw-nationality", "NATIONALITY", "4", $client_profile);
+    text_field("pw-nationality-code", "CODE", "4", $client_profile);
+    select_field(array("Single","Married","Civil Partnership","Common Law"), "pw-relationship-status", "RELATIONSHIP STATUS", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-religion", "RELIGION", "6", $cm);
-    text_field("pw-placeofworship", "PLACE OF WORSHIP", "6", $cm);
+    text_field("pw-religion", "RELIGION", "6", $client_profile);
+    text_field("pw-placeofworship", "PLACE OF WORSHIP", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME", "6", $cm);
-    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER", "6", $cm);
+    text_field("pw-spouse-name", "SPOUSE/PARTNER NAME", "6", $client_profile);
+    text_field("pw-spouse-cn", "SPOUSE/PARTNER CLIENT NUMBER", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT?", "6", $cm);
-    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU?", "6", $cm);
+    select_field(array("Yes","No"), "pw-spouse-uk", "UK RESIDENT?", "6", $client_profile);
+    select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU?", "6", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    children($cm);
+    children($client_profile);
     echo '</div>';
     
 }
 /*********************************************************************************/
 
-function education_form($cm) {
+function education_form($client_profile) {
     echo '<div class="row">';
-    select_multiple(array("Primary School","Secondary School","6th Form College","College","University","Other"), "pw-education-attended", "HAVE YOU EVER ATTENDED ANY OF THE FOLLOWING?", "6", $cm);
-    text_field("pw-education-other", "OTHER", "6", $cm);
+    select_multiple(array("Primary School","Secondary School","6th Form College","College","University","Other"), "pw-education-attended", "HAVE YOU EVER ATTENDED ANY OF THE FOLLOWING?", "6", $client_profile);
+    text_field("pw-education-other", "OTHER", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     echo '<div class="col-md-12">';
@@ -215,35 +215,35 @@ function education_form($cm) {
     echo '</div>';
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-education-qualification-1", "QUALIFICATION", "10", $cm);
-    select_field(array("Yes","No"), "pw-education-recognised-1", "RECOGNISED?", "2", $cm);
+    text_field("pw-education-qualification-1", "QUALIFICATION", "10", $client_profile);
+    select_field(array("Yes","No"), "pw-education-recognised-1", "RECOGNISED?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-education-qualification-2", "QUALIFICATION", "10", $cm);
-    select_field(array("Yes","No"), "pw-education-recognised-2", "RECOGNISED?", "2", $cm);
+    text_field("pw-education-qualification-2", "QUALIFICATION", "10", $client_profile);
+    select_field(array("Yes","No"), "pw-education-recognised-2", "RECOGNISED?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-education-qualification-3", "QUALIFICATION", "10", $cm);
-    select_field(array("Yes","No"), "pw-education-recognised-3", "RECOGNISED?", "2", $cm);
+    text_field("pw-education-qualification-3", "QUALIFICATION", "10", $client_profile);
+    select_field(array("Yes","No"), "pw-education-recognised-3", "RECOGNISED?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-education-qualification-4", "QUALIFICATION", "10", $cm);
-    select_field(array("Yes","No"), "pw-education-recognised-4", "RECOGNISED?", "2", $cm);
+    text_field("pw-education-qualification-4", "QUALIFICATION", "10", $client_profile);
+    select_field(array("Yes","No"), "pw-education-recognised-4", "RECOGNISED?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-education-qualification-5", "QUALIFICATION", "10", $cm);
-    select_field(array("Yes","No"), "pw-education-recognised-5", "RECOGNISED?", "2", $cm);
+    text_field("pw-education-qualification-5", "QUALIFICATION", "10", $client_profile);
+    select_field(array("Yes","No"), "pw-education-recognised-5", "RECOGNISED?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-education-not-recognised", "IF THEY HAVE NOT BEEN RECOGNISED PLEASE TELL US WHY", "5", "35", "12", $cm);
+    textarea_field("pw-education-not-recognised", "IF THEY HAVE NOT BEEN RECOGNISED PLEASE TELL US WHY", "5", "35", "12", $client_profile);
     echo '</div>';
 }
 /*********************************************************************************/
 
-function language_form($cm) {
+function language_form($client_profile) {
     echo '<div class="row">';
-    text_field("pw-language-primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8", $cm);
-    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-1", "ABILITY", "4", $cm);
+    text_field("pw-language-primary", "WHAT IS YOUR PRIMARY LANGUAGE?", "8", $client_profile);
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-1", "ABILITY", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
@@ -253,25 +253,25 @@ function language_form($cm) {
     echo '</div>';
     
     echo '<div class="row">';
-    text_field("pw-language-2", "LANGUAGE", "8", $cm);
-    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-2", "ABILITY", "4", $cm);
+    text_field("pw-language-2", "LANGUAGE", "8", $client_profile);
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-2", "ABILITY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-3", "LANGUAGE", "8", $cm);
-    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-3", "ABILITY", "4", $cm);
+    text_field("pw-language-3", "LANGUAGE", "8", $client_profile);
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-3", "ABILITY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-4", "LANGUAGE", "8", $cm);
-    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-4", "ABILITY", "4", $cm);
+    text_field("pw-language-4", "LANGUAGE", "8", $client_profile);
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-4", "ABILITY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-language-5", "LANGUAGE", "8", $cm);
-    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-5", "ABILITY", "4", $cm);
+    text_field("pw-language-5", "LANGUAGE", "8", $client_profile);
+    select_field(array("SPOKEN","WRITTEN"), "pw-language-spoken-5", "ABILITY", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-education-translate", "ARE YOU PREPARED TO ASSIST IN TRANSLATION?", "6", $cm);
-    select_field(array("Yes","No"), "pw-language-assistance", "DO YOU NEED ASSISTANCE WITH ENGLISH?", "6", $cm);
+    select_field(array("Yes","No"), "pw-education-translate", "ARE YOU PREPARED TO ASSIST IN TRANSLATION?", "6", $client_profile);
+    select_field(array("Yes","No"), "pw-language-assistance", "DO YOU NEED ASSISTANCE WITH ENGLISH?", "6", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
@@ -281,30 +281,30 @@ function language_form($cm) {
     echo '</div>';
     
     echo '<div class="row">';
-    text_field("pw-language-course-with", "WHO WITH?", "6", $cm);
-    date_field("pw-language-course-date", "START DATE", "pw-language-course-date", "6", $cm);
+    text_field("pw-language-course-with", "WHO WITH?", "6", $client_profile);
+    date_field("pw-language-course-date", "START DATE", "pw-language-course-date", "6", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    text_field("pw-language-course-length", "LENGTH OF COURSE", "6, $cm");
-    text_field("pw-language-course-title", "COURSE TITLE/LEVEL", "6", $cm);
+    text_field("pw-language-course-length", "LENGTH OF COURSE", "6, $client_profile");
+    text_field("pw-language-course-title", "COURSE TITLE/LEVEL", "6", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("ESOL","PRE ENTRY","ENTRY 1","ENTRY 2","ENTRY 3","LEVEL 1","LEVEL 2","COVERSATION GROUP"), "pw-language-course-title", "COURSE TYPE", "6", $cm);
+    select_field(array("ESOL","PRE ENTRY","ENTRY 1","ENTRY 2","ENTRY 3","LEVEL 1","LEVEL 2","COVERSATION GROUP"), "pw-language-course-title", "COURSE TYPE", "6", $client_profile);
     echo '</div>';
 }
 /*********************************************************************************/
 
-function immigration_form($cm) {
+function immigration_form($client_profile) {
     echo '<div class="row">';
-    select_field(array("ASYLUM SEEKER","REFUGEE","BRITISH","EU CITIZEN","ECONOMIC MIGRANT","OTHER"), "pw-immigration-status", "IMMIGRATION STATUS", "6", $cm);
-    text_field("pw-immigration-status-other", "OTHER", "6", $cm);
+    select_field(array("ASYLUM SEEKER","REFUGEE","BRITISH","EU CITIZEN","ECONOMIC MIGRANT","OTHER"), "pw-immigration-status", "IMMIGRATION STATUS", "6", $client_profile);
+    text_field("pw-immigration-status-other", "OTHER", "6", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    date_field("pw-immigration-arrival-date", "WHAT DATE DID YOU ARRIVE IN THE UK?", "pw-immigration-arrival-date", "6", $cm);
-    select_field(array("Yes","No"), "pw-immigration-travel-directly", "DID YOU TRAVEL DIRECTLY FROM YOUR COUNTRY?", "6", $cm);
+    date_field("pw-immigration-arrival-date", "WHAT DATE DID YOU ARRIVE IN THE UK?", "pw-immigration-arrival-date", "6", $client_profile);
+    select_field(array("Yes","No"), "pw-immigration-travel-directly", "DID YOU TRAVEL DIRECTLY FROM YOUR COUNTRY?", "6", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
@@ -314,52 +314,52 @@ function immigration_form($cm) {
     echo '</div>';
     
     echo '<div class="row">';
-    text_field("pw-immigration-country-1", "COUNTRY", "6", $cm);
-    text_field("pw-immigration-country-stay-1", "MONTHS", "6", $cm);
+    text_field("pw-immigration-country-1", "COUNTRY", "6", $client_profile);
+    text_field("pw-immigration-country-stay-1", "MONTHS", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-immigration-country-2", "COUNTRY", "6", $cm);
-    text_field("pw-immigration-country-stay-2", "MONTHS", "6", $cm);
+    text_field("pw-immigration-country-2", "COUNTRY", "6", $client_profile);
+    text_field("pw-immigration-country-stay-2", "MONTHS", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-immigration-country-3", "COUNTRY", "6", $cm);
-    text_field("pw-immigration-country-stay-3", "MONTHS", "6", $cm);
+    text_field("pw-immigration-country-3", "COUNTRY", "6", $client_profile);
+    text_field("pw-immigration-country-stay-3", "MONTHS", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-immigration-country-4", "COUNTRY", "6", $cm);
-    text_field("pw-immigration-country-stay-4", "MONTHS", "6", $cm);
+    text_field("pw-immigration-country-4", "COUNTRY", "6", $client_profile);
+    text_field("pw-immigration-country-stay-4", "MONTHS", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-immigration-why", "WHY DID YOU CHOOSE TO SETTLE IN THE UK?", "5", "35", "12", $cm);
+    textarea_field("pw-immigration-why", "WHY DID YOU CHOOSE TO SETTLE IN THE UK?", "5", "35", "12", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-immigration-assistance", "DO YOU NEED ASSISTANCE APPLYING FOR UK CITIZENSHIP?", "6", $cm);
-    select_field(array("Yes","No"), "pw-immigration-assistance-help", "IS SOMEONE ALREADY ASSISTING YOU WITH YOUR APLICATION?", "6", $cm);
+    select_field(array("Yes","No"), "pw-immigration-assistance", "DO YOU NEED ASSISTANCE APPLYING FOR UK CITIZENSHIP?", "6", $client_profile);
+    select_field(array("Yes","No"), "pw-immigration-assistance-help", "IS SOMEONE ALREADY ASSISTING YOU WITH YOUR APLICATION?", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-immigration-organisation-name", "NAME OF ORGANISATION", "6", $cm);
-    text_field("pw-immigration-organisation-solicitor", "SOLICITOR", "6", $cm);
+    text_field("pw-immigration-organisation-name", "NAME OF ORGANISATION", "6", $client_profile);
+    text_field("pw-immigration-organisation-solicitor", "SOLICITOR", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-immigration-organisation-stage", "AT WHAT STAGE IS YOUR APPLICATION?", "6", $cm);
-    date_field("pw-immigration-organisation-appointment", "WHEN IS YOUR NEXT APPOINTMENT?", "pw-immigration-organisation-appointment", "6", $cm);
+    text_field("pw-immigration-organisation-stage", "AT WHAT STAGE IS YOUR APPLICATION?", "6", $client_profile);
+    date_field("pw-immigration-organisation-appointment", "WHEN IS YOUR NEXT APPOINTMENT?", "pw-immigration-organisation-appointment", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-immigration-organisation-purpose", "WHAT IS THE PURPOSE OF THE APPOINTMENT?", "5", "35", "12", $cm);
+    textarea_field("pw-immigration-organisation-purpose", "WHAT IS THE PURPOSE OF THE APPOINTMENT?", "5", "35", "12", $client_profile);
     echo '</div>';
 }
 /*********************************************************************************/
 
-function financial_form($cm) {
+function financial_form($client_profile) {
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-financial-bank", "DO YOU HAVE A UK BANK ACCOUNT?", "12", $cm);
+    select_field(array("Yes","No"), "pw-financial-bank", "DO YOU HAVE A UK BANK ACCOUNT?", "12", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-financial-benefits-claaming", "ARE YOU CURRENTLY CLAIMING BENEFITS FROM THE UK GOVERNMENT?", "12", $cm);
+    select_field(array("Yes","No"), "pw-financial-benefits-claaming", "ARE YOU CURRENTLY CLAIMING BENEFITS FROM THE UK GOVERNMENT?", "12", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-financial-benefits-assessment", "HAVE YOU HAD AN INDEPENDENT ASSESSMENT OF THE BENEFITS YOU MAY BE ELIGIBLE FOR?", "12", $cm);
+    select_field(array("Yes","No"), "pw-financial-benefits-assessment", "HAVE YOU HAD AN INDEPENDENT ASSESSMENT OF THE BENEFITS YOU MAY BE ELIGIBLE FOR?", "12", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
@@ -368,55 +368,55 @@ function financial_form($cm) {
     echo '</div>';
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-financial-benefit-1", "BENEFIT", "4", $cm);
-    text_field("pw-financial-benefit-amount-1", "AMOUNT", "4", $cm);
-    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-1", "FREQUENCY", "4", $cm);
+    text_field("pw-financial-benefit-1", "BENEFIT", "4", $client_profile);
+    text_field("pw-financial-benefit-amount-1", "AMOUNT", "4", $client_profile);
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-1", "FREQUENCY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-financial-benefit-2", "BENEFIT", "4", $cm);
-    text_field("pw-financial-benefit-amount-2", "AMOUNT", "4", $cm);
-    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-2", "FREQUENCY", "4", $cm);
+    text_field("pw-financial-benefit-2", "BENEFIT", "4", $client_profile);
+    text_field("pw-financial-benefit-amount-2", "AMOUNT", "4", $client_profile);
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-2", "FREQUENCY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-financial-benefit-3", "BENEFIT", "4", $cm);
-    text_field("pw-financial-benefit-amount-3", "AMOUNT", "4", $cm);
-    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-3", "FREQUENCY", "4", $cm);
+    text_field("pw-financial-benefit-3", "BENEFIT", "4", $client_profile);
+    text_field("pw-financial-benefit-amount-3", "AMOUNT", "4", $client_profile);
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-3", "FREQUENCY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-financial-benefit-4", "BENEFIT", "4", $cm);
-    text_field("pw-financial-benefit-amount-4", "AMOUNT", "4", $cm);
-    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-4", "FREQUENCY", "4", $cm);
+    text_field("pw-financial-benefit-4", "BENEFIT", "4", $client_profile);
+    text_field("pw-financial-benefit-amount-4", "AMOUNT", "4", $client_profile);
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-4", "FREQUENCY", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    text_field("pw-financial-benefit-5", "BENEFIT", "4", $cm);
-    text_field("pw-financial-benefit-amount-5", "AMOUNT", "4", $cm);
-    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-5", "FREQUENCY", "4", $cm);
+    text_field("pw-financial-benefit-5", "BENEFIT", "4", $client_profile);
+    text_field("pw-financial-benefit-amount-5", "AMOUNT", "4", $client_profile);
+    select_field(array("WEEKLY","MONTHLY","FORTNIGHTLY"), "pw-financial-benefit-frequency-5", "FREQUENCY", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_multiple(array("RENT","COUNCIL TAX","GAS","ELECTRICITY","WATER RATES","TV LICENCE","HEALTH CARE COSTS","SCHOOL TEAMS","CREDIT CARDS","TRANSPORT","TELEPHONE","MOBILE PHONES"), "pw-financial-understand", "DO YOU UNDERSTND THE FOLLOWING?", "6", $cm);
+    select_multiple(array("RENT","COUNCIL TAX","GAS","ELECTRICITY","WATER RATES","TV LICENCE","HEALTH CARE COSTS","SCHOOL TEAMS","CREDIT CARDS","TRANSPORT","TELEPHONE","MOBILE PHONES"), "pw-financial-understand", "DO YOU UNDERSTND THE FOLLOWING?", "6", $client_profile);
     echo '</div>';
     
     
 }
 /*********************************************************************************/
 
-function work_form($cm) {
+function work_form($client_profile) {
     echo '<div class="row">';
-    text_field("pw-work-ni-number", "NATIONAL INSURANCE NUMBER", "4", $cm);
-    select_field(array("NOT YET ELIGIBLE","NOT APPLIED"), "pw-work-ni-none", "NO NATIONAL INSURANCE NUMBER - WHY?", "4", $cm);
-    select_field(array("Yes","No"), "pw-work-registered", "HAVE YOU REGISTERED AS UNEMPLOYED?", "4", $cm);
+    text_field("pw-work-ni-number", "NATIONAL INSURANCE NUMBER", "4", $client_profile);
+    select_field(array("NOT YET ELIGIBLE","NOT APPLIED"), "pw-work-ni-none", "NO NATIONAL INSURANCE NUMBER - WHY?", "4", $client_profile);
+    select_field(array("Yes","No"), "pw-work-registered", "HAVE YOU REGISTERED AS UNEMPLOYED?", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-work-cv", "DO YOU HAVE A CV?", "4", $cm);
-    select_field(array("Yes","No"), "pw-work-assistance", "DO YOU NEED ASSISTANCE IN SEARCHING FOR WORK?", "4", $cm);
-    select_field(array("Yes","No"), "pw-work-computer", "ARE YOU ABLE TO USE A COMPUTER?", "4", $cm);
+    select_field(array("Yes","No"), "pw-work-cv", "DO YOU HAVE A CV?", "4", $client_profile);
+    select_field(array("Yes","No"), "pw-work-assistance", "DO YOU NEED ASSISTANCE IN SEARCHING FOR WORK?", "4", $client_profile);
+    select_field(array("Yes","No"), "pw-work-computer", "ARE YOU ABLE TO USE A COMPUTER?", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("0-6 MONTHS","7-12 MONTHS","13-24 MONTHS","24 MONTHS +"), "pw-work-how-long", "HOW LONG HAVE YOU BEEN LOOKING FOR WORK?", "4", $cm);
-    textarea_field("pw-work-barriers", "ARE THERE ANY BARRIERS STOPPING YOU FROM WORKING? PLEASE LIST THEM.", "5", "35", "8", $cm);
+    select_field(array("0-6 MONTHS","7-12 MONTHS","13-24 MONTHS","24 MONTHS +"), "pw-work-how-long", "HOW LONG HAVE YOU BEEN LOOKING FOR WORK?", "4", $client_profile);
+    textarea_field("pw-work-barriers", "ARE THERE ANY BARRIERS STOPPING YOU FROM WORKING? PLEASE LIST THEM.", "5", "35", "8", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
@@ -426,20 +426,20 @@ function work_form($cm) {
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-work-culture", "UNDERSTANDING WORK CULTURE", "4", $cm);
-    select_field(array("Yes","No"), "pw-work-interview", "INTERVIEW TECHNIQUES", "4", $cm);
-    select_field(array("Yes","No"), "pw-work-experience", "WORK EXPERIENCE", "4", $cm);
+    select_field(array("Yes","No"), "pw-work-culture", "UNDERSTANDING WORK CULTURE", "4", $client_profile);
+    select_field(array("Yes","No"), "pw-work-interview", "INTERVIEW TECHNIQUES", "4", $client_profile);
+    select_field(array("Yes","No"), "pw-work-experience", "WORK EXPERIENCE", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-work-assistance", "ARE YOU RECEIVING ASSISTANCE TO FIND WORK ELSEWHERE?", "4", $cm);
-    textarea_field("pw-work-assistance-whom", "IF YES FROM WHOM?","5", "35", "8", $cm);
+    select_field(array("Yes","No"), "pw-work-assistance", "ARE YOU RECEIVING ASSISTANCE TO FIND WORK ELSEWHERE?", "4", $client_profile);
+    textarea_field("pw-work-assistance-whom", "IF YES FROM WHOM?","5", "35", "8", $client_profile);
     echo '</div>';
 }
 
 /*********************************************************************************/
 
-function work_experience_form($cm) {
+function work_experience_form($client_profile) {
     echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<label>PLEASE TELL US ABOUT YOUR WORK EXPERIENCE?</label>';
@@ -447,80 +447,80 @@ function work_experience_form($cm) {
     echo '</div>';
     
     echo '<div class="row">';
-    date_field("pw-experience-from-1", "FROM", "pw-experience-from-1", "2", $cm);
-    date_field("pw-experience-to-1", "TO", "pw-experience-to-1", "2", $cm);
-    text_field("pw-experience-role-1", "ROLE", "4", $cm);
-    text_field("pw-experience-role-where-1", "WHERE", "4", $cm);
+    date_field("pw-experience-from-1", "FROM", "pw-experience-from-1", "2", $client_profile);
+    date_field("pw-experience-to-1", "TO", "pw-experience-to-1", "2", $client_profile);
+    text_field("pw-experience-role-1", "ROLE", "4", $client_profile);
+    text_field("pw-experience-role-where-1", "WHERE", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    date_field("pw-experience-from-2", "FROM", "pw-experience-from-2", "2", $cm);
-    date_field("pw-experience-to-2", "TO", "pw-experience-to-2", "2", $cm);
-    text_field("pw-experience-role-2", "ROLE", "4", $cm);
-    text_field("pw-experience-role-where-2", "WHERE", "4", $cm);
+    date_field("pw-experience-from-2", "FROM", "pw-experience-from-2", "2", $client_profile);
+    date_field("pw-experience-to-2", "TO", "pw-experience-to-2", "2", $client_profile);
+    text_field("pw-experience-role-2", "ROLE", "4", $client_profile);
+    text_field("pw-experience-role-where-2", "WHERE", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    date_field("pw-experience-from-3", "FROM", "pw-experience-from-3", "2", $cm);
-    date_field("pw-experience-to-3", "TO", "pw-experience-to-3", "2", $cm);
-    text_field("pw-experience-role-3", "ROLE", "4", $cm);
-    text_field("pw-experience-role-where-3", "WHERE", "4", $cm);
+    date_field("pw-experience-from-3", "FROM", "pw-experience-from-3", "2", $client_profile);
+    date_field("pw-experience-to-3", "TO", "pw-experience-to-3", "2", $client_profile);
+    text_field("pw-experience-role-3", "ROLE", "4", $client_profile);
+    text_field("pw-experience-role-where-3", "WHERE", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    date_field("pw-experience-from-4", "FROM", "pw-experience-from-4", "2", $cm);
-    date_field("pw-experience-to-4", "TO", "pw-experience-to-4", "2", $cm);
-    text_field("pw-experience-role-4", "ROLE", "4", $cm);
-    text_field("pw-experience-role-where-4", "WHERE", "4", $cm);
+    date_field("pw-experience-from-4", "FROM", "pw-experience-from-4", "2", $client_profile);
+    date_field("pw-experience-to-4", "TO", "pw-experience-to-4", "2", $client_profile);
+    text_field("pw-experience-role-4", "ROLE", "4", $client_profile);
+    text_field("pw-experience-role-where-4", "WHERE", "4", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    date_field("pw-experience-from-5", "FROM", "pw-experience-from-5", "2", $cm);
-    date_field("pw-experience-to-5", "TO", "pw-experience-to-5", "2", $cm);
+    date_field("pw-experience-from-5", "FROM", "pw-experience-from-5", "2", $client_profile);
+    date_field("pw-experience-to-5", "TO", "pw-experience-to-5", "2", $client_profile);
     text_field("pw-experience-role-5", "ROLE", "4");
-    text_field("pw-experience-role-where-5", "WHERE", "4", $cm);
+    text_field("pw-experience-role-where-5", "WHERE", "4", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-experience-vocational", "DO YOU HAVE ANY VOCATIONAL QUALIFICATIONS?", "4", $cm);
-    textarea_field("pw-experience-vocational-description", "DESCRIPTION","5", "35", "8", $cm);
+    select_field(array("Yes","No"), "pw-experience-vocational", "DO YOU HAVE ANY VOCATIONAL QUALIFICATIONS?", "4", $client_profile);
+    textarea_field("pw-experience-vocational-description", "DESCRIPTION","5", "35", "8", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-experience-recognised", "HAS YOUR TRAINING BEEN RECOGNISED?", "4", $cm);
-    textarea_field("pw-experience-recognised-description", "DESCRIPTION","5", "35", "8", $cm);
+    select_field(array("Yes","No"), "pw-experience-recognised", "HAS YOUR TRAINING BEEN RECOGNISED?", "4", $client_profile);
+    textarea_field("pw-experience-recognised-description", "DESCRIPTION","5", "35", "8", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     select_field(array("Yes","No"), "pw-experience-volunteering", "DO YOU HAVE ANY EXPERIENCE VOLUNTEERING?", "4");
-    textarea_field("pw-experience-volunteering-description", "DESCRIPTION","5", "35", "8", $cm);
+    textarea_field("pw-experience-volunteering-description", "DESCRIPTION","5", "35", "8", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-experience-aspirations", "WHAT ARE YOUR FUTURE ASPIRATIONS?","5", "35", "12", $cm);
+    textarea_field("pw-experience-aspirations", "WHAT ARE YOUR FUTURE ASPIRATIONS?","5", "35", "12", $client_profile);
     echo '</div>';
     
     
 }
 /*********************************************************************************/
-function health_form($cm) {
+function health_form($client_profile) {
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-health-doctor", "ARE YOU REGISTERED WITH A DOCTOR?", "4", $cm);
-    textarea_field("pw-health-doctor-address", "DOCTORS NAME & ADDRESS","5", "35", "8", $cm);
+    select_field(array("Yes","No"), "pw-health-doctor", "ARE YOU REGISTERED WITH A DOCTOR?", "4", $client_profile);
+    textarea_field("pw-health-doctor-address", "DOCTORS NAME & ADDRESS","5", "35", "8", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    textarea_field("pw-health-issues", "DO YOU HAVE ANY CURRENT MEDICAL ISSUES?","5", "35", "12", $cm);
+    textarea_field("pw-health-issues", "DO YOU HAVE ANY CURRENT MEDICAL ISSUES?","5", "35", "12", $client_profile);
     echo '</div>';
     
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-health-dentist", "ARE YOU REGISTERED WITH A DENTIST?", "4", $cm);
-    textarea_field("pw-health-dentist-address", "DENTISTS NAME & ADDRESS","5", "35", "8", $cm);
+    select_field(array("Yes","No"), "pw-health-dentist", "ARE YOU REGISTERED WITH A DENTIST?", "4", $client_profile);
+    textarea_field("pw-health-dentist-address", "DENTISTS NAME & ADDRESS","5", "35", "8", $client_profile);
     echo '</div>';
 }
 /*********************************************************************************/
-function additional_form($cm) {
+function additional_form($client_profile) {
     echo '<div class="row">';
-    select_field(array("Yes","No"), "pw-additional-assistance", "IS THERE ANY ONE ELSE ASSISTING YOU?", "6", $cm);
+    select_field(array("Yes","No"), "pw-additional-assistance", "IS THERE ANY ONE ELSE ASSISTING YOU?", "6", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-additional-assistance-description", "DESCRIPTION","5", "35", "12", $cm);
+    textarea_field("pw-additional-assistance-description", "DESCRIPTION","5", "35", "12", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    textarea_field("pw-additional-notes", "ADDITIONAL NOTES","20", "35", "12", $cm);
+    textarea_field("pw-additional-notes", "ADDITIONAL NOTES","20", "35", "12", $client_profile);
     echo '</div>';
 }
 /*********************************************************************************/
@@ -665,10 +665,10 @@ add_shortcode('belong_csv_export', 'export_data_to_csv');
 function CSV_export_client($id) {
 
     $post_id = 337; //post_id for client profile post
-    $cm = get_post_meta($post_id, "client_profile_" . $id)[0];
+    $client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
     $output = fopen('php://output', 'w');
     //output client info 
-    fputcsv($output, explode(',', $cm));
+    fputcsv($output, explode(',', $client_profile));
     fclose($output);
 }
 
@@ -788,14 +788,14 @@ function datepicker($date_id) {
 /***********************************************
 Dynamically populate staff dropdown
 ************************************************/
-function staff_select_field($name, $title, $col, $cm) {
+function staff_select_field($name, $title, $col, $client_profile) {
     $staff_list = get_staff_list();
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "'><option>choose</option>";
     foreach ($staff_list as $item) {
         echo "<option value=" . strtolower(str_replace(' ', '_',$item[0])) . " ";
-        if($cm[$name] == strtolower(str_replace(' ', '_',$item[0]))) {
+        if($client_profile[$name] == strtolower(str_replace(' ', '_',$item[0]))) {
             echo "selected='selected'";
         }
         echo ">" . str_replace('_', ' ',$item[0] );
@@ -808,13 +808,13 @@ function staff_select_field($name, $title, $col, $cm) {
 /***********************************************
 Dynamically populate select element from array
 ************************************************/
-function select_field($array, $name, $title, $col, $cm) {
+function select_field($array, $name, $title, $col, $client_profile) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "'><option>choose</option>";
     foreach ($array as $item) {
         echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " "; 
-        if($cm[$name] == strtolower(str_replace(' ', '_',$item))) {
+        if($client_profile[$name] == strtolower(str_replace(' ', '_',$item))) {
             echo "selected='selected'";
         }
         echo ">" . str_replace('_', ' ',$item);
@@ -828,13 +828,13 @@ function select_field($array, $name, $title, $col, $cm) {
 /***********************************************
 Multi select element field from array
 ************************************************/
-function select_multiple($array, $name, $title, $col, $cm) {
+function select_multiple($array, $name, $title, $col, $client_profile) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
     echo "<select class='form-control' name='" . $name . "[]' multiple='multiple'><option>choose</option>";
     foreach ($array as $item) {
         echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " ";
-        foreach($cm[$name] as $selected) {
+        foreach($client_profile[$name] as $selected) {
             if($selected == strtolower(str_replace(' ', '_',$item))) {
                 echo "selected='selected'";
             }
@@ -849,17 +849,17 @@ function select_multiple($array, $name, $title, $col, $cm) {
 /***********************************************
 Standard text field
 ************************************************/
-function text_field($name, $title, $col, $cm) {
+function text_field($name, $title, $col, $client_profile) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label class="control-label">' . $title . '</label>';
-    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" size="40" />';
+    echo '<input class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
 
 /***********************************************
 Checkbox
 ************************************************/
-function checkbox_field($name, $title, $col, $cm) {
+function checkbox_field($name, $title, $col, $client_profile) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label class="checkbox">';
     echo '<input class="form-control" type="checkbox" name="' . $name . '"/>' . $title;
@@ -869,7 +869,7 @@ function checkbox_field($name, $title, $col, $cm) {
 /***********************************************
 User text field
 ************************************************/
-function user_field($name, $title, $field_name, $id, $col, $cm) {
+function user_field($name, $title, $field_name, $id, $col, $client_profile) {
     $user  = belong_get_user_by("ID", $id);
     $field = $user->$field_name;
     echo '<div class="col-md-' . $col . '" >';
@@ -882,31 +882,31 @@ function user_field($name, $title, $field_name, $id, $col, $cm) {
 /***********************************************
 jquery date picker field
 ************************************************/
-function date_field($name, $title, $date_id, $col, $cm) {
+function date_field($name, $title, $date_id, $col, $client_profile) {
     datepicker($date_id);
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<input  class="form-control" id="' . $date_id . '" name="' . $name . '" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" />';
+    echo '<input  class="form-control" id="' . $date_id . '" name="' . $name . '" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" />';
     echo '</div>';
 }
 
 /***********************************************
 email field with validation
 ************************************************/
-function email_field($name, $title, $col, $cm) {
+function email_field($name, $title, $col, $client_profile) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<input class="form-control" type="email" name="' . $name . '" value="' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '" size="40" />';
+    echo '<input class="form-control" type="email" name="' . $name . '" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" size="40" />';
     echo '</div>';
 }
 
 /***********************************************
 textarea field
 ************************************************/
-function textarea_field($name, $title, $rows, $columns, $col, $cm) {
+function textarea_field($name, $title, $rows, $columns, $col, $client_profile) {
     echo '<div class="col-md-' . $col . '" >';
     echo '<label>' . $title . '</label>';
-    echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($cm[$name]) ? esc_attr($cm[$name]) : '') . '</textarea>';
+    echo '<textarea class="form-control" rows="' . $rows . '" cols="' . $columns . '" name="' . $name . '">' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '</textarea>';
     echo '</div>';
 }
 
@@ -914,11 +914,11 @@ function textarea_field($name, $title, $rows, $columns, $col, $cm) {
 /*****************************************************
 Dynamic child input fields
 ******************************************************/
-function children($cm) {
-    $child_names = $cm["pw-child-name"];
-    $child_dobs = $cm["pw-child-dob"];
-    $child_cns = $cm["pw-child-cn"];
-    $child_uks = $cm["pw-child-uk"];
+function children($client_profile) {
+    $child_names = $client_profile["pw-child-name"];
+    $child_dobs = $client_profile["pw-child-dob"];
+    $child_cns = $client_profile["pw-child-cn"];
+    $child_uks = $client_profile["pw-child-uk"];
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
@@ -965,7 +965,7 @@ function children($cm) {
                 }
                 echo '</select>';
                 echo '<div class="input-group-btn">';
-                echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
+                echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $client_profile . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
@@ -976,7 +976,7 @@ function children($cm) {
                 ?>
                 <script type="text/javascript">
                 jQuery(document).ready(function() {
-                    child_fields(<?php echo $cm; ?>);
+                    child_fields(<?php echo $client_profile; ?>);
                 });
                 </script>
                 <?php
@@ -1017,7 +1017,7 @@ function children($cm) {
         echo '</select>';
 
         echo '<div class="input-group-btn">';
-        echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $cm . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
+        echo '<button class="btn btn-success btn-sm" type="button"  onclick="child_fields(' . $client_profile . ');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
@@ -1107,7 +1107,7 @@ function children($cm) {
             for($i=0; $i < $count; $i++) { ?>
                 <script type="text/javascript">
                     jQuery(document).ready(function() {
-                        child_fields(<?php $cm; ?>);
+                        child_fields(<?php $client_profile; ?>);
                     });
                 </script>
                 <?php
