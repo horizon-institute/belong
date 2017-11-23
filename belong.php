@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.7.0
+* Version: 0.3.7.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -928,7 +928,8 @@ function children($client_profile) {
 
     if (isset($child_names)) {
         for($index = 0; $index < count($child_names) - 1; $index++) {
-            echo "Child index: " + $index + " : Child name: " + $child_names[$index];
+            var_dump($child_names);
+            echo "Child index: " . $index . " : Child name: " . $child_names[$index];
             if($index == 0) { //manually generate first line
                 echo '<div class="col-md-3">';
                 echo '<div class="form-group">';
