@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.7.3
+* Version: 0.3.7.4
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -915,22 +915,20 @@ function textarea_field($name, $title, $rows, $columns, $col, $client_profile) {
 Dynamic child input fields
 ******************************************************/
 function children($client_profile) {
+    $child_names = $client_profile["pw-child-name"];
+    $child_dobs = $client_profile["pw-child-dob"];
+    $child_cns = $client_profile["pw-child-cn"];
+    $child_uks = $client_profile["pw-child-uk"];
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
     echo '<div id="child_fields">';
     echo '</div>';
     
-    if ($client_profile.hasOwnProperty('pw-child-name')) {
 
-        $child_names = $client_profile["pw-child-name"];
-        $child_dobs = $client_profile["pw-child-dob"];
-        $child_cns = $client_profile["pw-child-cn"];
-        $child_uks = $client_profile["pw-child-uk"];
-
+    if (isset($child_names)) {
         for($index = 0; $index < count($child_names) - 1; $index++) {
-            var_dump($child_names);
-            // echo "Child index: " . $index . " : Child name: " . $child_names[$index];
+
             if($index == 0) { //manually generate first line
                 echo '<div class="col-md-3">';
                 echo '<div class="form-group">';
@@ -1034,7 +1032,9 @@ function children($client_profile) {
         var child = 0;
 
         function child_fields(cm) {
+            //console.log("CM variable: " + cm);
           child++;
+          console.log("CM:" + cm, " -- Child no: " + child);
           var objTo = document.getElementById('child_fields')
           var childData = document.createElement("div");
           childData.setAttribute("class", "form-group removeclass" + child);
@@ -1042,11 +1042,11 @@ function children($client_profile) {
           var html = [];
 
         if(cm && cm.hasOwnProperty('pw-child-name')) {
+            
             var child_names = cm["pw-child-name"];
             var child_dobs = cm["pw-child-dob"];
             var child_cns = cm["pw-child-cn"];
             var child_uks = cm["pw-child-uk"];
-
             html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child]) + '" placeholder="CHILD NAME"></div></div>',
