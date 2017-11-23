@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.6.8
+* Version: 0.3.6.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -928,7 +928,7 @@ function children($client_profile) {
 
     if (isset($child_names)) {
         for($index = 0; $index < count($child_names) - 1; $index++) {
-
+            console.log("Child index: " + $index + " : Child name: " + $child_names[$index]);
             if($index == 0) { //manually generate first line
                 echo '<div class="col-md-3">';
                 echo '<div class="form-group">';
@@ -1032,9 +1032,7 @@ function children($client_profile) {
         var child = 0;
 
         function child_fields(cm) {
-            //console.log("CM variable: " + cm);
           child++;
-          console.log("CM:" + cm, " -- Child no: " + child);
           var objTo = document.getElementById('child_fields')
           var childData = document.createElement("div");
           childData.setAttribute("class", "form-group removeclass" + child);
@@ -1042,11 +1040,11 @@ function children($client_profile) {
           var html = [];
 
         if(cm && cm.hasOwnProperty('pw-child-name')) {
-            
             var child_names = cm["pw-child-name"];
             var child_dobs = cm["pw-child-dob"];
             var child_cns = cm["pw-child-cn"];
             var child_uks = cm["pw-child-uk"];
+
             html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child]) + '" placeholder="CHILD NAME"></div></div>',
