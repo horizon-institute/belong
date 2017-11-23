@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.7.1
+* Version: 0.3.7.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -915,21 +915,22 @@ function textarea_field($name, $title, $rows, $columns, $col, $client_profile) {
 Dynamic child input fields
 ******************************************************/
 function children($client_profile) {
-    $child_names = $client_profile["pw-child-name"];
-    $child_dobs = $client_profile["pw-child-dob"];
-    $child_cns = $client_profile["pw-child-cn"];
-    $child_uks = $client_profile["pw-child-uk"];
 
     echo '<div class="col-md-12">';
     echo '<label>CHILDREN</label>';
     echo '<div id="child_fields">';
     echo '</div>';
     
+    if ($client_profile.hasOwnProperty('pw-child-name')) {
 
-    if (isset($child_names)) {
+        $child_names = $client_profile["pw-child-name"];
+        $child_dobs = $client_profile["pw-child-dob"];
+        $child_cns = $client_profile["pw-child-cn"];
+        $child_uks = $client_profile["pw-child-uk"];
+
         for($index = 0; $index < count($child_names) - 1; $index++) {
             var_dump($child_names);
-            echo "Child index: " . $index . " : Child name: " . $child_names[$index];
+            // echo "Child index: " . $index . " : Child name: " . $child_names[$index];
             if($index == 0) { //manually generate first line
                 echo '<div class="col-md-3">';
                 echo '<div class="form-group">';
