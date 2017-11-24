@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.7.6
+* Version: 0.3.7.7
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -199,34 +199,34 @@ function personal_form($id, $client_profile) {
     
      //children($client_profile);
     echo '<div class="row">';
-    text_field("pw-child-name-1", "NAME", "4", $client_profile);
+    child_text_field("pw-child-name-1", "NAME", "4", $client_profile, "NAME");
     date_field("pw-child-dob-1", "DOB", "pw-child-dob-1", "3", $client_profile);
-    text_field("pw-child-cn-1", "CLIENT NO.", "3", $client_profile);
-    select_field(array("Yes","No"), "pw-child-uk-1", "UK RESIDENT?", "2", $client_profile);
+    child_text_field("pw-child-cn-1", "CLIENT NO.", "3", $client_profile, "CLIENT NO.");
+    select_field(array("Yes","No"), "pw-child-uk-1", "UK?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     text_field("pw-child-name-2", "NAME", "4", $client_profile);
     date_field("pw-child-dob-2", "DOB", "pw-child-dob-2", "3", $client_profile);
     text_field("pw-child-cn-2", "CLIENT NO.", "3", $client_profile);
-    select_field(array("Yes","No"), "pw-child-uk-2", "UK RESIDENT?", "2", $client_profile);
+    select_field(array("Yes","No"), "pw-child-uk-2", "UK?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     text_field("pw-child-name-3", "NAME", "4", $client_profile);
     date_field("pw-child-dob-3", "DOB", "pw-child-dob-3", "3", $client_profile);
     text_field("pw-child-cn-3", "CLIENT NO.", "3", $client_profile);
-    select_field(array("Yes","No"), "pw-child-uk-3", "UK RESIDENT?", "2", $client_profile);
+    select_field(array("Yes","No"), "pw-child-uk-3", "UK?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     text_field("pw-child-name-4", "NAME", "4", $client_profile);
     date_field("pw-child-dob-4", "DOB", "pw-child-dob-4", "3", $client_profile);
     text_field("pw-child-cn-4", "CLIENT NO.", "3", $client_profile);
-    select_field(array("Yes","No"), "pw-child-uk-4", "UK RESIDENT?", "2", $client_profile);
+    select_field(array("Yes","No"), "pw-child-uk-4", "UK?", "2", $client_profile);
     echo '</div>';
     echo '<div class="row">';
     text_field("pw-child-name-5", "NAME", "4", $client_profile);
     date_field("pw-child-dob-5", "DOB", "pw-child-dob-5", "3", $client_profile);
     text_field("pw-child-cn-5", "CLIENT NO.", "3", $client_profile);
-    select_field(array("Yes","No"), "pw-child-uk-5", "UK RESIDENT?", "2", $client_profile);
+    select_field(array("Yes","No"), "pw-child-uk-5", "UK?", "2", $client_profile);
     echo '</div>';
     
 }
@@ -884,6 +884,12 @@ function text_field($name, $title, $col, $client_profile) {
     echo '</div>';
 }
 
+function child_text_field($name, $title, $col, $client_profile, $placeholder) {
+    echo '<div class="col-md-' . $col . '" >';
+    //echo '<label class="control-label">' . $title . '</label>';
+    echo '<input placeholder="' . $placeholder . '" class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" size="40" />';
+    echo '</div>';
+}
 /***********************************************
 Checkbox
 ************************************************/
