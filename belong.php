@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.8.0
+* Version: 0.3.8.1
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -722,19 +722,6 @@ function CSV_export_client($id) {
 /***********************************
 *        HELPER FUNCTIONS          *
 ************************************/
-
-/**************************************************************
-* Send SMS to users number. Need to restrict lenght of message
-* $numbers is an array. $message is the message to send.
-***************************************************************/
-function belong_send_SMS($message, $numbers) {
-    global $sms;
-    $sms->to  = array(
-    $numbers
-    );
-    $sms->msg = $message;
-    $sms->SendSMS();
-}
 
 /***********************************************
 Check if current user ID is in the mult-select
