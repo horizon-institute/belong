@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.7.4
+* Version: 0.3.7.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -925,8 +925,7 @@ function children($client_profile) {
     echo '<div id="child_fields">';
     echo '</div>';
     
-
-    if (isset($child_names)) {
+    if (isset($child_names) & !empty($child_names)) {
         for($index = 0; $index < count($child_names) - 1; $index++) {
 
             if($index == 0) { //manually generate first line
@@ -1031,22 +1030,19 @@ function children($client_profile) {
       <script type="text/javascript">
         var child = 0;
 
-        function child_fields(cm) {
-            //console.log("CM variable: " + cm);
+        function child_fields(client_profile) {
           child++;
-          console.log("CM:" + cm, " -- Child no: " + child);
           var objTo = document.getElementById('child_fields')
           var childData = document.createElement("div");
           childData.setAttribute("class", "form-group removeclass" + child);
           var rdiv = 'removeclass' + child;
           var html = [];
 
-        if(cm && cm.hasOwnProperty('pw-child-name')) {
-            
-            var child_names = cm["pw-child-name"];
-            var child_dobs = cm["pw-child-dob"];
-            var child_cns = cm["pw-child-cn"];
-            var child_uks = cm["pw-child-uk"];
+        if(client_profile && client_profile.hasOwnProperty('pw-child-name')) { 
+            var child_names = client_profile["pw-child-name"];
+            var child_dobs = client_profile["pw-child-dob"];
+            var child_cns = client_profile["pw-child-cn"];
+            var child_uks = client_profile["pw-child-uk"];
             html.push(
             '<div class="col-md-3 nopadding"><div class="form-group">',
             '<input type="text" class="form-control" id="pw-child-name" name="pw-child-name[]" value="' + (child_names[child]) + '" placeholder="CHILD NAME"></div></div>',
