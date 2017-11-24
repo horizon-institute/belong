@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.7.8
+* Version: 0.3.7.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -197,7 +197,11 @@ function personal_form($id, $client_profile) {
     select_field(array("Yes","No"), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU?", "6", $client_profile);
     echo '</div>';
     
-     //children($client_profile);
+    //children($client_profile);
+    echo '<div class="row">';
+    echo '<div class="col-md-12">';
+    echo '<label>CHILDREN</label>';
+    echo '</div>';
     echo '<div class="row">';
     child_text_field("pw-child-name-1", "NAME", "4", $client_profile, "NAME");
     child_date_field("pw-child-dob-1", "DOB", "pw-child-dob-1", "3", $client_profile, "DOB");
@@ -857,6 +861,7 @@ function select_field($array, $name, $title, $col, $client_profile) {
 function child_select_field($array, $name, $title, $col, $client_profile, $placeholder) {
     echo '<div class="col-md-' . $col . '" >';
     //echo '<label>' . $title . '</label>';
+    echo '<br />';
     echo '<select placeholder="' . $placeholder . '" class="form-control" name="' . $name . '"><option>choose</option>';
     foreach ($array as $item) {
         echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " "; 
@@ -901,6 +906,7 @@ function text_field($name, $title, $col, $client_profile) {
 }
 
 function child_text_field($name, $title, $col, $client_profile, $placeholder) {
+    echo '<br />';
     echo '<div class="col-md-' . $col . '" >';
     //echo '<label class="control-label">' . $title . '</label>';
     echo '<input placeholder="' . $placeholder . '" class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" size="40" />';
@@ -942,6 +948,7 @@ function date_field($name, $title, $date_id, $col, $client_profile) {
 
 function child_date_field($name, $title, $date_id, $col, $client_profile, $placeholder) {
     datepicker($date_id);
+    echo '<br />';
     echo '<div class="col-md-' . $col . '" >';
     //echo '<label>' . $title . '</label>';
     echo '<input placeholder="' . $placeholder . '"class="form-control" id="' . $date_id . '" name="' . $name . '" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" />';
