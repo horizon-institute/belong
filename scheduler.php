@@ -5,7 +5,21 @@
 * This will execute daily and send EMAIL/SMS notifications to clients
 **********************************************************/
 
+function belong_get_assignments() {
+    ob_start();
+    $assignment_args = array(
+    'posts_per_page' => -1,
+    'post_type' => 'assignments'
+    );
+    
+    $assignment_posts = get_posts($assignment_args);
+    if ($assignment_posts) {
+        var_dump($assignment_posts);
+    }
+    return ob_get_clean();
+}
 
+add_shortcode('belong_assignments', 'belong_get_assignments');
 
 /***********************************************************
 * Send SMS to users

@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.3.8.1
+* Version: 0.3.8.2
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -843,23 +843,6 @@ function select_field($array, $name, $title, $col, $client_profile) {
     echo '</div>';
 }
 
-
-
-function child_select_field($array, $name, $title, $col, $client_profile, $placeholder) {
-    echo '<div class="col-md-' . $col . '" >';
-    echo '<label class="control-label"> </label>';
-    echo '<select placeholder="' . $placeholder . '" class="form-control" name="' . $name . '"><option>choose</option>';
-    foreach ($array as $item) {
-        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " "; 
-        if($client_profile[$name] == strtolower(str_replace(' ', '_',$item))) {
-            echo "selected='selected'";
-        }
-        echo ">" . str_replace('_', ' ',$item);
-        echo "</option>";
-    }
-    echo "</select>";
-    echo '</div>';
-}
 /***********************************************
 Multi select element field from array
 ************************************************/
@@ -891,12 +874,6 @@ function text_field($name, $title, $col, $client_profile) {
     echo '</div>';
 }
 
-function child_text_field($name, $title, $col, $client_profile, $placeholder) {
-    echo '<div class="col-md-' . $col . '" >';
-    echo '<label class="control-label"> </label>';
-    echo '<input placeholder="' . $placeholder . '" class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" size="40" />';
-    echo '</div>';
-}
 /***********************************************
 Checkbox
 ************************************************/
@@ -931,14 +908,6 @@ function date_field($name, $title, $date_id, $col, $client_profile) {
     echo '</div>';
 }
 
-function child_date_field($name, $title, $date_id, $col, $client_profile, $placeholder) {
-    datepicker($date_id);
-    echo '<div class="col-md-' . $col . '" >';
-    echo '<label class="control-label"> </label>';
-    echo '<input placeholder="' . $placeholder . '"class="form-control" id="' . $date_id . '" name="' . $name . '" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" />';
-    echo '</div>';
-}
-
 /***********************************************
 email field with validation
 ************************************************/
@@ -959,6 +928,40 @@ function textarea_field($name, $title, $rows, $columns, $col, $client_profile) {
     echo '</div>';
 }
 
+
+/***********************************************
+Child fields
+************************************************/
+function child_text_field($name, $title, $col, $client_profile, $placeholder) {
+    echo '<div class="col-md-' . $col . '" >';
+    echo '<label class="control-label"> </label>';
+    echo '<input placeholder="' . $placeholder . '" class="form-control" type="text" name="' . $name . '" pattern="[a-zA-Z0-9 ]+" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" size="40" />';
+    echo '</div>';
+}
+
+function child_select_field($array, $name, $title, $col, $client_profile, $placeholder) {
+    echo '<div class="col-md-' . $col . '" >';
+    echo '<label class="control-label"> </label>';
+    echo '<select placeholder="' . $placeholder . '" class="form-control" name="' . $name . '"><option>choose</option>';
+    foreach ($array as $item) {
+        echo "<option value=" . strtolower(str_replace(' ', '_',$item)) . " "; 
+        if($client_profile[$name] == strtolower(str_replace(' ', '_',$item))) {
+            echo "selected='selected'";
+        }
+        echo ">" . str_replace('_', ' ',$item);
+        echo "</option>";
+    }
+    echo "</select>";
+    echo '</div>';
+}
+
+function child_date_field($name, $title, $date_id, $col, $client_profile, $placeholder) {
+    datepicker($date_id);
+    echo '<div class="col-md-' . $col . '" >';
+    echo '<label class="control-label"> </label>';
+    echo '<input placeholder="' . $placeholder . '"class="form-control" id="' . $date_id . '" name="' . $name . '" value="' . (isset($client_profile[$name]) ? esc_attr($client_profile[$name]) : '') . '" />';
+    echo '</div>';
+}
 
 /*****************************************************
 Dynamic child input fields
