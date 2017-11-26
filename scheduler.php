@@ -15,9 +15,7 @@ function belong_get_assignments() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
         foreach ($assignment_posts as $post) {
-            
-            var_dump($assignment_posts);
-
+            var_dump($post);
         }
         
     }
