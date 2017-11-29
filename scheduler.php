@@ -27,8 +27,8 @@ function belong_get_assignments() {
     }
 
     //send a test email
-    $addresses = array("javidyousaf@outlook.com");
-    belong_send_EMAIL("Pathways test message body.", "Email from Pathways system", $addresses);
+    // $addresses = array("javidyousaf@outlook.com");
+    // belong_send_EMAIL("Pathways test message body.", "Email from Pathways system", $addresses);
 
     return ob_get_clean();
 }
