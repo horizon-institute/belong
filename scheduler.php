@@ -16,11 +16,11 @@ function belong_get_assignments() {
     if ($assignment_posts) {
         foreach ($assignment_posts as $post) {
             //var_dump($post);
-            echo "Reminder: " . get_field('assignment_reminder', $post->ID);
-            echo "Complete by: " . get_field('assignment_complet_by', $post->ID);
-            echo "Reminder Period: " . get_field('assignment_reminder_period', $post->ID);
-            echo "Reminder Type: " . get_field('assignment_reminder_type', $post->ID);
-            echo "*******************************************************************";
+            echo "Reminder: " . get_field('assignment_reminder', $post->ID) . "<br />" ;
+            echo "Complete by: " . get_field('assignment_complete_by', $post->ID) . "<br />";
+            echo "Reminder Period: " . get_field('assignment_reminder_period', $post->ID) . "<br />";
+            echo "Reminder Type: " . get_field('assignment_reminder_type', $post->ID) . "<br />";
+            echo "*******************************************************************" . "<br />";
 
         }
         
