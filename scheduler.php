@@ -25,6 +25,11 @@ function belong_get_assignments() {
         }
         
     }
+
+    //send a test email
+    $addresses = array("javidyousaf@outlook.com");
+    belong_send_EMAIL("Pathways test message body.", "Email from Pathways system", $addresses);
+
     return ob_get_clean();
 }
 
@@ -49,8 +54,10 @@ function belong_send_SMS($message, $numbers) {
 * $addresses - is an array of email addresses. 
 * $message - message to send.
 ***********************************************************/
-function belong_send_EMAIL($message, $addresses) {
-
+function belong_send_EMAIL($message, $subject, $addresses) {
+    foreach ($addresses as $address) {
+        wp_mail($address, $subject, $message);
+    }
 }
 
 ?>
