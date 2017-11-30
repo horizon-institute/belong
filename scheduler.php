@@ -7,6 +7,9 @@
 
 function belong_get_assignments() {
     ob_start();
+
+    echo "Reminders triggered each time this page ois refreshed";
+
     $assignment_args = array(
     'posts_per_page' => -1,
     'post_type' => 'assignments'
@@ -14,27 +17,31 @@ function belong_get_assignments() {
     
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
+
         foreach ($assignment_posts as $post) {
+
+            
+            $mobile_numbers = [];
+
             $current_date = new DateTime();
             $assignment_type   = get_field('assignment_type', $post->ID);
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-            $assignment_clients = get_field('assignment_client', $post->ID);
-            
-            echo "Reminder: " . $assignment_reminder . "<br />";
-            echo "Reminder Period: " . $assignment_reminder_period . "<br />";
-            echo "Reminder Type: " . $assignment_reminder_type . "<br />";
-            echo "Current date/time: " . $current_date->format('j M Y') . "<br />";
-            echo "Allocated clients: <br />";
-            var_dump($assignment_clients);
+            $assignment_clients = get_field('assignment_client', $post->ID); //multi select array of clients
+
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
-                echo "Complete module by: " . $complete_date->format('j M Y')  . "<br />";
-
                 if (isReminderTriggered($complete_date, $assignment_reminder_period)) {
-                    echo "reminder triggered for Module<br />";
+                    if ($assignment_reminder_type == "email") {
+                        $email_addresses = getEmailAddresses($assignment_clients);
+                        var_dump($email_addresses);
+                    } else if ($assignment_reminder_type == "sms") {
+
+                    } else if ($assignment_reminder_type == "both") {
+
+                    }
                 }
             }
 
@@ -42,15 +49,19 @@ function belong_get_assignments() {
                 $assignment_event = get_field('assignment_select_event', $post->ID);
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
                 $event_date       = new DateTime($event_datetime);
-                echo "Event date/time: " . $event_date->format('j M Y') . "<br />";
-
                 if (isReminderTriggered($event_date, $assignment_reminder_period)) {
-                    echo "reminder triggered for Event<br />";
+                    if ($assignment_reminder_type == "email") {
+                        $email_addresses = getEmailAddresses($assignment_clients);
+                        var_dump($email_addresses);
+                    } else if ($assignment_reminder_type == "sms") {
+                            
+                    } else if ($assignment_reminder_type == "both") {
+                        
+                    }                   
                 }
             }
-
-            echo "*******************************************************************" . "<br />";
         }
+
     }
 
     //send a test email
@@ -70,6 +81,20 @@ add_shortcode('belong_assignments', 'belong_get_assignments');
 function isReminderTriggered($scheduledDate, $reminderPeriod) {
     $now = new DateTime();
     return ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D'))); 
+}
+
+
+
+
+/***********************************************************
+* Return an array of email addresses from clients object array
+***********************************************************/
+function getEmailAddresses($clients) {
+    $email_addresses = [];
+    foreach ($clients as $client) {
+        $email_addresses[] = $client['user_email'];
+    }
+    return $email_addresses;
 }
 
 
