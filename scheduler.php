@@ -14,10 +14,8 @@ function belong_get_assignments() {
     
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
-
-        $current_date = new DateTime();
-
         foreach ($assignment_posts as $post) {
+            $current_date = new DateTime();
             $assignment_type   = get_field('assignment_type', $post->ID);
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
@@ -32,7 +30,10 @@ function belong_get_assignments() {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
                 echo "Complete module by: " . $complete_date->format('j M Y')  . "<br />";
-                echo "now + reminder period: " . $current_date->add(new DateInterval('P' . $assignment_reminder_period . 'D'))->format('j M Y');
+
+                if (isReminderTriggered($complete_date, $assignment_reminder_period)) {
+                    echo "reminder triggered for Module<br />";
+                }
             }
 
             if ($assignment_type == "Events") {
@@ -40,13 +41,14 @@ function belong_get_assignments() {
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
                 $event_date       = new DateTime($event_datetime);
                 echo "Event date/time: " . $event_date->format('j M Y') . "<br />";
-                echo "now + reminder period: " . $current_date->add(new DateInterval('P' . $assignment_reminder_period . 'D'))->format('j M Y');
+
+                if (isReminderTriggered($event_date, $assignment_reminder_period)) {
+                    echo "reminder triggered for Event<br />";
+                }
             }
 
             echo "*******************************************************************" . "<br />";
-
         }
-        
     }
 
     //send a test email
@@ -55,10 +57,7 @@ function belong_get_assignments() {
 
     return ob_get_clean();
 }
-
 add_shortcode('belong_assignments', 'belong_get_assignments');
-
-
 
 
 /***********************************************************
@@ -68,11 +67,7 @@ add_shortcode('belong_assignments', 'belong_get_assignments');
 ***********************************************************/
 function isReminderTriggered($scheduledDate, $reminderPeriod) {
     $now = new DateTime();
-    $endDate = $scheduledDate + $reminderPeriod
-
-
-
-
+    return ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D'))); 
 }
 
 
