@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.4.1.7
+* Version: 0.4.1.8
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -637,6 +637,9 @@ function belong_list_clients() {
     $clients = get_users($user_args);
     echo "<table>";
     echo "<tr><td></td><td>Client Name</td><td>Report</td></tr>";
+	echo "<tr><td></td><td>All Clients</td><td>" . esc_url(add_query_arg(array(
+			'format' => 'csv',
+		), site_url('/clients'))) . "</td></tr>";
     foreach ($clients as $client) {
         $counter++;
         echo "<tr><td>" . $counter . "</td>";
@@ -656,62 +659,63 @@ add_shortcode('belong_clients', 'belong_list_clients');
 /**********************************************************
 * CSV export
 ***********************************************************/
-function export_csv()
-{
-	if ( !current_user_can( 'list_users' ) )
-	{
+function export_csv() {
+	if ( ! current_user_can( 'list_users' ) ) {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
-	$id = $_GET['clientID'];
-	$post_id = 337; //get_the_ID();
-    $user = get_user_by('id', $id);
-	$client_profile = get_post_meta($post_id, "client_profile_" . $id, true);
+	$post_id = 337;
+	if ( array_key_exists( 'clientID', $_GET ) ) {
+		$id             = $_GET['clientID'];
+		$user           = get_user_by( 'id', $id );
+		$client_profile = get_post_meta( $post_id, "client_profile_" . $id, true );
 
-	$name = $user->display_name." Report ".date('Y-m-d').'.csv';
+		$keys   = array_unshift( array_keys( $client_profile ), 'name', 'email' );
+		$values = array_unshift( array_values( $client_profile ), $user->display_name, $user->user_email );
+		$lines  = array( $values );
 
-	header('Content-Type: application/csv');
-	header("Content-Disposition: attachment; filename=$name");
-	header('Pragma: no-cache');
+		$name = $user->display_name . " Report " . date( 'Y-m-d' ) . '.csv';
+	} else {
+		$keys      = array();
+		$lines     = array();
+		$user_args = array(
+			'role' => 'Client'
+		);
+		$users     = get_users( $user_args );
 
-    $output = fopen('php://output', 'w');
+		foreach ( $users as $user ) {
+			$client_profile = get_post_meta( $post_id, "client_profile_" . $user->id, true );
+			$keys           = array_unshift( array_keys( $client_profile ), 'name', 'email' );
+			$values         = array_unshift( array_values( $client_profile ), $user->display_name, $user->user_email );
+			array_push( $lines, $values );
+		}
 
-    fputcsv($output, array('name', $user->display_name));
-	fputcsv($output, array('email', $user->user_email));
-	foreach($client_profile as $key=>$value) {
-		fputcsv($output, array($key, $value));
+		$name = "Report " . date( 'Y-m-d' ) . '.csv';
 	}
 
-    fclose($output);
+	header( 'Content-Type: application/csv' );
+	header( "Content-Disposition: attachment; filename=$name" );
+	header( 'Pragma: no-cache' );
+
+	$output = fopen( 'php://output', 'w' );
+
+	fputcsv( $output, $keys );
+	foreach ( $lines as $line ) {
+		fputcsv( $output, $line );
+	}
+
+	fclose( $output );
 }
 
-function parse_format(&$wp)
-{
-	if(array_key_exists('clientID', $_GET) && array_key_exists('format', $_GET) && $_GET['format'] == 'csv')
-	{
+function parse_format( &$wp ) {
+	if (array_key_exists( 'format', $_GET ) && $_GET['format'] == 'csv' ) {
 		export_csv();
 		exit;
 	}
 }
 
-add_action('parse_request', 'parse_format');
+add_action( 'parse_request', 'parse_format' );
 
-
-
-/**************************************************************
-* Export all clients to CSV  
-***************************************************************/
-// function CSV_export_clients() {
-//     header('Content-Type: text/csv; charset=utf-8');
-//     header('Content-Disposition: attachment; filename=pathways.csv');
-//     $output = fopen('php://output', 'w');
-//     // output the column headings
-//     fputcsv($output, array('Column 1', 'Column 2', 'Column 3')); // get this dynamically by iterating over the data
-//     foreach ($data as $item) {
-//         fputcsv($output, $item);
-//     }
-
-// }
 
 /***********************************
 *        HELPER FUNCTIONS          *
