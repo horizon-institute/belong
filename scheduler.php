@@ -14,7 +14,7 @@ function belong_get_assignments() {
     
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
-        $current_date = new DateTime();
+        $current_date = getdate();
         foreach ($assignment_posts as $post) {
 
             $assignment_type   = get_field('assignment_type', $post->ID);
