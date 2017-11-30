@@ -14,12 +14,32 @@ function belong_get_assignments() {
     
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
+        $current_date = new DateTime();
         foreach ($assignment_posts as $post) {
-            //var_dump($post);
-            echo "Reminder: " . get_field('assignment_reminder', $post->ID) . "<br />" ;
-            echo "Complete by: " . get_field('assignment_complete_by', $post->ID) . "<br />";
-            echo "Reminder Period: " . get_field('assignment_reminder_period', $post->ID) . "<br />";
-            echo "Reminder Type: " . get_field('assignment_reminder_type', $post->ID) . "<br />";
+
+            $assignment_type   = get_field('assignment_type', $post->ID);
+            $assignment_reminder = get_field('assignment_reminder', $post->ID);
+            $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
+            $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
+
+            echo "Reminder: " . $assignment_reminder . "<br />" ;
+            echo "Reminder Period: " . $assignment_reminder_period . "<br />";
+            echo "Reminder Type: " . $assignment_reminder_type . "<br />";
+            echo "Current date/time: " . $current_date . "<br />" ;
+
+            if ($assignment_type == "Modules") {
+                $complete_by = get_field('assignment_complete_by', $post->ID);
+                echo "Complete module by: " . $complete_by  . "<br />";
+            }
+
+            if ($assignment_type == "Events") {
+                //get event object and ge the date/time field
+                $assignment_event = get_field('assignment_select_event', $post->ID);
+                $event_datetime   = get_field('event_date', $assignment_event->ID);
+                $event_date         = new DateTime($event_datetime);
+                echo "Event date/time: " . $event_date . "<br />";
+            }
+
             echo "*******************************************************************" . "<br />";
 
         }
