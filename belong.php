@@ -673,13 +673,8 @@ function export_csv(&$wp)
 	header("Content-Disposition: attachment; filename=$name");
 	header('Pragma: no-cache');
 
-    $output = fopen('php://output', 'w');
-
-    //output client info
-    fputcsv($output, explode(',', $client_profile));
-    var_dump($wp);
     var_dump($client_profile);
-    fclose($output);
+    echo explode(',', $client_profile);
 }
 
 function parse_format(&$wp)
