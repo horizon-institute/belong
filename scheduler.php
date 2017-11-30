@@ -32,6 +32,7 @@ function belong_get_assignments() {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
                 echo "Complete module by: " . $complete_date->format('j M Y')  . "<br />";
+                echo "now + reminder period: " . $current_date->add(new DateInterval('P' . $assignment_reminder_period . 'D'))->format('j M Y');
             }
 
             if ($assignment_type == "Events") {
@@ -39,6 +40,7 @@ function belong_get_assignments() {
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
                 $event_date       = new DateTime($event_datetime);
                 echo "Event date/time: " . $event_date->format('j M Y') . "<br />";
+                echo "now + reminder period: " . $current_date->add(new DateInterval('P' . $assignment_reminder_period . 'D'))->format('j M Y');
             }
 
             echo "*******************************************************************" . "<br />";
@@ -62,9 +64,14 @@ add_shortcode('belong_assignments', 'belong_get_assignments');
 /***********************************************************
 * check reminder period
 * $ReminderPeriod - is in days
-* $scheduledDate - the Module/Event date
+* $scheduledDate - the Module/Event DateTime object
 ***********************************************************/
-function isReminderTriggered($scheduledDate, $ReminderPeriod) {
+function isReminderTriggered($scheduledDate, $reminderPeriod) {
+    $now = new DateTime();
+    $endDate = $scheduledDate + $reminderPeriod
+
+
+
 
 }
 
