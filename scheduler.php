@@ -15,7 +15,7 @@ function belong_get_assignments() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
 
-        $current_date = date('y-m-d');
+        $current_date = new DateTime('now');
 
         foreach ($assignment_posts as $post) {
             $assignment_type   = get_field('assignment_type', $post->ID);
@@ -26,7 +26,7 @@ function belong_get_assignments() {
             echo "Reminder: " . $assignment_reminder . "<br />";
             echo "Reminder Period: " . $assignment_reminder_period . "<br />";
             echo "Reminder Type: " . $assignment_reminder_type . "<br />";
-            echo "Current date/time: " . $current_date . "<br />";
+            echo "Current date/time: " . $current_date->format('j M Y') . "<br />";
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
@@ -54,6 +54,22 @@ function belong_get_assignments() {
 }
 
 add_shortcode('belong_assignments', 'belong_get_assignments');
+
+
+
+
+/***********************************************************
+* check reminder period
+* $ReminderPeriod - is in days
+* $scheduledDate - the Module/Event date
+***********************************************************/
+isReminderTriggered($scheduledDate, $ReminderPeriod) {
+
+
+
+
+}
+
 
 /***********************************************************
 * Send SMS to users
