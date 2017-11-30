@@ -34,11 +34,10 @@ function belong_get_assignments() {
             }
 
             if ($assignment_type == "Events") {
-                //get event object and ge the date/time field
                 $assignment_event = get_field('assignment_select_event', $post->ID);
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
-                $event_date         = new DateTime($event_datetime);
-                echo "Event date/time: " . $event_date . "<br />";
+                $event_date       = new DateTime($event_datetime);
+                echo "Event date/time: " . $event_date->format('j M Y') . "<br />";
             }
 
             echo "*******************************************************************" . "<br />";
