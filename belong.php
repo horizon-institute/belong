@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.4.1.8
+* Version: 0.4.1.9
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -637,9 +637,9 @@ function belong_list_clients() {
     $clients = get_users($user_args);
     echo "<table>";
     echo "<tr><td></td><td>Client Name</td><td>Report</td></tr>";
-	echo "<tr><td></td><td>All Clients</td><td>" . esc_url(add_query_arg(array(
+	echo "<tr><td></td><td>All Clients</td><td><a href='" . esc_url(add_query_arg(array(
 			'format' => 'csv',
-		), site_url('/clients'))) . "</td></tr>";
+		), site_url('/clients'))) . "'>csv</a></td></tr>";
     foreach ($clients as $client) {
         $counter++;
         echo "<tr><td>" . $counter . "</td>";
