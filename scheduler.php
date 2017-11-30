@@ -20,12 +20,14 @@ function belong_get_assignments() {
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-
+            $assignment_clients = get_field('assignment_client', $post->ID);
+            
             echo "Reminder: " . $assignment_reminder . "<br />";
             echo "Reminder Period: " . $assignment_reminder_period . "<br />";
             echo "Reminder Type: " . $assignment_reminder_type . "<br />";
             echo "Current date/time: " . $current_date->format('j M Y') . "<br />";
-
+            echo "Allocated clients: <br />";
+            var_dump($assignment_clients);
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
