@@ -5,7 +5,7 @@
 * Plugin URI: http://belong-horizon.cloudapp.net
 * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
 * Description: Custom functionality for Belong Nottingham CRM
-* Version: 0.4.0.4
+* Version: 0.4.0.5
 * Author: Javid Yousaf
 * License: GPL3
 */
@@ -656,7 +656,7 @@ add_shortcode('belong_clients', 'belong_list_clients');
 /**********************************************************
 * CSV export
 ***********************************************************/
-function export_csv()
+function export_csv(&$wp)
 {
 	if ( !current_user_can( 'list_users' ) )
 	{
@@ -665,7 +665,7 @@ function export_csv()
 
 	$id = $_GET['clientID'];
 	$post_id = 337; //get_the_ID();
-	$client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
+	$client_profile = get_post_meta($post_id, "client_profile_" . $id, true);
 
 	$name = $client_profile->display_name." Report ".date('Y-m-d').'.csv';
 
@@ -677,8 +677,8 @@ function export_csv()
 
     //output client info
     fputcsv($output, explode(',', $client_profile));
-    echo $id;
-    echo explode(',', $client_profile);
+    var_dump($wp);
+    var_dump($client_profile);
     fclose($output);
 }
 
@@ -686,7 +686,7 @@ function parse_format(&$wp)
 {
 	if(array_key_exists('clientID', $_GET) && array_key_exists('format', $_GET) && $_GET['format'] == 'csv')
 	{
-		export_csv();
+		export_csv($wp);
 		exit;
 	}
 }
