@@ -47,7 +47,6 @@ function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
         $email_addresses = getEmailAddresses($users);
         if ($reminder_type == "email") {
-            var_dump($email_addresses);
             // belong_send_emails("Pathways test message body.", "Reminder", $addresses);
         } else if ($reminder_type == "sms") {
             //belong_send_SMS($message, $numbers);
@@ -74,12 +73,15 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 * Return an array of email addresses from user object array
 ***********************************************************/
 function getEmailAddresses($users) {
-    $email_addresses = [];
-    foreach ($users as $user) {
-        var_dump ($user);
-        //$email_addresses[] = $user['user_email'];
+    //$email_addresses = [];
+    if (isset($users)) {
+        foreach ($users as $user) {
+            var_dump ($user->user_email);
+            //$email_addresses[] = $user['user_email'];
+        }
     }
-    return $email_addresses;
+
+   // return $email_addresses;
 }
 
 
