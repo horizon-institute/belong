@@ -636,10 +636,16 @@ function belong_list_clients() {
     );
     $clients = get_users($user_args);
     echo "<table>";
-    echo "<tr><td></td><td>Client Name</td></tr>";
+    echo "<tr><td></td><td>Client Name</td><td>Report</td></tr>";
     foreach ($clients as $client) {
         $counter++;
-        echo "<tr><td>" . $counter . "</td><td><a href=" . esc_url(add_query_arg('clientID', $client->ID, site_url('/client-profile'))) . ">" . esc_html($client->display_name) . "</a></td></tr>";
+        echo "<tr><td>" . $counter . "</td>";
+        echo "<td><a href=" . esc_url(add_query_arg('clientID', $client->ID, site_url('/client-profile'))) . ">" . esc_html($client->display_name) . "</a></td>";
+	    echo "<td><a href=" . esc_url(add_query_arg(array(
+			    'clientID' => $client->ID,
+			    'format' => 'csv',
+		    ), site_url('/client-profile'))) . ">csv</a></td>";
+        echo "</tr>";
     }
     echo "</table>";
     return ob_get_clean();
@@ -651,15 +657,6 @@ add_shortcode('belong_clients', 'belong_list_clients');
 * CSV export
 ***********************************************************/
 function export_data_to_csv() {
-    ob_start();
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=pathways.csv');
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if(isset($_POST)) {
-            $id = $_POST["export_client_select"];
-            CSV_export_client($id);
-        }
-    }
     $user_args = array(
     'role' => 'Client'
     );
@@ -688,21 +685,45 @@ function export_data_to_csv() {
     echo '</form>';
     return ob_get_clean();
 }
-
 add_shortcode('belong_csv_export', 'export_data_to_csv');
 
-/**************************************************************
-* Export an individual clients data to CSV  
-***************************************************************/
-function CSV_export_client($id) {
+function export_csv(&$wp)
+{
+	if ( !current_user_can( 'list_users' ) )
+	{
+		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+	}
 
-    $post_id = 337; //post_id for client profile post
+	$name = "report-".date('Y-m-d').'.csv';
+
+	header('Content-Type: application/csv');
+	header("Content-Disposition: attachment; filename=$name");
+	header('Pragma: no-cache');
+
+	$id = $wp->$_GET['clientID'];
+
+	$post_id = 337; //post_id for client profile post
     $client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
+
     $output = fopen('php://output', 'w');
-    //output client info 
+
+    //output client info
     fputcsv($output, explode(',', $client_profile));
     fclose($output);
 }
+
+function parse_format(&$wp)
+{
+	if(array_key_exists('clientID', $_GET) && array_key_exists('format', $_GET) && $_GET['format'] == 'csv')
+	{
+		export_csv($wp);
+		exit;
+	}
+}
+
+add_action('parse_request', 'parse_format');
+
+
 
 /**************************************************************
 * Export all clients to CSV  
