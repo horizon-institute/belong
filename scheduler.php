@@ -15,7 +15,7 @@ function belong_get_assignments() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
 
-        $current_date = new DateTime('now');
+        $current_date = new DateTime();
 
         foreach ($assignment_posts as $post) {
             $assignment_type   = get_field('assignment_type', $post->ID);
@@ -30,7 +30,8 @@ function belong_get_assignments() {
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
-                echo "Complete module by: " . $complete_by  . "<br />";
+                $complete_date = new DateTime($complete_by);
+                echo "Complete module by: " . $complete_date->format('j M Y')  . "<br />";
             }
 
             if ($assignment_type == "Events") {
@@ -63,10 +64,7 @@ add_shortcode('belong_assignments', 'belong_get_assignments');
 * $ReminderPeriod - is in days
 * $scheduledDate - the Module/Event date
 ***********************************************************/
-isReminderTriggered($scheduledDate, $ReminderPeriod) {
-
-
-
+function isReminderTriggered($scheduledDate, $ReminderPeriod) {
 
 }
 
