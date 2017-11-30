@@ -656,54 +656,24 @@ add_shortcode('belong_clients', 'belong_list_clients');
 /**********************************************************
 * CSV export
 ***********************************************************/
-function export_data_to_csv() {
-    $user_args = array(
-    'role' => 'Client'
-    );
-    $clients = get_users($user_args);
-
-    echo '<form action="" method="post" id="export">';
-    echo '<div class="row">';
-    echo '<div class="form-group">';
-    echo '<div class="col-md-3" >';
-    echo "<select class='form-control' name='export_client_select'><option>choose</option>";
-    foreach ($clients as $client) {
-        echo "<option value=" . $client->ID . " "; 
-        echo ">" . str_replace('_', ' ', $client->display_name);
-        echo "</option>";
-    }
-    echo "</select>";
-    echo '</div>';
-
-    echo '<div class="col-md-3" >';
-    echo '<div class="form-group">';
-    echo '<button type="submit" class="btn btn-default" name="submit">EXPORT</button>';
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
-    echo '</form>';
-    return ob_get_clean();
-}
-add_shortcode('belong_csv_export', 'export_data_to_csv');
-
-function export_csv(&$wp)
+function export_csv()
 {
 	if ( !current_user_can( 'list_users' ) )
 	{
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
-	$name = "report-".date('Y-m-d').'.csv';
+	$id = $_GET['clientID'];
+
+	$post_id = 337; //post_id for client profile post
+	$client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
+
+	$name = $client_profile->display_name." Report ".date('Y-m-d').'.csv';
 
 	header('Content-Type: application/csv');
 	header("Content-Disposition: attachment; filename=$name");
 	header('Pragma: no-cache');
 
-	$id = $wp->$_GET['clientID'];
-
-	$post_id = 337; //post_id for client profile post
-    $client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
 
     $output = fopen('php://output', 'w');
 
@@ -716,7 +686,7 @@ function parse_format(&$wp)
 {
 	if(array_key_exists('clientID', $_GET) && array_key_exists('format', $_GET) && $_GET['format'] == 'csv')
 	{
-		export_csv($wp);
+		export_csv();
 		exit;
 	}
 }
