@@ -75,8 +75,8 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 function getEmailAddresses($users) {
     //$email_addresses = [];
         foreach ($users as $user) {
-            $email = get_field('user_email', $users->ID);
-            var_dump ($email);
+            //$email = get_field('user_email', $users->ID);
+            var_dump ($user);
             //$email_addresses[] = $user['user_email'];
         }
    // return $email_addresses;
