@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.2.1
+ * Version: 0.4.2.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -800,23 +800,24 @@ function export_csv() {
 		$user           = get_user_by( 'id', $id );
 		$client_profile = get_post_meta( $post_id, "client_profile_" . $id, true );
 
-		var_dump($client_profile);
 
-		$keys   = array_unshift( array_keys( $client_profile ), 'name', 'email' );
-		$values = array_unshift( array_values( $client_profile ), $user->display_name, $user->user_email );
-		$lines  = array_push( $lines,  $values );
+		$keys   = array_keys( $client_profile );
+		$values = array_values( $client_profile );
+		array_unshift( $keys, 'name', 'email' );
+		array_unshift( $values, $user->display_name, $user->user_email );
+		array_push( $lines, $values );
 
 		$name = $user->display_name . " Report " . date( 'Y-m-d' ) . '.csv';
 	} else {
 		$users = get_users( array( 'role' => 'Client' ) );
 
-		var_dump($users);
-
 		foreach ( $users as $user ) {
-			$client_profile = get_post_meta( $post_id, "client_profile_" . $user->id, true );
-			$keys           = array_unshift( array_keys( $client_profile ), 'name', 'email' );
-			$values         = array_unshift( array_values( $client_profile ), $user->display_name, $user->user_email );
-			$lines = array_push( $lines, $values );
+			$client_profile = get_post_meta( $post_id, "client_profile_" . $user->ID, true );
+			$keys           = array_keys( $client_profile );
+			$values         = array_values( $client_profile );
+			array_unshift( $keys, 'name', 'email' );
+			array_unshift( $values, $user->display_name, $user->user_email );
+			array_push( $lines, $values );
 		}
 
 		$name = "Report " . date( 'Y-m-d' ) . '.csv';
