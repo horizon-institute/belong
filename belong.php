@@ -664,8 +664,7 @@ function export_csv()
 	}
 
 	$id = $_GET['clientID'];
-
-	$post_id = 337; //post_id for client profile post
+	$post_id = 337; //get_the_ID();
 	$client_profile = get_post_meta($post_id, "client_profile_" . $id)[0];
 
 	$name = $client_profile->display_name." Report ".date('Y-m-d').'.csv';
@@ -674,11 +673,12 @@ function export_csv()
 	header("Content-Disposition: attachment; filename=$name");
 	header('Pragma: no-cache');
 
-
     $output = fopen('php://output', 'w');
 
     //output client info
     fputcsv($output, explode(',', $client_profile));
+    echo $id;
+    echo explode(',', $client_profile);
     fclose($output);
 }
 
