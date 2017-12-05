@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.2.3
+ * Version: 0.4.2.4
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -208,8 +208,6 @@ function personal_form( $id, $client_profile ) {
 		"No"
 	), "pw-spouse-travel", "DID THEY TRAVEL TO THE UK WITH YOU?", "6", $client_profile );
 	echo '</div>';
-
-	//children($client_profile);
 	echo '<div class="row">';
 	echo '<label>CHILDREN</label>';
 	echo '</div>';
@@ -520,8 +518,6 @@ function financial_form( $client_profile ) {
 		"MOBILE PHONES"
 	), "pw-financial-understand", "DO YOU UNDERSTND THE FOLLOWING?", "6", $client_profile );
 	echo '</div>';
-
-
 }
 
 /*********************************************************************************/
@@ -640,8 +636,6 @@ function work_experience_form( $client_profile ) {
 	echo '<div class="row">';
 	textarea_field( "pw-experience-aspirations", "WHAT ARE YOUR FUTURE ASPIRATIONS?", "5", "35", "12", $client_profile );
 	echo '</div>';
-
-
 }
 
 /*********************************************************************************/
@@ -746,7 +740,6 @@ function belong_list_modules_for_user() {
 		}
 		echo "</table>";
 	}
-
 	return ob_get_clean();
 }
 
@@ -778,7 +771,6 @@ function belong_list_clients() {
 		echo "</tr>";
 	}
 	echo "</table>";
-
 	return ob_get_clean();
 }
 

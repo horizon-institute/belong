@@ -23,6 +23,7 @@ function belong_get_assignments() {
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
             $assignment_users = get_field('assignment_client', $post->ID); //multi select array of clients
+            var_dump($assignment_users);
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
@@ -36,6 +37,7 @@ function belong_get_assignments() {
                 $event_date       = new DateTime($event_datetime);
                 sendReminders($event_date, $assignment_reminder_period, $assignment_users, $assignment_reminder_type);
             }
+
         }
     }
     return ob_get_clean();
@@ -45,12 +47,15 @@ add_shortcode('belong_assignments', 'belong_get_assignments');
 
 function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
-        $email_addresses = getEmailAddresses($users);
+        //$email_addresses = getEmailAddresses($users);
         if ($reminder_type == "email") {
+            echo "email <br />";
             // belong_send_emails("Pathways test message body.", "Reminder", $addresses);
         } else if ($reminder_type == "sms") {
+            echo "sms <br />";
             //belong_send_SMS($message, $numbers);
         } else if ($reminder_type == "both") {
+            echo "both <br />";
             // belong_send_emails("Pathways test message body.", "Reminder", $addresses);
             // belong_send_SMS($message, $numbers);
         }                   
