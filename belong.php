@@ -693,7 +693,8 @@ function belong_list_events_for_user() {
 		foreach ( $assignment_posts as $post ) {
 		    echo "1";
 			$assignment_client = get_field( 'assignment_client', $post->ID );
-			echo "2". $assignment_client;
+			echo "2";
+			var_dump($assignment_client);
 			$assignment_type   = get_field( 'assignment_type', $post->ID );
 			echo "3". $assignment_type;
 
@@ -711,6 +712,7 @@ function belong_list_events_for_user() {
 				echo "<td>" . $date->format( 'F j, Y g:i a' ) . "</td></tr>";
 			}
 		}
+		echo "8";
 		echo "</table>";
 	}
 
