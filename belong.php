@@ -686,6 +686,7 @@ function belong_list_events_for_user() {
 	);
 
 	$assignment_posts = get_posts( $assignment_args );
+	var_dump($assignment_posts);
 	if ( $assignment_posts ) {
 		echo "<table>";
 		echo "<tr><td></td><td>Event Name</td><td> Date & Time</td></tr>";
