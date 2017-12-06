@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.3.4
+ * Version: 0.4.3.5
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -686,7 +686,6 @@ function belong_list_events_for_user() {
 	);
 
 	$assignment_posts = get_posts( $assignment_args );
-	//var_dump($assignment_posts);
 	if ( $assignment_posts ) {
 		echo "<table>";
 		echo "<tr><td></td><td>Event Name</td><td> Date & Time</td></tr>";
@@ -828,47 +827,52 @@ function export_csv() {
 
 		$assignment_max = 0;
 		if ( $assignment_posts ) {
-		    $assignment_list = [];
+			$assignment_list = [];
 			foreach ( $assignment_posts as $post ) {
 				$assignment_client = get_field( 'assignment_client', $post->ID );
-				if($assignment_client) {
+				if ( $assignment_client ) {
 					$assignment_type = get_field( 'assignment_type', $post->ID );
-					if ( belong_is_current_user_selected( $assignment_client, $user->ID )) {
-                         if($assignment_type == 'Modules' ) {
-	                         $assignment_module = get_field( 'assignment_select_module', $post->ID );
-	                         $assignment_name = $assignment_module->post_title;
-	                         $assignment_date   = get_field( 'assignment_complete_by', $post->ID );
-	                         $date              = new DateTime( $assignment_date );
-                         } else if($assignment_type == 'Event') {
-	                         $assignment_event = get_field( 'assignment_select_event', $post->ID );
-	                         $assignment_name = $assignment_event->post_title;
-	                         $assignment_date   = get_field( 'event_date', $assignment_event->ID );
-	                         $date             = new DateTime( $assignment_date );
-                         }
+					if ( belong_is_current_user_selected( $assignment_client, $user->ID ) ) {
+						if ( $assignment_type == 'Modules' ) {
+							$assignment_module = get_field( 'assignment_select_module', $post->ID );
+							$assignment_name   = $assignment_module->post_title;
+							$assignment_date   = get_field( 'assignment_complete_by', $post->ID );
+							$date              = new DateTime( $assignment_date );
+						} else if ( $assignment_type == 'Event' ) {
+							$assignment_event = get_field( 'assignment_select_event', $post->ID );
+							$assignment_name  = $assignment_event->post_title;
+							$assignment_date  = get_field( 'event_date', $assignment_event->ID );
+							$date             = new DateTime( $assignment_date );
+						}
 
 						$assignment = array(
 							'name' => $assignment_name,
 							'type' => $assignment_type,
 							'date' => $date->format( 'F j, Y g:i a' )
 						);
-						array_push($assignment_list, $assignment);
+						var_dump( $assignment );
+						array_push( $assignment_list, $assignment );
 					}
 				}
 			}
 
-			$assignment_max = max($assignment_max, array_count_values($assignment_list));
-			for($x = 1; $x <= $assignment_max; $x++) {
-				array_unshift( $keys, 'assignment'.$x, 'assignment'.$x.'type', 'assignment'.$x.'date' );
-            }
+			$assignment_max = max( $assignment_max, sizeof( $assignment_list ) );
 
-            foreach ($assignment_list as $assignment) {
-			    array_unshift($values, $assignment['name'], $assignment['type'], $assignment['date']);
-            }
+			var_dump( $assignment_max );
+			var_dump( $assignment_list );
+
+			for ( $x = 1; $x <= $assignment_max; $x ++ ) {
+				array_unshift( $keys, 'assignment' . $x, 'assignment' . $x . 'type', 'assignment' . $x . 'date' );
+			}
+
+			foreach ( $assignment_list as $assignment ) {
+				array_unshift( $values, $assignment['name'], $assignment['type'], $assignment['date'] );
+			}
 		}
 	}
 
-	var_dump($keys);
-	var_dump($lines);
+	var_dump( $keys );
+	var_dump( $lines );
 
 	header( 'Content-Type: application/csv' );
 	header( "Content-Disposition: attachment; filename=$name" );
