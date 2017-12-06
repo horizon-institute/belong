@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.4.2
+ * Version: 0.4.4.3
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -812,72 +812,70 @@ function export_csv() {
 	);
 
 	$assignment_posts = get_posts( $assignment_args );
-	$assignment_max = 0;
+	$assignment_max   = 0;
 
 	foreach ( $users as $user ) {
 		$client_profile = get_post_meta( $post_id, "client_profile_" . $user->ID, true );
-		$keys           = array_keys( $client_profile );
-		$values         = [];
+		if ( sizeof( $keys ) == 0 ) {
+			array_unshift( $keys, 'Name', 'Email' );
+			$keys = array_keys( $client_profile );
+		}
 
-		foreach($keys as $key) {
-		    $value = $client_profile[$key];
-		    if($value == null || $value == 'choose') {
-		        $value = '';
-            }
-		    array_push($values, $value);
-        }
-
-		array_unshift( $keys, 'Name', 'Email' );
-		array_unshift( $values, $user->display_name, $user->user_email );
+		$client_profile['Name']  = $user->display_name;
+		$client_profile['Email'] = $user->user_email;
 
 		if ( $assignment_posts ) {
-			$assignment_list = [];
+			$assignment_count = 0;
 			foreach ( $assignment_posts as $post ) {
 				$assignment_client = get_field( 'assignment_client', $post->ID );
-                if ( belong_is_current_user_selected( $assignment_client, $user->ID ) ) {
-                    $assignment_type = get_field( 'assignment_type', $post->ID );
-                    if ( $assignment_type == 'Modules' ) {
-                        $assignment_module = get_field( 'assignment_select_module', $post->ID );
-                        $assignment_name   = $assignment_module->post_title;
-                        $assignment_date   = get_field( 'assignment_complete_by', $post->ID );
-                        $date              = new DateTime( $assignment_date );
-                    } else if ( $assignment_type == 'Events' ) {
-                        $assignment_event = get_field( 'assignment_select_event', $post->ID );
-                        $assignment_name  = $assignment_event->post_title;
-                        $assignment_date  = get_field( 'event_date', $assignment_event->ID );
-                        $date             = new DateTime( $assignment_date );
-                    }
-
-                    $assignment = array(
-                        'name' => $assignment_name,
-                        'type' => $assignment_type,
-                        'date' => $date->format( "Y-m-d")
-                    );
-                    array_push( $assignment_list, $assignment );
-                }
-			}
-			$assignment_max = max( $assignment_max, sizeof( $assignment_list ) );
-
-			for ( $x = 1; $x <= $assignment_max; $x ++ ) {
-				array_push( $keys, 'Assignment ' . $x, 'Assignment ' . $x . ' Type', 'Assignment ' . $x . ' Date' );
+				if ( belong_is_current_user_selected( $assignment_client, $user->ID ) ) {
+					$assignment_count ++;
+					$assignment_type                              = get_field( 'assignment_type', $post->ID );
+					$assignment_name                              = 'Assignment ' . $assignment_count;
+					$client_profile[ $assignment_name . ' Type' ] = $assignment_type;
+					if ( $assignment_type == 'Modules' ) {
+						$assignment_module                  = get_field( 'assignment_select_module', $post->ID );
+						$client_profile[ $assignment_name ] = $assignment_module->post_title;
+						$assignment_date                    = get_field( 'assignment_complete_by', $post->ID );
+					} else if ( $assignment_type == 'Events' ) {
+						$assignment_event                   = get_field( 'assignment_select_event', $post->ID );
+						$client_profile[ $assignment_name ] = $assignment_event->post_title;
+						$assignment_date                    = get_field( 'event_date', $post->ID );
+					}
+					$date                                         = new DateTime( $assignment_date );
+					$client_profile[ $assignment_name . ' Date' ] = $date->format( "Y-m-d" );
+				}
 			}
 
-			foreach ( $assignment_list as $assignment ) {
-				array_push( $values, $assignment['name'], $assignment['type'], $assignment['date'] );
+			if ( $assignment_count > $assignment_max ) {
+				for ( $x = $assignment_max; $x < $assignment_count; $x ++ ) {
+					$val = $x + 1;
+					array_push( $keys, 'Assignment ' . $val, 'Assignment ' . $val . ' Type', 'Assignment ' . $val . ' Date' );
+				}
 			}
 
+			$values = [];
+			foreach ( $keys as $key ) {
+				$value = $client_profile[ $key ];
+				if ( is_array( $value ) ) {
+					$value = join( ' ', $value );
+				} else if ( $value == null || $value == 'choose' ) {
+					$value = '';
+				}
+				array_push( $values, $value );
+			}
 			array_push( $lines, $values );
 		}
 	}
 
-	for($x = 0; $x < sizeof($keys); $x++) {
-        $key = $keys[$x];
-		$key = str_replace("pw-", "", $key);
-        $key = str_replace("_", "", $key);
-		$key = str_replace("-", "", $key);
+	for ( $x = 0; $x < sizeof( $keys ); $x ++ ) {
+		$key = $keys[ $x ];
+		$key = str_replace( "pw-", "", $key );
+		$key = str_replace( "_", " ", $key );
+		$key = str_replace( "-", " ", $key );
 
-	    $key = ucwords($key);
-	    $keys[$x] = $key;
+		$key        = ucwords( $key );
+		$keys[ $x ] = $key;
 	}
 
 	header( 'Content-Type: application/csv' );
