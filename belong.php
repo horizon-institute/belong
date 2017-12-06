@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.3.1
+ * Version: 0.4.3.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -762,18 +762,24 @@ function belong_list_clients() {
 	);
 	$clients   = get_users( $user_args );
 	echo "<table>";
-	echo "<tr><td></td><td>Client Name</td><td>Report</td></tr>";
-	echo "<tr><td></td><td>All Clients</td><td><a href='" . esc_url( add_query_arg( array(
-			'format' => 'csv',
-		), site_url( '/clients' ) ) ) . "'>csv</a></td></tr>";
+	if(	current_user_can( 'list_users' ) ) {
+		echo "<tr><td></td><td>Client Name</td><td>Report</td></tr>";
+		echo "<tr><td></td><td>All Clients</td><td><a href='" . esc_url( add_query_arg( array(
+				'format' => 'csv',
+			), site_url( '/clients' ) ) ) . "'>csv</a></td></tr>";
+	} else {
+		echo "<tr><td></td><td>Client Name</td></tr>";
+    }
 	foreach ( $clients as $client ) {
 		$counter ++;
 		echo "<tr><td>" . $counter . "</td>";
 		echo "<td><a href=" . esc_url( add_query_arg( 'clientID', $client->ID, site_url( '/client-profile' ) ) ) . ">" . esc_html( $client->display_name ) . "</a></td>";
-		echo "<td><a href=" . esc_url( add_query_arg( array(
-				'clientID' => $client->ID,
-				'format'   => 'csv',
-			), site_url( '/client-profile' ) ) ) . ">csv</a></td>";
+		if(	current_user_can( 'list_users' ) ) {
+			echo "<td><a href=" . esc_url( add_query_arg( array(
+					'clientID' => $client->ID,
+					'format'   => 'csv',
+				), site_url( '/client-profile' ) ) ) . ">csv</a></td>";
+		}
 		echo "</tr>";
 	}
 	echo "</table>";
@@ -794,31 +800,76 @@ function export_csv() {
 	$lines   = array();
 	$post_id = 337;
 	if ( array_key_exists( 'clientID', $_GET ) ) {
-		$id             = $_GET['clientID'];
-		$user           = get_user_by( 'id', $id );
-		$client_profile = get_post_meta( $post_id, "client_profile_" . $id, true );
-
-
-		$keys   = array_keys( $client_profile );
-		$values = array_values( $client_profile );
-		array_unshift( $keys, 'name', 'email' );
-		array_unshift( $values, $user->display_name, $user->user_email );
-		array_push( $lines, $values );
+		$id    = $_GET['clientID'];
+		$user  = get_user_by( 'id', $id );
+		$users = array( $user );
 
 		$name = $user->display_name . " Report " . date( 'Y-m-d' ) . '.csv';
 	} else {
 		$users = get_users( array( 'role' => 'Client' ) );
 
-		foreach ( $users as $user ) {
-			$client_profile = get_post_meta( $post_id, "client_profile_" . $user->ID, true );
-			$keys           = array_keys( $client_profile );
-			$values         = array_values( $client_profile );
-			array_unshift( $keys, 'name', 'email' );
-			array_unshift( $values, $user->display_name, $user->user_email );
-			array_push( $lines, $values );
-		}
-
 		$name = "Report " . date( 'Y-m-d' ) . '.csv';
+	}
+
+	$assignment_args = array(
+		'posts_per_page' => - 1,
+		'post_type'      => 'assignments'
+	);
+
+	$assignment_posts = get_posts( $assignment_args );
+
+	foreach ( $users as $user ) {
+		$client_profile = get_post_meta( $post_id, "client_profile_" . $user->ID, true );
+		$keys           = array_keys( $client_profile );
+		$values         = array_values( $client_profile );
+		array_unshift( $keys, 'name', 'email' );
+		array_unshift( $values, $user->display_name, $user->user_email );
+		array_push( $lines, $values );
+
+		$assignment_max = 0;
+		if ( $assignment_posts ) {
+		    $assignment_list = [];
+			foreach ( $assignment_posts as $post ) {
+				$assignment_client = get_field( 'assignment_client', $post->ID );
+				if($assignment_client) {
+					$assignment_type = get_field( 'assignment_type', $post->ID );
+					if ( belong_is_current_user_selected( $assignment_client, $user->ID )) {
+                         if($assignment_type == 'Modules' ) {
+	                         $assignment_module = get_field( 'assignment_select_module', $post->ID );
+	                         var_dump($assignment_module);
+	                         $assignment_date   = get_field( 'assignment_complete_by', $post->ID );
+	                         var_dump($assignment_date);
+	                         $date              = new DateTime( $assignment_date );
+	                         var_dump($date);
+                         } else if($assignment_type == 'Event') {
+	                         $assignment_event = get_field( 'assignment_select_event', $post->ID );
+	                         var_dump($assignment_event);
+	                         $assignment_date   = get_field( 'event_date', $assignment_event->ID );
+	                         var_dump($assignment_date);
+	                         $date             = new DateTime( $assignment_date );
+	                         var_dump($date);
+                         }
+
+						$assignment = array(
+							//'name' => $assignment_name,
+							'type' => $assignment_type,
+							'date' => $date
+						);
+						array_push($assignment_list, $assignment);
+					}
+				}
+			}
+
+			$assignment_max = max($assignment_max, array_count_values($assignment_list));
+			for($x = 1; $x <= $assignment_max; $x++) {
+				array_unshift( $keys, 'assignment'.$x, 'assignment'.$x.'type', 'assignment'.$x.'date' );
+            }
+
+
+            foreach ($assignment_list as $assignment) {
+			    array_unshift($values, $assignment['name'], $assignment['type'], $assignment['date']);
+            }
+		}
 	}
 
 	header( 'Content-Type: application/csv' );
