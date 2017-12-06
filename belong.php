@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.2.7
+ * Version: 0.4.2.8
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -693,26 +693,24 @@ function belong_list_events_for_user() {
 		foreach ( $assignment_posts as $post ) {
 		    echo "1";
 			$assignment_client = get_field( 'assignment_client', $post->ID );
-			echo "2";
-			var_dump($assignment_client);
 			$assignment_type   = get_field( 'assignment_type', $post->ID );
-			echo "3". $assignment_type;
+			echo "2". $assignment_type;
 
 			if ( belong_is_current_user_selected( $assignment_client, $current_user->ID ) && $assignment_type == 'Events' ) {
-				echo "4";
+				echo "3";
 				$assignment_event = get_field( 'assignment_select_event', $post->ID );
-				echo "5".$assignment_event;
 				$event_datetime   = get_field( 'event_date', $assignment_event->ID );
-				echo "6".$event_datetime;
 				$date             = new DateTime( $event_datetime );
-				echo "7".$date;
+				echo "4";
 				$counter ++;
 				$permalink = get_permalink( $assignment_event->ID );
 				echo "<tr><td>" . $counter . "</td><td><a href='" . $permalink . "'>" . $assignment_event->post_title . "</a></td>";
 				echo "<td>" . $date->format( 'F j, Y g:i a' ) . "</td></tr>";
+				echo "5";
 			}
+			echo "6";
 		}
-		echo "8";
+		echo "7";
 		echo "</table>";
 	}
 
