@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.4.3
+ * Version: 0.4.4.4
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -830,19 +830,19 @@ function export_csv() {
 				$assignment_client = get_field( 'assignment_client', $post->ID );
 				if ( belong_is_current_user_selected( $assignment_client, $user->ID ) ) {
 					$assignment_count ++;
-					$assignment_type                              = get_field( 'assignment_type', $post->ID );
-					$assignment_name                              = 'Assignment ' . $assignment_count;
-					$client_profile[ $assignment_name . ' Type' ] = $assignment_type;
+					$assignment_type = get_field( 'assignment_type', $post->ID );
+					$assignment_name = 'Assignment ' . $assignment_count;
 					if ( $assignment_type == 'Modules' ) {
 						$assignment_module                  = get_field( 'assignment_select_module', $post->ID );
-						$client_profile[ $assignment_name ] = $assignment_module->post_title;
 						$assignment_date                    = get_field( 'assignment_complete_by', $post->ID );
+						$client_profile[ $assignment_name ] = $assignment_module->post_title;
 					} else if ( $assignment_type == 'Events' ) {
 						$assignment_event                   = get_field( 'assignment_select_event', $post->ID );
-						$client_profile[ $assignment_name ] = $assignment_event->post_title;
 						$assignment_date                    = get_field( 'event_date', $post->ID );
+						$client_profile[ $assignment_name ] = $assignment_event->post_title;
 					}
 					$date                                         = new DateTime( $assignment_date );
+					$client_profile[ $assignment_name . ' Type' ] = $assignment_type;
 					$client_profile[ $assignment_name . ' Date' ] = $date->format( "Y-m-d" );
 				}
 			}
@@ -853,19 +853,19 @@ function export_csv() {
 					array_push( $keys, 'Assignment ' . $val, 'Assignment ' . $val . ' Type', 'Assignment ' . $val . ' Date' );
 				}
 			}
-
-			$values = [];
-			foreach ( $keys as $key ) {
-				$value = $client_profile[ $key ];
-				if ( is_array( $value ) ) {
-					$value = join( ' ', $value );
-				} else if ( $value == null || $value == 'choose' ) {
-					$value = '';
-				}
-				array_push( $values, $value );
-			}
-			array_push( $lines, $values );
 		}
+
+		$values = [];
+		foreach ( $keys as $key ) {
+			$value = $client_profile[ $key ];
+			if ( is_array( $value ) ) {
+				$value = join( ' ', $value );
+			} else if ( $value == null || $value == 'choose' ) {
+				$value = '';
+			}
+			array_push( $values, $value );
+		}
+		array_push( $lines, $values );
 	}
 
 	for ( $x = 0; $x < sizeof( $keys ); $x ++ ) {
