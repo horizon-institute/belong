@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.4.1
+ * Version: 0.4.4.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -817,10 +817,18 @@ function export_csv() {
 	foreach ( $users as $user ) {
 		$client_profile = get_post_meta( $post_id, "client_profile_" . $user->ID, true );
 		$keys           = array_keys( $client_profile );
-		$values         = array_values( $client_profile );
-		array_unshift( $keys, 'name', 'email' );
+		$values         = [];
+
+		foreach($keys as $key) {
+		    $value = $client_profile[$key];
+		    if($value == null || $value == 'choose') {
+		        $value = '';
+            }
+		    array_push($values, $value);
+        }
+
+		array_unshift( $keys, 'Name', 'Email' );
 		array_unshift( $values, $user->display_name, $user->user_email );
-		array_push( $lines, $values );
 
 		if ( $assignment_posts ) {
 			$assignment_list = [];
@@ -843,7 +851,7 @@ function export_csv() {
                     $assignment = array(
                         'name' => $assignment_name,
                         'type' => $assignment_type,
-                        'date' => $date->format( 'F j, Y g:i a' )
+                        'date' => $date->format( "Y-m-d")
                     );
                     array_push( $assignment_list, $assignment );
                 }
@@ -851,13 +859,25 @@ function export_csv() {
 			$assignment_max = max( $assignment_max, sizeof( $assignment_list ) );
 
 			for ( $x = 1; $x <= $assignment_max; $x ++ ) {
-				array_push( $keys, 'assignment' . $x, 'assignment' . $x . 'type', 'assignment' . $x . 'date' );
+				array_push( $keys, 'Assignment ' . $x, 'Assignment ' . $x . ' Type', 'Assignment ' . $x . ' Date' );
 			}
 
 			foreach ( $assignment_list as $assignment ) {
 				array_push( $values, $assignment['name'], $assignment['type'], $assignment['date'] );
 			}
+
+			array_push( $lines, $values );
 		}
+	}
+
+	for($x = 0; $x < sizeof($keys); $x++) {
+        $key = $keys[$x];
+		$key = str_replace("pw-", "", $key);
+        $key = str_replace("_", "", $key);
+		$key = str_replace("-", "", $key);
+
+	    $key = ucwords($key);
+	    $keys[$x] = $key;
 	}
 
 	header( 'Content-Type: application/csv' );
