@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.3.5
+ * Version: 0.4.3.6
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -831,11 +831,13 @@ function export_csv() {
 			foreach ( $assignment_posts as $post ) {
 				$assignment_client = get_field( 'assignment_client', $post->ID );
 				if ( $assignment_client ) {
-					$assignment_type = get_field( 'assignment_type', $post->ID );
 					if ( belong_is_current_user_selected( $assignment_client, $user->ID ) ) {
+						$assignment_type = get_field( 'assignment_type', $post->ID );
 						if ( $assignment_type == 'Modules' ) {
 							$assignment_module = get_field( 'assignment_select_module', $post->ID );
+							var_dump($assignment_module);
 							$assignment_name   = $assignment_module->post_title;
+							var_dump($assignment_name);
 							$assignment_date   = get_field( 'assignment_complete_by', $post->ID );
 							$date              = new DateTime( $assignment_date );
 						} else if ( $assignment_type == 'Event' ) {
