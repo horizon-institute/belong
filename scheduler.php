@@ -47,7 +47,7 @@ add_shortcode('belong_notifications', 'belong_send_notifications');
 function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
         $email_addresses = $users[0]['user_email'];
-
+        echo $email_addresses . "<br />";
         if ($reminder_type == "email") {
             echo "send reminders for EMAIL <br />";
             belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
@@ -108,12 +108,12 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $addresses) {
-    echo "should be sending emails to:  " . $addresses;
-    foreach ($addresses as $address) {
-        //wp_mail($address, $subject, $message);
-        echo "Email sent to: ";
-        echo $address . "<br />";
-    }
+    echo "about to send emails to:  " . $addresses;
+    // foreach ($addresses as $address) {
+    //     //wp_mail($address, $subject, $message);
+    //     echo "Email sent to: ";
+    //     echo $address . "<br />";
+    // }
 }
 
 ?>
