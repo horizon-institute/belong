@@ -24,7 +24,7 @@ function belong_get_assignments() {
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
             $assignment_users = get_field('assignment_client', $post->ID); //multi select array of clients
             echo $assignment_users[0]['user_email'];
-            
+
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
@@ -50,13 +50,14 @@ function sendReminders($date, $reminder_period, $users, $reminder_type) {
         $email_addresses = $users[0]['user_email']; //***** */
         if ($reminder_type == "email") {
             echo "email <br />";
-            // belong_send_emails("Pathways test message body.", "Reminder", $addresses);
+            
+            belong_send_emails("Pathways test message body.", "Reminder", $addresses);
         } else if ($reminder_type == "sms") {
             echo "sms <br />";
-            //belong_send_SMS($message, $numbers);
+            // belong_send_SMS($message, $numbers);
         } else if ($reminder_type == "both") {
             echo "both <br />";
-            // belong_send_emails("Pathways test message body.", "Reminder", $addresses);
+            belong_send_emails("Pathways test message body.", "Reminder", $addresses);
             // belong_send_SMS($message, $numbers);
         }                   
     }
@@ -109,7 +110,9 @@ function belong_send_SMS($message, $numbers) {
 ***********************************************************/
 function belong_send_emails($message, $subject, $addresses) {
     foreach ($addresses as $address) {
-        wp_mail($address, $subject, $message);
+        //wp_mail($address, $subject, $message);
+        echo "Email sent to: ";
+        echo $address . "<br />";
     }
 }
 
