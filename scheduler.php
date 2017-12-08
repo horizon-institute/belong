@@ -23,9 +23,10 @@ function belong_send_notifications() {
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
 
-            $assignment_users = get_field_object('assignment_client', $post->ID); // get multi select object
+            $assignment_email_field = get_field_object('assignment_client', $post->ID); // get multi select object
+            $assignment_email_values = get_field('assignment_client', $post->ID);
             //get email addresses as an array
-            $email_addresses = getEmailAddresses($assignment_users); // pass the object for the multi select
+            $email_addresses = getEmailAddresses($assignment_email_field, $assignment_email_values); // pass the object for the multi select
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
@@ -47,8 +48,8 @@ add_shortcode('belong_notifications', 'belong_send_notifications');
 
 function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
-        $email_addresses = array();
-        $email_addresses = getEmailAddresses($users);
+        // $email_addresses = array();
+        // $email_addresses = getEmailAddresses($users);
 
         if ($reminder_type == "email") {
             belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
@@ -76,14 +77,14 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 /***********************************************************
 * Return an array of email addresses from user object array
 ***********************************************************/
-function getEmailAddresses($email_addresses) {
+function getEmailAddresses($field, $values) {
         $email_array = array();
-        foreach ($email_addresses['value'] as $email_address) {
-            $email_array[$email_address] = $email_addresses['choices'][$email_address];
+        foreach ($values as $value) {
+            $email_array[] = $field['choices'][$value];
         }
         // output for test
         foreach ($email_array as $email) {
-            echo $email;
+            echo $email . "<br />";
         }
    return $email_array;
 }
