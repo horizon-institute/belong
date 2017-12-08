@@ -35,7 +35,7 @@ function belong_send_notifications() {
             echo "******************************";
 
             foreach ($assignment_email_values as $value) {
-                echo $assignment_email_field['assignment_client'][$value] . "<br />";
+                echo $assignment_email_field['choices'][$value] . "<br />";
             }
             //get email addresses as an array
             //$email_addresses = getEmailAddresses($assignment_email_field, $assignment_email_values); // pass the object for the multi select
