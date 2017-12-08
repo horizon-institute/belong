@@ -22,30 +22,19 @@ function belong_send_notifications() {
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-
             $assignment_email_field = get_field ('assignment_client', $post->ID); // get multi select object         
-
-            echo "******************************";
-            echo "FIELD OBJECT <br />";
-            var_dump($assignment_email_field);
-            echo "<br />";
-            echo "******************************";
-
-            foreach ($assignment_email_field as $users) {
-                echo $users[0]['user_email'] . "<br />";
-            }
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
-                sendReminders($complete_date, $assignment_reminder_period, $email_addresses, $assignment_reminder_type);
+                sendReminders($complete_date, $assignment_reminder_period, $assignment_email_field, $assignment_reminder_type);
             }
 
             if ($assignment_type == "Events") {
                 $assignment_event = get_field('assignment_select_event', $post->ID);
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
                 $event_date       = new DateTime($event_datetime);
-                sendReminders($event_date, $assignment_reminder_period, $email_addresses, $assignment_reminder_type);
+                sendReminders($event_date, $assignment_reminder_period, $assignment_email_field, $assignment_reminder_type);
             }
         }
     }
@@ -53,17 +42,14 @@ function belong_send_notifications() {
 }
 add_shortcode('belong_notifications', 'belong_send_notifications');
 
-function sendReminders($date, $reminder_period, $users, $reminder_type) {
+function sendReminders($date, $reminder_period, $emails, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
-        // $email_addresses = array();
-        // $email_addresses = getEmailAddresses($users);
-
         if ($reminder_type == "email") {
-           // belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
+           belong_send_emails("Pathways test message body.", "Reminder", $emails);
         } else if ($reminder_type == "sms") {
             // belong_send_SMS($message, $numbers);
         } else if ($reminder_type == "both") {
-            //belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
+            belong_send_emails("Pathways test message body.", "Reminder", $emails);
             // belong_send_SMS($message, $numbers);
         }                   
     }
@@ -116,12 +102,11 @@ function belong_send_SMS($message, $numbers) {
 * $addresses - is an array of email addresses. 
 * $message - message to send.
 ***********************************************************/
-function belong_send_emails($message, $subject, $addresses) {
-    // foreach ($addresses as $address) {
-    //     //wp_mail($address, $subject, $message);
-    //     echo "Email sent to: ";
-    //     echo $address . "<br />";
-    // }
+function belong_send_emails($message, $subject, $emails) {
+    foreach ($emails as $users) {
+        //wp_mail($address, $subject, $message);
+        echo "sending email to: " . $users['user_email'] . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
+    }
 }
 
 ?>
