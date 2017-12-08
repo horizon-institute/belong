@@ -49,15 +49,15 @@ function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
         $email_addresses = $users[0]['user_email']; //***** */
         if ($reminder_type == "email") {
-            echo "email <br />";
+            echo "EMAIL <br />";
             
-            belong_send_emails("Pathways test message body.", "Reminder", $addresses);
+            belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
         } else if ($reminder_type == "sms") {
-            echo "sms <br />";
+            echo "SMS <br />";
             // belong_send_SMS($message, $numbers);
         } else if ($reminder_type == "both") {
-            echo "both <br />";
-            belong_send_emails("Pathways test message body.", "Reminder", $addresses);
+            echo "BOTH <br />";
+            belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
             // belong_send_SMS($message, $numbers);
         }                   
     }
