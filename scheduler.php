@@ -16,7 +16,6 @@ function belong_send_notifications() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
         foreach ($assignment_posts as $post) {    
-            $mobile_numbers = [];
             $current_date = new DateTime();
             $assignment_type   = get_field('assignment_type', $post->ID);
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
@@ -48,6 +47,7 @@ add_shortcode('belong_notifications', 'belong_send_notifications');
 function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
         $email_addresses = $users[0]['user_email'];
+
         if ($reminder_type == "email") {
             echo "send reminders for EMAIL <br />";
             belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
@@ -108,6 +108,7 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $addresses) {
+    echo "Actally sending email! ";
     foreach ($addresses as $address) {
         //wp_mail($address, $subject, $message);
         echo "Email sent to: ";
