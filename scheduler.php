@@ -22,7 +22,6 @@ function belong_send_notifications() {
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
             $assignment_users = get_field('assignment_client', $post->ID); //multi select array of clients
-            // echo $assignment_users[0]['user_email'];
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
@@ -47,15 +46,11 @@ add_shortcode('belong_notifications', 'belong_send_notifications');
 function sendReminders($date, $reminder_period, $users, $reminder_type) {
     if (isReminderTriggered($date, $reminder_period)) {
         $email_addresses = $users[0]['user_email'];
-        echo $email_addresses . "<br />";
         if ($reminder_type == "email") {
-            echo "send reminders for EMAIL <br />";
             belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
         } else if ($reminder_type == "sms") {
-            echo "SMS <br />";
             // belong_send_SMS($message, $numbers);
         } else if ($reminder_type == "both") {
-            echo "send reminders for BOTH <br />";
             belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
             // belong_send_SMS($message, $numbers);
         }                   
@@ -81,7 +76,6 @@ function getEmailAddresses($users) {
     //$email_addresses = [];
         foreach ($users as $user) {
             //$email = get_field('user_email', $users->ID);
-            var_dump ($user);
             //$email_addresses[] = $user['user_email'];
         }
    // return $email_addresses;
@@ -108,7 +102,8 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $addresses) {
-    echo "about to send emails to:  " . $addresses;
+    echo "about to send emails to:  ";
+    var_dump($addresses);
     // foreach ($addresses as $address) {
     //     //wp_mail($address, $subject, $message);
     //     echo "Email sent to: ";
