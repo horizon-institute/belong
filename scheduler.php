@@ -25,20 +25,28 @@ function belong_send_notifications() {
 
             $assignment_email_field = get_field_object('assignment_client', $post->ID); // get multi select object
             $assignment_email_values = get_field('assignment_client', $post->ID);
+            
+            echo "******************************";
+            echo "<br />";
+            var_dump($assignment_email_field);
+            echo "<br />";
+            var_dump($assignment_email_values);
+            echo "<br />";
+            echo "******************************";
             //get email addresses as an array
-            $email_addresses = getEmailAddresses($assignment_email_field, $assignment_email_values); // pass the object for the multi select
+            //$email_addresses = getEmailAddresses($assignment_email_field, $assignment_email_values); // pass the object for the multi select
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
-                sendReminders($complete_date, $assignment_reminder_period, $assignment_users, $assignment_reminder_type);
+                sendReminders($complete_date, $assignment_reminder_period, $email_addresses, $assignment_reminder_type);
             }
 
             if ($assignment_type == "Events") {
                 $assignment_event = get_field('assignment_select_event', $post->ID);
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
                 $event_date       = new DateTime($event_datetime);
-                sendReminders($event_date, $assignment_reminder_period, $assignment_users, $assignment_reminder_type);
+                sendReminders($event_date, $assignment_reminder_period, $email_addresses, $assignment_reminder_type);
             }
         }
     }
