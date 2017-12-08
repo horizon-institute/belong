@@ -27,9 +27,9 @@ function belong_send_notifications() {
             $assignment_email_values = get_field('assignment_client', $post->ID);
             
             echo "******************************";
-            echo "<br />";
+            echo "FIELD OBJECT <br />";
             var_dump($assignment_email_field);
-            echo "<br />";
+            echo " FIELD VALUES <br />";
             var_dump($assignment_email_values);
             echo "<br />";
             echo "******************************";
@@ -60,11 +60,11 @@ function sendReminders($date, $reminder_period, $users, $reminder_type) {
         // $email_addresses = getEmailAddresses($users);
 
         if ($reminder_type == "email") {
-            belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
+           // belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
         } else if ($reminder_type == "sms") {
             // belong_send_SMS($message, $numbers);
         } else if ($reminder_type == "both") {
-            belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
+            //belong_send_emails("Pathways test message body.", "Reminder", $email_addresses);
             // belong_send_SMS($message, $numbers);
         }                   
     }
