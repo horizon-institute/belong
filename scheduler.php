@@ -24,6 +24,7 @@ function belong_get_assignments() {
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
             $assignment_users = get_field('assignment_client', $post->ID); //multi select array of clients
             echo $assignment_users[0]['user_email'];
+            
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
