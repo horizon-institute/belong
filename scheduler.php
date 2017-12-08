@@ -23,22 +23,17 @@ function belong_send_notifications() {
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
 
-            $assignment_email_field = get_field_object('assignment_client', $post->ID); // get multi select object
-            $assignment_email_values = get_field('assignment_client', $post->ID);
-            
+            $assignment_email_field = get_field ('assignment_client', $post->ID); // get multi select object         
+
             echo "******************************";
             echo "FIELD OBJECT <br />";
             var_dump($assignment_email_field);
-            echo " FIELD VALUES <br />";
-            var_dump($assignment_email_values);
             echo "<br />";
             echo "******************************";
 
-            foreach ($assignment_email_values as $value) {
-                echo $assignment_email_field['user_email'][$value] . "<br />";
+            foreach ($assignment_email_field as $users) {
+                echo $users[0]['user_email'] . "<br />";
             }
-            //get email addresses as an array
-            //$email_addresses = getEmailAddresses($assignment_email_field, $assignment_email_values); // pass the object for the multi select
 
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
