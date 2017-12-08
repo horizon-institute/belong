@@ -108,7 +108,7 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $addresses) {
-    echo "Actally sending email! ";
+    echo "should be sending emails to:  " . $addresses;
     foreach ($addresses as $address) {
         //wp_mail($address, $subject, $message);
         echo "Email sent to: ";
