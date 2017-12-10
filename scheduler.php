@@ -46,8 +46,8 @@ function belong_send_notifications() {
 add_shortcode('belong_notifications', 'belong_send_notifications');
 
 function sendReminders($date, $reminder_period, $emails, $reminder_type) {
-    echo "Has Rem triggered?: " . isReminderTriggered($date, $reminder_period) . "<br />";
-    if (isReminderTriggered($date, $reminder_period) == 1) {
+    $trigger = isReminderTriggered($date, $reminder_period);
+    if (isset($trigger) && $trigger == 1) {
         if ($reminder_type == "email") {
            belong_send_emails("Pathways test message body.", "Reminder", $emails);
         } else if ($reminder_type == "sms") {
@@ -66,7 +66,7 @@ function sendReminders($date, $reminder_period, $emails, $reminder_type) {
 ***********************************************************/
 function isReminderTriggered($scheduledDate, $reminderPeriod) {
     $now = new DateTime();
-    return ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D'))) 
+    return ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D')));
 }
 
 /***********************************************************
