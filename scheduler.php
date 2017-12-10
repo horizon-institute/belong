@@ -27,9 +27,10 @@ function belong_send_notifications() {
 
             // display email address for test
             echo "************************";
-            var_dump($emails);
-            echo "************************";
-
+            foreach($emails as $email) {
+                echo $email . " <br />";
+            }
+            
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
