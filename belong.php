@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.6.3
+ * Version: 0.4.6.4
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -30,32 +30,34 @@ function client_registration_form() {
 	ob_start();
 	$id             = $_GET['clientID'];
 	$post_id        = get_the_ID();
-	$client_profile = get_post_meta( $post_id, "client_profile_" . $id )[0];
-
-	if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
-		if ( isset( $_POST ) ) {
-			/** Add or update client profile in meta table */
-			if ( ! add_post_meta( $post_id, "client_profile_" . $id, $_POST, true ) ) {
-				update_post_meta( $post_id, "client_profile_" . $id, $_POST );
+	if ( array_key_exists( 'clientID', $_GET ) ) {
+		$client_profile = get_post_meta( $post_id, "client_profile_" . $id )[0];
+		if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+			if ( isset( $_POST ) ) {
+				/** Add or update client profile in meta table */
+				if ( ! add_post_meta( $post_id, "client_profile_" . $id, $_POST, true ) ) {
+					update_post_meta( $post_id, "client_profile_" . $id, $_POST );
+				}
+				/** get selected clients profile from meta table */
+				$client_profile = get_post_meta( $post_id, "client_profile_" . $id )[0];
 			}
-			/** get selected clients profile from meta table */
-			$client_profile = get_post_meta( $post_id, "client_profile_" . $id )[0];
 		}
+
+		echo '<form action="" method="post" id="tab">';
+		echo '<div class="form-group">';
+		client_registration( $id, $client_profile );
+		echo '</div>';
+		echo '<div class="row">';
+		echo '<div class="col-md-12">';
+		echo '<div class="form-group">';
+		echo '<button type="submit" class="btn btn-default" name="submit">UPDATE</button>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+		echo '</form>';
+	} else {
+		echo "No profile for Admin";
 	}
-
-	echo '<form action="" method="post" id="tab">';
-	echo '<div class="form-group">';
-	client_registration( $id, $client_profile );
-	echo '</div>';
-	echo '<div class="row">';
-	echo '<div class="col-md-12">';
-	echo '<div class="form-group">';
-	echo '<button type="submit" class="btn btn-default" name="submit">UPDATE</button>';
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
-	echo '</form>';
-
 	return ob_get_clean();
 }
 

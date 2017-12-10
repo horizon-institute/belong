@@ -103,11 +103,14 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
+
     if (is_array($emails) || is_object($emails)) {
         foreach ($emails as $users) {
             //wp_mail($address, $subject, $message);
             echo "sending email to: " . $users['user_email'] . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
         }
+    } else {
+        echo "not an email array!";
     }
 }
 
