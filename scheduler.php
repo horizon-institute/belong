@@ -26,12 +26,6 @@ function belong_send_notifications() {
             $emails = getEmailAddresses($assignment_client_field); 
 
             if (isset($emails)) {
-                // display email address for test
-                echo "************************ <br />";
-                foreach($emails as $email) {
-                    echo $email . " <br />";
-                }
-
                 if ($assignment_type == "Modules") {
                     $complete_by = get_field('assignment_complete_by', $post->ID);
                     $complete_date = new DateTime($complete_by);
@@ -52,6 +46,7 @@ function belong_send_notifications() {
 add_shortcode('belong_notifications', 'belong_send_notifications');
 
 function sendReminders($date, $reminder_period, $emails, $reminder_type) {
+    echo "Has Rem triggered?: " . isReminderTriggered($date, $reminder_period) . "<br />";
     if (isReminderTriggered($date, $reminder_period)) {
         if ($reminder_type == "email") {
            belong_send_emails("Pathways test message body.", "Reminder", $emails);
@@ -64,7 +59,6 @@ function sendReminders($date, $reminder_period, $emails, $reminder_type) {
     }
 }
 
-
 /***********************************************************
 * Are we within the reminder period?
 * $ReminderPeriod - is in days
@@ -74,7 +68,6 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
     $now = new DateTime();
     return ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D'))); 
 }
-
 
 /***********************************************************
 * Return an array of email addresses from user object array
