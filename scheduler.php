@@ -22,8 +22,8 @@ function belong_send_notifications() {
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-            $assignment_email_field = get_field ('assignment_client', $post->ID); // get multi select object         
-
+            $assignment_email_field = get_field('assignment_client', $post->ID); // get multi select object         
+            $var_dump($assignment_email_field);
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
