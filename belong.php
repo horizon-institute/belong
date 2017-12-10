@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.6.2
+ * Version: 0.4.6.3
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -848,7 +848,7 @@ add_action( 'parse_request', 'parse_format' );
  * array for the particular assignment
  ***********************************************/
 function belong_is_current_user_selected( $array, $id ) {
-	if (empty($array)) {
+	if (is_array($array) || is_object($array)) {
 		foreach ( $array as $element ) {
 			if ( $element['ID'] == $id ) {
 				return true;

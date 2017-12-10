@@ -70,17 +70,17 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 /***********************************************************
 * Return an array of email addresses from user object array
 ***********************************************************/
-function getEmailAddresses($field, $values) {
-        $email_array = array();
-        foreach ($values as $value) {
-            $email_array[] = $field['choices'][$value];
-        }
-        // output for test
-        foreach ($email_array as $email) {
-            echo $email . "<br />";
-        }
-   return $email_array;
-}
+// function getEmailAddresses($field, $values) {
+//         $email_array = array();
+//         foreach ($values as $value) {
+//             $email_array[] = $field['choices'][$value];
+//         }
+//         // output for test
+//         foreach ($email_array as $email) {
+//             echo $email . "<br />";
+//         }
+//    return $email_array;
+// }
 
 
 /***********************************************************
@@ -103,9 +103,11 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
-    foreach ($emails as $users) {
-        //wp_mail($address, $subject, $message);
-        echo "sending email to: " . $users['user_email'] . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
+    if (is_array($emails) || is_object($emails)) {
+        foreach ($emails as $users) {
+            //wp_mail($address, $subject, $message);
+            echo "sending email to: " . $users['user_email'] . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
+        }
     }
 }
 
