@@ -23,7 +23,7 @@ function belong_send_notifications() {
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
             $assignment_email_field = get_field('assignment_client', $post->ID); // get multi select object         
-            $var_dump($assignment_email_field);
+            var_dump($assignment_email_field);
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
@@ -103,7 +103,7 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
-    var_dump($emails);
+    // var_dump($emails);
     if (is_array($emails) || is_object($emails)) {
         foreach ($emails as $users) {
             //wp_mail($address, $subject, $message);
