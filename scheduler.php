@@ -103,7 +103,7 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
-
+    var_dump($emails);
     if (is_array($emails) || is_object($emails)) {
         foreach ($emails as $users) {
             //wp_mail($address, $subject, $message);
