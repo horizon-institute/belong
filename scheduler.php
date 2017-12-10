@@ -66,7 +66,11 @@ function sendReminders($date, $reminder_period, $emails, $reminder_type) {
 ***********************************************************/
 function isReminderTriggered($scheduledDate, $reminderPeriod) {
     $now = new DateTime();
-    return ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D'))); 
+    if ($now < $scheduledDate && $now > $scheduledDate->sub(new DateInterval('P' . $reminderPeriod . 'D'))) {
+        return true;
+    }  else {
+        return false;
+    }
 }
 
 /***********************************************************
