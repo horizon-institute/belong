@@ -22,12 +22,9 @@ function belong_send_notifications() {
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-
             $assignment_client_field = get_field('assignment_client', $post->ID);
-
             $emails = getEmailAddresses($assignment_client_field); 
 
-            var_dump($assignment_email_field);
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
@@ -75,14 +72,16 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 * Return an array of email addresses from user object array
 ***********************************************************/
 function getEmailAddresses($client_array) {
-    $email_array = array();
-
-    foreach($client_array as $client) {
-        echo $client["user_email"];
-        $email_array[] = $client["user_email"];
+    if (is_array($client_array) || is_object($client_array)) {
+        $email_array = array();
+        foreach($client_array as $client) {
+            //echo $client["user_email"];
+            $email_array[] = $client["user_email"];
+        }
+        return $email_array;
+    } else {
+        return null;
     }
-
-    return $email_array;
 }
 
 
@@ -106,11 +105,10 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
-    // var_dump($emails);
     if (is_array($emails) || is_object($emails)) {
+        //wp_mail($address, $subject, $message);
         foreach ($emails as $users) {
-            //wp_mail($address, $subject, $message);
-            echo "sending email to: " . $users['user_email'] . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
+            echo "sending email to: " . $users . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
         }
     } else {
         echo "not an email array!";
