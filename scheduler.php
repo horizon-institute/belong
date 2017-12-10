@@ -22,19 +22,23 @@ function belong_send_notifications() {
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-            $assignment_email_field = get_field('assignment_client', $post->ID); // get multi select object         
+
+            $assignment_client_field = get_field('assignment_client', $post->ID);
+
+            $emails = getEmailAddresses($assignment_client_field); 
+
             var_dump($assignment_email_field);
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
-                sendReminders($complete_date, $assignment_reminder_period, $assignment_email_field, $assignment_reminder_type);
+                sendReminders($complete_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
             }
 
             if ($assignment_type == "Events") {
                 $assignment_event = get_field('assignment_select_event', $post->ID);
                 $event_datetime   = get_field('event_date', $assignment_event->ID);
                 $event_date       = new DateTime($event_datetime);
-                sendReminders($event_date, $assignment_reminder_period, $assignment_email_field, $assignment_reminder_type);
+                sendReminders($event_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
             }
         }
     }
@@ -70,17 +74,16 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 /***********************************************************
 * Return an array of email addresses from user object array
 ***********************************************************/
-// function getEmailAddresses($field, $values) {
-//         $email_array = array();
-//         foreach ($values as $value) {
-//             $email_array[] = $field['choices'][$value];
-//         }
-//         // output for test
-//         foreach ($email_array as $email) {
-//             echo $email . "<br />";
-//         }
-//    return $email_array;
-// }
+function getEmailAddresses($client_array) {
+    $email_array = array();
+
+    foreach($client_array as $client) {
+        echo $client["user_email"];
+        $email_array[] = $client["user_email"];
+    }
+
+    return $email_array;
+}
 
 
 /***********************************************************
