@@ -25,6 +25,11 @@ function belong_send_notifications() {
             $assignment_client_field = get_field('assignment_client', $post->ID);
             $emails = getEmailAddresses($assignment_client_field); 
 
+            // display email address for test
+            echo "************************";
+            var_dump($emails);
+            echo "************************";
+
             if ($assignment_type == "Modules") {
                 $complete_by = get_field('assignment_complete_by', $post->ID);
                 $complete_date = new DateTime($complete_by);
@@ -71,19 +76,18 @@ function isReminderTriggered($scheduledDate, $reminderPeriod) {
 /***********************************************************
 * Return an array of email addresses from user object array
 ***********************************************************/
-function getEmailAddresses($client_array) {
-    if (is_array($client_array) || is_object($client_array)) {
+function getEmailAddresses($client_object) {
+    if (is_array($client_object) || is_object($client_object)) {
         $email_array = array();
-        foreach($client_array as $client) {
+        foreach($client_object as $client) {
             //echo $client["user_email"];
-            $email_array[] = $client["user_email"];
+            array_push($email_array, $client["user_email"]);
         }
         return $email_array;
     } else {
         return null;
     }
 }
-
 
 /***********************************************************
 * Send SMS to users
