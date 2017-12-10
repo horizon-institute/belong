@@ -25,23 +25,25 @@ function belong_send_notifications() {
             $assignment_client_field = get_field('assignment_client', $post->ID);
             $emails = getEmailAddresses($assignment_client_field); 
 
-            // display email address for test
-            echo "************************";
-            foreach($emails as $email) {
-                echo $email . " <br />";
-            }
-            
-            if ($assignment_type == "Modules") {
-                $complete_by = get_field('assignment_complete_by', $post->ID);
-                $complete_date = new DateTime($complete_by);
-                sendReminders($complete_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
-            }
+            if (isset($emails)) {
+                // display email address for test
+                echo "************************";
+                foreach($emails as $email) {
+                    echo $email . " <br />";
+                }
 
-            if ($assignment_type == "Events") {
-                $assignment_event = get_field('assignment_select_event', $post->ID);
-                $event_datetime   = get_field('event_date', $assignment_event->ID);
-                $event_date       = new DateTime($event_datetime);
-                sendReminders($event_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
+                if ($assignment_type == "Modules") {
+                    $complete_by = get_field('assignment_complete_by', $post->ID);
+                    $complete_date = new DateTime($complete_by);
+                    sendReminders($complete_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
+                }
+
+                if ($assignment_type == "Events") {
+                    $assignment_event = get_field('assignment_select_event', $post->ID);
+                    $event_datetime   = get_field('event_date', $assignment_event->ID);
+                    $event_date       = new DateTime($event_datetime);
+                    sendReminders($event_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
+                }
             }
         }
     }
@@ -81,11 +83,11 @@ function getEmailAddresses($client_object) {
     if (is_array($client_object) || is_object($client_object)) {
         $email_array = array();
         foreach($client_object as $client) {
-            //echo $client["user_email"];
             array_push($email_array, $client["user_email"]);
         }
         return $email_array;
     } else {
+        echo "returning null";
         return null;
     }
 }
