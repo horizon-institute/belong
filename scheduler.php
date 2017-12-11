@@ -1,54 +1,47 @@
 <?php
-
-/***********************************************************
+/*********************************************************
 * Scheduled job for Belong notifications
-* This will execute daily and send EMAIL/SMS notifications to clients
+* This will execute daily and send EMAIL/SMS notifications
 **********************************************************/
 
-function belong_send_notifications() {
-    ob_start();
-    echo "REMINDERS<br /><br />";
-    $assignment_args = array(
-    'posts_per_page' => -1,
-    'post_type' => 'assignments'
-    );
-    
-    $assignment_posts = get_posts($assignment_args);
-    if ($assignment_posts) {
-        foreach ($assignment_posts as $post) {  
-            $current_date = new DateTime();
-            $assignment_type   = get_field('assignment_type', $post->ID);
-            $assignment_title = $post->post_title;
-            $assignment_reminder = get_field('assignment_reminder', $post->ID);
-            $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
-            $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
-            $assignment_client_field = get_field('assignment_client', $post->ID);
-            $emails = getEmailAddresses($assignment_client_field);
-            $mobiles = getMobileNumbers($assignment_client_field);
-            
-            if (isset($emails)) {
-                if ($assignment_type == "Modules") {
-                    $complete_by = get_field('assignment_complete_by', $post->ID);
-                    $complete_date = new DateTime($complete_by);
-                    sendReminders($complete_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type, $assignment_title);
-                }
+$assignment_args = array(
+'posts_per_page' => -1,
+'post_type' => 'assignments'
+);
 
-                if ($assignment_type == "Events") {
-                    $assignment_event = get_field('assignment_select_event', $post->ID);
-                    $event_datetime   = get_field('event_date', $assignment_event->ID);
-                    $event_date       = new DateTime($event_datetime);
-                    sendReminders($event_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type, $assignment_title);
-                }
+$assignment_posts = get_posts($assignment_args);
+if ($assignment_posts) {
+    foreach ($assignment_posts as $post) {  
+        $current_date = new DateTime();
+        $assignment_type   = get_field('assignment_type', $post->ID);
+        $assignment_title = $post->post_title;
+        $assignment_reminder = get_field('assignment_reminder', $post->ID);
+        $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
+        $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
+        $assignment_client_field = get_field('assignment_client', $post->ID);
+        $emails = getEmailAddresses($assignment_client_field);
+        $mobiles = getMobileNumbers($assignment_client_field);
+        
+        if (isset($emails)) {
+            if ($assignment_type == "Modules") {
+                $complete_by = get_field('assignment_complete_by', $post->ID);
+                $complete_date = new DateTime($complete_by);
+                sendReminders($complete_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type, $assignment_title);
+            }
+
+            if ($assignment_type == "Events") {
+                $assignment_event = get_field('assignment_select_event', $post->ID);
+                $event_datetime   = get_field('event_date', $assignment_event->ID);
+                $event_date       = new DateTime($event_datetime);
+                sendReminders($event_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type, $assignment_title);
             }
         }
     }
-    return ob_get_clean();
 }
-add_shortcode('belong_notifications', 'belong_send_notifications');
 
 function sendReminders($date, $reminder_period, $emails, $mobiles, $reminder_type, $title) {
     $trigger = isReminderTriggered($date, $reminder_period);
-    $message = "REMINDER. The following action: " . $title . " has been assigned to you to complete by " . $date->format('Y-m-d');
+    $message = "REMINDER. The following action: " . $title . " has been assigned to you to complete by " . $date->format('j M Y');
     if (isset($trigger) && $trigger == 1) {
         if ($reminder_type == "email") {
            belong_send_emails($message, "REMINDER FROM PATHWAYS", $emails);
