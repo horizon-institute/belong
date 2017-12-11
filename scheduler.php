@@ -114,11 +114,10 @@ function getMobileNumbers($client_object) {
 ***********************************************************/
 function belong_send_SMS($message, $numbers) {
     global $sms;
-    $sms->to  = array(
-    $numbers
-    );
+    $sms->to  = $numbers;
     $sms->msg = $message;
     $sms->SendSMS();
+    echo "Sending SMS to: " . $numbers;
 }
 
 /***********************************************************
@@ -128,8 +127,8 @@ function belong_send_SMS($message, $numbers) {
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
         foreach($emails as $email) {
-            wp_mail($address, $subject, $message);
-            //echo "sending email to: " . $email . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
+            wp_mail($email, $subject, $message);
+            echo "sending email to: " . $email . " | Subject: " . $subject . " | Message: " . $message . "<br />";
         }
 }
 
