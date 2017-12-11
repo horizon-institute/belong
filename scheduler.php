@@ -25,24 +25,19 @@ function belong_send_notifications() {
             $assignment_client_field = get_field('assignment_client', $post->ID);
             $emails = getEmailAddresses($assignment_client_field);
             $mobiles = getMobileNumbers($assignment_client_field);
-
-            foreach($mobiles as $mobile) {
-                echo $mobile . "<br />";
-            }
             
-
             if (isset($emails)) {
                 if ($assignment_type == "Modules") {
                     $complete_by = get_field('assignment_complete_by', $post->ID);
                     $complete_date = new DateTime($complete_by);
-                    sendReminders($complete_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
+                    sendReminders($complete_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type);
                 }
 
                 if ($assignment_type == "Events") {
                     $assignment_event = get_field('assignment_select_event', $post->ID);
                     $event_datetime   = get_field('event_date', $assignment_event->ID);
                     $event_date       = new DateTime($event_datetime);
-                    sendReminders($event_date, $assignment_reminder_period, $emails, $assignment_reminder_type);
+                    sendReminders($event_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type);
                 }
             }
         }
@@ -51,16 +46,16 @@ function belong_send_notifications() {
 }
 add_shortcode('belong_notifications', 'belong_send_notifications');
 
-function sendReminders($date, $reminder_period, $emails, $reminder_type) {
+function sendReminders($date, $reminder_period, $emails, $mobiles, $reminder_type) {
     $trigger = isReminderTriggered($date, $reminder_period);
     if (isset($trigger) && $trigger == 1) {
         if ($reminder_type == "email") {
            belong_send_emails("Pathways test message body.", "Reminder", $emails);
         } else if ($reminder_type == "sms") {
-            // belong_send_SMS($message, $numbers);
+            belong_send_SMS("SMS reminder", $mobiles);
         } else if ($reminder_type == "both") {
             belong_send_emails("Pathways test message body.", "Reminder", $emails);
-            // belong_send_SMS($message, $numbers);
+            belong_send_SMS("SMS reminder", $mobiles);
         }                   
     }
 }
@@ -132,9 +127,9 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
-        //wp_mail($address, $subject, $message);
         foreach($emails as $email) {
-            echo "sending email to: " . $email . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
+            wp_mail($address, $subject, $message);
+            //echo "sending email to: " . $email . " | Subject: " . $subject  . " | Message: " .$message . "<br />";
         }
 }
 
