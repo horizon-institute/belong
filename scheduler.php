@@ -95,7 +95,7 @@ function getMobileNumbers($client_object) {
         foreach($client_object as $client) {
             $id = $client["user_id"];
             //get mobile number from client profile
-            $client_profile = get_post_meta( $post_id, "client_profile_" . $id, true )[0];
+            $client_profile = get_post_meta( $post_id, "client_profile_" . $id, true );
             echo $client_profile["pw-client-telephone"] . "<br />";
             //$mobile_number = 
 
