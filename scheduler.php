@@ -48,7 +48,7 @@ add_shortcode('belong_notifications', 'belong_send_notifications');
 
 function sendReminders($date, $reminder_period, $emails, $mobiles, $reminder_type, $title) {
     $trigger = isReminderTriggered($date, $reminder_period);
-    $message = "REMINDER. The following action: " . $title . " has been assigned to you to complete by " . $date;
+    $message = "REMINDER. The following action: " . $title . " has been assigned to you to complete by " . $date->format('Y-m-d');
     if (isset($trigger) && $trigger == 1) {
         if ($reminder_type == "email") {
            belong_send_emails($message, "REMINDER FROM PATHWAYS", $emails);
