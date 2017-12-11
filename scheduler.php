@@ -23,7 +23,8 @@ function belong_send_notifications() {
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
             $assignment_client_field = get_field('assignment_client', $post->ID);
-            $emails = getEmailAddresses($assignment_client_field); 
+            $emails = getEmailAddresses($assignment_client_field);
+            $mobile = getMobileNumbers($assignment_client_field);
 
             if (isset($emails)) {
                 if ($assignment_type == "Modules") {
@@ -79,6 +80,28 @@ function getEmailAddresses($client_object) {
             array_push($email_array, $client["user_email"]);
         }
         return $email_array;
+    } else {
+        return null;
+    }
+}
+
+/***********************************************************
+* Return an array of mobile numbers
+***********************************************************/
+function getMobileNumbers($client_object) {
+    if (is_array($client_object) || is_object($client_object)) {
+        $post_id = 337;
+        $mobiles = array();
+        foreach($client_object as $client) {
+            $id = $client["user_id"];
+            //get mobile number from client profile
+            $client_profile = get_post_meta( $post_id, "client_profile_" . $id, true )[0];
+            echo $client_profile["pw-client-telephone"] . "<br />";
+            //$mobile_number = 
+
+            //array_push($mobiles, $mobile_number);
+        }
+        return $mobiles;
     } else {
         return null;
     }
