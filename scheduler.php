@@ -16,9 +16,9 @@ function belong_send_notifications() {
     $assignment_posts = get_posts($assignment_args);
     if ($assignment_posts) {
         foreach ($assignment_posts as $post) {  
-            $email_addresses = array();
             $current_date = new DateTime();
             $assignment_type   = get_field('assignment_type', $post->ID);
+            $assignment_title = $post->post_title;
             $assignment_reminder = get_field('assignment_reminder', $post->ID);
             $assignment_reminder_period = get_field('assignment_reminder_period', $post->ID);
             $assignment_reminder_type = get_field('assignment_reminder_type', $post->ID);
@@ -30,14 +30,14 @@ function belong_send_notifications() {
                 if ($assignment_type == "Modules") {
                     $complete_by = get_field('assignment_complete_by', $post->ID);
                     $complete_date = new DateTime($complete_by);
-                    sendReminders($complete_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type);
+                    sendReminders($complete_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type, $assignment_title);
                 }
 
                 if ($assignment_type == "Events") {
                     $assignment_event = get_field('assignment_select_event', $post->ID);
                     $event_datetime   = get_field('event_date', $assignment_event->ID);
                     $event_date       = new DateTime($event_datetime);
-                    sendReminders($event_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type);
+                    sendReminders($event_date, $assignment_reminder_period, $emails, $mobiles, $assignment_reminder_type, $assignment_title);
                 }
             }
         }
@@ -46,16 +46,17 @@ function belong_send_notifications() {
 }
 add_shortcode('belong_notifications', 'belong_send_notifications');
 
-function sendReminders($date, $reminder_period, $emails, $mobiles, $reminder_type) {
+function sendReminders($date, $reminder_period, $emails, $mobiles, $reminder_type, $title) {
     $trigger = isReminderTriggered($date, $reminder_period);
+    $message = "REMINDER. The following action: " . $title . " has been assigned to you to complete by " . $date;
     if (isset($trigger) && $trigger == 1) {
         if ($reminder_type == "email") {
-           belong_send_emails("Pathways test message body.", "Reminder", $emails);
+           belong_send_emails($message, "REMINDER FROM PATHWAYS", $emails);
         } else if ($reminder_type == "sms") {
-            belong_send_SMS("SMS reminder", $mobiles);
+            belong_send_SMS($message, $mobiles);
         } else if ($reminder_type == "both") {
-            belong_send_emails("Pathways test message body.", "Reminder", $emails);
-            belong_send_SMS("SMS reminder", $mobiles);
+            belong_send_emails($message, "REMINDER FROM PATHWAYS", $emails);
+            belong_send_SMS($message, $mobiles);
         }                   
     }
 }
@@ -117,7 +118,6 @@ function belong_send_SMS($message, $numbers) {
     $sms->to  = $numbers;
     $sms->msg = $message;
     $sms->SendSMS();
-    echo "Sending SMS to: " . $numbers;
 }
 
 /***********************************************************
@@ -126,10 +126,9 @@ function belong_send_SMS($message, $numbers) {
 * $message - message to send.
 ***********************************************************/
 function belong_send_emails($message, $subject, $emails) {
-        foreach($emails as $email) {
-            wp_mail($email, $subject, $message);
-            echo "sending email to: " . $email . " | Subject: " . $subject . " | Message: " . $message . "<br />";
-        }
+    foreach($emails as $email) {
+        wp_mail($email, $subject, $message);
+    }
 }
 
 ?>
