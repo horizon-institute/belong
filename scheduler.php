@@ -1,5 +1,5 @@
 <?php
-
+echo $_SERVER["DOCUMENT_ROOT"];
 require_once("../../../wp-load.php");
 /*********************************************************
 * Scheduled job for Belong notifications

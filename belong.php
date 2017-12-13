@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.9.0
+ * Version: 0.4.9.1
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -21,7 +21,6 @@ wp_register_script( 'prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3
 wp_enqueue_script( 'prefix_bootstrap' );
 wp_register_style( 'prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' );
 wp_enqueue_style( 'prefix_bootstrap' );
-//include( 'scheduler.php' );
 
 /*********************************************************************************/
 function client_registration_form() {
