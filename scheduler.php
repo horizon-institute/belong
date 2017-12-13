@@ -1,5 +1,6 @@
 <?php
-require_once($_SERVER["DOCUMENT_ROOT"] . "/wp-load.php");
+
+require_once("../../../wp-load.php");
 /*********************************************************
 * Scheduled job for Belong notifications
 * This will execute daily and send EMAIL/SMS notifications
