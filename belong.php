@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.9.8
+ * Version: 0.4.9.9
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -13,8 +13,10 @@
 // Prevent direct access
 defined('ABSPATH') or die('No script kiddies please!');
 
-wp_enqueue_script('jquery-ui-datepicker');
-wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.8.24/themes/smoothness/jquery-ui.css');
+wp_enqueue_script('jquery');
+wp_enqueue_script('jquery-ui', 'https://code.jquery.com/ui/1.12.0/jquery-ui.min.js');
+//wp_enqueue_script('jquery-ui-datepicker');
+wp_enqueue_style('jquery-ui', 'https://code.jquery.com/ui/1.8.24/themes/smoothness/jquery-ui.css');
 wp_register_script('prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
 wp_enqueue_script('prefix_bootstrap');
 wp_register_style('prefix_bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
@@ -881,7 +883,6 @@ function export_csv()
     }
     fclose($output);
 }
-
 function parse_format(&$wp)
 {
     if (array_key_exists('format', $_GET) && $_GET['format'] == 'csv') {
@@ -889,7 +890,6 @@ function parse_format(&$wp)
         exit;
     }
 }
-
 add_action('parse_request', 'parse_format');
 
 
