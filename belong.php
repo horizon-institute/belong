@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.4.9.9
+ * Version: 0.5.0.0
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -347,7 +347,7 @@ function language_form($client_profile)
     echo '</div>';
 
     echo '<div class="row">';
-    text_field("pw-language-course-length", "LENGTH OF COURSE", "6, $client_profile");
+    text_field("pw-language-course-length", "LENGTH OF COURSE", "6", $client_profile);
     text_field("pw-language-course-title", "COURSE TITLE/LEVEL", "6", $client_profile);
     echo '</div>';
 
