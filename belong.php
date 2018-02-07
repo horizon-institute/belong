@@ -5,7 +5,7 @@
  * Plugin URI: http://belong-horizon.cloudapp.net
  * GitHub Plugin URI: https://github.com/horizon-institute/belong.git
  * Description: Custom functionality for Belong Nottingham CRM
- * Version: 0.5.0.1
+ * Version: 0.5.0.2
  * Author: Javid Yousaf
  * License: GPL3
  */
@@ -619,7 +619,7 @@ function work_experience_form($client_profile)
     echo '<div class="row">';
     date_field("pw-experience-from-5", "FROM", "pw-experience-from-5", "2", $client_profile);
     date_field("pw-experience-to-5", "TO", "pw-experience-to-5", "2", $client_profile);
-    text_field("pw-experience-role-5", "ROLE", "4");
+    text_field("pw-experience-role-5", "ROLE", "4", $client_profile);
     text_field("pw-experience-role-where-5", "WHERE", "4", $client_profile);
     echo '</div>';
 
@@ -638,7 +638,7 @@ function work_experience_form($client_profile)
     textarea_field("pw-experience-recognised-description", "DESCRIPTION", "5", "35", "8", $client_profile);
     echo '</div>';
     echo '<div class="row">';
-    select_field(array("Yes", "No"), "pw-experience-volunteering", "DO YOU HAVE ANY EXPERIENCE VOLUNTEERING?", "4");
+    select_field(array("Yes", "No"), "pw-experience-volunteering", "DO YOU HAVE ANY EXPERIENCE VOLUNTEERING?", "4", $client_profile);
     textarea_field("pw-experience-volunteering-description", "DESCRIPTION", "5", "35", "8", $client_profile);
     echo '</div>';
     echo '<div class="row">';
